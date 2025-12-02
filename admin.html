@@ -112,16 +112,14 @@
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBERZmLdmVxDSXcsQu6IZxOa6oEDFNQjBo",
-            authDomain: "topseospecialists.firebaseapp.com",
-            projectId: "topseospecialists",
-            storageBucket: "topseospecialists.firebasestorage.app",
-            messagingSenderId: "353115416273",
-            appId: "1:353115416273:web:c36f74dfa0c717072e47f0",
-            measurementId: "G-C70JP3DS7R"
-        };
-        
+        async function loadConfig() {
+            const response = await fetch('config.json');
+            if (!response.ok) throw new Error('Unable to load configuration');
+            return response.json();
+        }
+
+        const { firebase: firebaseConfig } = await loadConfig();
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
