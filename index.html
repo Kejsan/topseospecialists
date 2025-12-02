@@ -36,8 +36,8 @@
         }
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
         }
         .modal-backdrop {
             transition: opacity 0.3s ease;
@@ -45,9 +45,56 @@
         html {
             scroll-behavior: smooth;
         }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(17, 24, 39, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 50;
+        }
+        .overlay.active { display: flex; }
+        .card-3d {
+            perspective: 1200px;
+            position: relative;
+            min-height: 320px;
+            overflow: hidden;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            min-height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s ease;
+        }
+        .card-3d:hover .card-inner { transform: rotateY(180deg); }
+        .card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .card-back { transform: rotateY(180deg); }
+        @media (prefers-reduced-motion: reduce) {
+            .card-inner, .modal-backdrop { transition: none !important; }
+            .card-3d:hover .card-inner { transform: none; }
+        }
+        @media (hover: none) {
+            .card-3d:hover .card-inner { transform: none; }
+        }
+        .sticky-controls { position: sticky; top: 0; z-index: 30; background: rgba(253,253,253,0.95); padding-top: 1rem; backdrop-filter: blur(6px); }
+        #back-to-top { position: fixed; bottom: 24px; right: 24px; display: none; z-index: 40; }
     </style>
 </head>
 <body class="text-gray-800">
+
+    <div id="dialog-overlay" class="overlay" aria-hidden="true"></div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -71,8 +118,11 @@
             <section id="specialists">
                 <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Explore the Specialists</h2>
                  <p class="text-center text-gray-500 mb-8 max-w-3xl mx-auto">Use the filters and search bar to navigate the community-curated list of specialists. You can search by name, role, or keywords from their contributions.</p>
-                <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <input type="search" id="search-input" placeholder="Search by name, role, or keyword..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+                <div class="flex flex-col gap-3 mb-8 sticky-controls shadow-sm border border-gray-200 rounded-2xl px-4 py-3">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <input type="search" id="search-input" placeholder="Search by name, role, or keyword..." class="w-full max-w-md px-4 py-2 border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition">
+                        <button id="back-to-top" class="px-3 py-2 bg-indigo-600 text-white rounded-full shadow hover:bg-indigo-700">Back to top</button>
+                    </div>
                     <div id="filter-buttons" class="flex flex-wrap justify-center gap-2"></div>
                 </div>
 
@@ -146,23 +196,50 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBERZmLdmVxDSXcsQu6IZxOa6oEDFNQjBo",
-            authDomain: "topseospecialists.firebaseapp.com",
-            projectId: "topseospecialists",
-            storageBucket: "topseospecialists.firebasestorage.app",
-            messagingSenderId: "353115416273",
-            appId: "1:353115416273:web:c36f74dfa0c717072e47f0",
-            measurementId: "G-C70JP3DS7R"
-        };
-        
+        async function loadConfig() {
+            if (window.__APP_CONFIG__) {
+                return window.__APP_CONFIG__;
+            }
+
+            const candidates = ['config.runtime.json', 'config.json'];
+            for (const path of candidates) {
+                try {
+                    const response = await fetch(path, { cache: 'no-store' });
+                    if (response.ok) return response.json();
+                } catch (error) {
+                    console.warn(`Config fetch failed for ${path}`, error);
+                }
+            }
+
+            throw new Error('Runtime configuration is missing. Provide config.runtime.json or window.__APP_CONFIG__.');
+        }
+
+        const configResult = await loadConfig().catch((error) => {
+            console.error(error);
+            const loading = document.getElementById('loading-state');
+            if (loading) {
+                loading.textContent = 'App misconfigured: unable to load Firebase settings.';
+                loading.classList.add('text-red-600');
+            }
+            return null;
+        });
+
+        if (!configResult) {
+            throw new Error('Missing runtime configuration');
+        }
+
+        const { firebase: firebaseConfig, rateLimitEnabled = false } = configResult;
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         // setLogLevel('debug');
 
         let allSpecialists = [];
         let specialtyChart = null;
-        let activeFilter = 'All';
+        let activeFilters = new Set(['All']);
+        let visibleBatch = 20;
+        let observer = null;
+        let lastTrigger = null;
+        let activeDialogTrigger = null;
 
         const initialSpecialistData = [
             { name: 'Tom Winter', role: 'Founder, SEOwind', contribution: 'Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.', category: 'AI SEO' },
@@ -322,7 +399,7 @@
         function createFilterButtons(labels) {
             const container = document.getElementById('filter-buttons');
             container.innerHTML = '';
-            
+
             const allButton = createButton('All');
             allButton.classList.add('bg-indigo-600', 'text-white');
             container.appendChild(allButton);
@@ -331,20 +408,33 @@
                 container.appendChild(createButton(label));
             });
         }
-        
+
         function createButton(label) {
             const button = document.createElement('button');
             button.textContent = label;
             button.dataset.filter = label;
-            button.className = 'px-4 py-2 text-sm font-medium border border-gray-300 rounded-full hover:bg-indigo-100 hover:border-indigo-400 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500';
+            button.className = 'px-4 py-2 text-sm font-medium border border-gray-300 rounded-full hover:bg-indigo-100 hover:border-indigo-400 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-gray-700';
             button.addEventListener('click', () => {
-                activeFilter = label;
-                document.querySelectorAll('#filter-buttons button').forEach(btn => {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('text-gray-700');
-                });
-                button.classList.add('bg-indigo-600', 'text-white');
-                button.classList.remove('text-gray-700');
+                if (label === 'All') {
+                    activeFilters = new Set(['All']);
+                    document.querySelectorAll('#filter-buttons button').forEach(btn => btn.classList.remove('bg-indigo-600', 'text-white'));
+                    button.classList.add('bg-indigo-600', 'text-white');
+                } else {
+                    activeFilters.delete('All');
+                    if (activeFilters.has(label)) {
+                        activeFilters.delete(label);
+                        button.classList.remove('bg-indigo-600', 'text-white');
+                    } else {
+                        activeFilters.add(label);
+                        button.classList.add('bg-indigo-600', 'text-white');
+                    }
+                    if (activeFilters.size === 0) {
+                        activeFilters.add('All');
+                        document.querySelector('button[data-filter="All"]').classList.add('bg-indigo-600', 'text-white');
+                    } else {
+                        document.querySelector('button[data-filter="All"]').classList.remove('bg-indigo-600', 'text-white');
+                    }
+                }
                 handleFiltering();
             });
             return button;
@@ -403,18 +493,19 @@
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             let filteredData = allSpecialists;
 
-            if (activeFilter !== 'All') {
-                filteredData = filteredData.filter(specialist => specialist.category === activeFilter);
+            if (!activeFilters.has('All')) {
+                filteredData = filteredData.filter(specialist => activeFilters.has(specialist.category));
             }
 
             if (searchTerm) {
-                filteredData = filteredData.filter(specialist =>
-                    specialist.name.toLowerCase().includes(searchTerm) ||
-                    specialist.role.toLowerCase().includes(searchTerm) ||
-                    specialist.contribution.toLowerCase().includes(searchTerm)
-                );
+                filteredData = filteredData.filter(specialist => {
+                    const haystack = `${specialist.name} ${specialist.role} ${specialist.contribution}`.toLowerCase();
+                    return haystack.includes(searchTerm);
+                });
             }
-            renderGrid(filteredData);
+            visibleBatch = 20;
+            renderGrid(filteredData.slice(0, visibleBatch));
+            setupInfiniteScroll(filteredData);
         }
 
         function renderGrid(data) {
@@ -422,32 +513,133 @@
             const loading = document.getElementById('loading-state');
             const noResults = document.getElementById('no-results');
             grid.innerHTML = '';
-            
+
             if (loading) loading.style.display = 'none';
 
-            if (data.length === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+            noResults.style.display = data.length === 0 ? 'block' : 'none';
 
+            const fragment = document.createDocumentFragment();
             data.forEach(specialist => {
                 const slug = specialist.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
                 const card = document.createElement('div');
                 card.id = slug;
-                card.className = 'bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col';
+                card.dataset.name = specialist.name;
+                card.className = 'card-3d bg-transparent h-full';
+                const frontCta = `https://www.google.com/search?q=${encodeURIComponent(specialist.name)}`;
                 card.innerHTML = `
-                    <a href="#${slug}" class="flex-grow">
-                        <h3 class="text-xl font-semibold text-gray-900">${specialist.name}</h3>
-                        <p class="text-indigo-600 font-medium mt-1 mb-3">${specialist.role}</p>
-                        <p class="text-gray-600 text-sm">${specialist.contribution}</p>
-                    </a>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
+                    <div class="card-inner h-full">
+                        <div class="card-face bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 flex flex-col">
+                            <a href="#${slug}" class="flex-grow" data-trigger="dialog">
+                                <h3 class="text-xl font-semibold text-gray-900">${specialist.name}</h3>
+                                <p class="text-indigo-600 font-medium mt-1 mb-3">${specialist.role}</p>
+                                <p class="text-gray-600 text-sm">${specialist.contribution}</p>
+                            </a>
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
+                            </div>
+                        </div>
+                        <div class="card-face card-back bg-indigo-50 p-6 rounded-xl shadow-inner border border-indigo-100 flex flex-col justify-between">
+                            <div>
+                                <p class="text-sm text-indigo-800 mb-4">Learn more about ${specialist.name} or connect directly.</p>
+                                <p class="text-sm text-indigo-900 font-semibold">Category: ${specialist.category}</p>
+                            </div>
+                            <div class="flex gap-2 mt-4">
+                                <a href="${frontCta}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm">View Profile</a>
+                                <button class="px-4 py-2 bg-white border border-indigo-200 text-indigo-700 rounded-md text-sm" data-trigger="dialog">Open Card</button>
+                            </div>
+                        </div>
                     </div>
                 `;
-                grid.appendChild(card);
+                fragment.appendChild(card);
             });
+            grid.appendChild(fragment);
+            attachDialogTriggers();
+        }
+
+        function attachDialogTriggers() {
+            document.querySelectorAll('[data-trigger="dialog"]').forEach(el => {
+                el.onclick = (e) => {
+                    e.preventDefault();
+                    const card = e.currentTarget.closest('.card-3d');
+                    const name = card?.dataset.name;
+                    const specialist = allSpecialists.find(s => s.name === name);
+                    if (specialist) {
+                        openCardDialog(specialist, e.currentTarget);
+                    }
+                };
+            });
+        }
+
+        function setupInfiniteScroll(fullData) {
+            const grid = document.getElementById('specialist-grid');
+            const existingSentinel = document.getElementById('scroll-sentinel');
+            if (existingSentinel) existingSentinel.remove();
+            if (observer) observer.disconnect();
+            if (fullData.length <= visibleBatch) return;
+
+            const sentinel = document.createElement('div');
+            sentinel.id = 'scroll-sentinel';
+            sentinel.className = 'col-span-full h-1';
+            grid.appendChild(sentinel);
+
+            observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        visibleBatch += 20;
+                        renderGrid(fullData.slice(0, visibleBatch));
+                        setupInfiniteScroll(fullData);
+                    }
+                });
+            }, { rootMargin: '200px' });
+            observer.observe(sentinel);
+        }
+
+        function openCardDialog(specialist, trigger) {
+            const overlay = document.getElementById('dialog-overlay');
+            overlay.innerHTML = '';
+            const dialog = document.createElement('div');
+            dialog.setAttribute('role', 'dialog');
+            dialog.setAttribute('aria-modal', 'true');
+            dialog.className = 'bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto';
+            dialog.innerHTML = `
+                <button aria-label="Close" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" id="dialog-close">×</button>
+                <h3 class="text-2xl font-bold mb-2 text-gray-900">${specialist.name}</h3>
+                <p class="text-indigo-700 font-semibold mb-2">${specialist.role}</p>
+                <p class="text-gray-700 mb-4">${specialist.contribution}</p>
+                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
+                <div class="mt-6 flex gap-3">
+                    <a href="https://www.google.com/search?q=${encodeURIComponent(specialist.name)}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md">View Profile</a>
+                    <a href="mailto:?subject=Connect%20with%20${encodeURIComponent(specialist.name)}" class="px-4 py-2 border border-gray-200 rounded-md text-gray-800">Reach Out</a>
+                </div>
+            `;
+            overlay.appendChild(dialog);
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            activeDialogTrigger = trigger;
+
+            const closeDialog = () => {
+                overlay.classList.remove('active');
+                overlay.setAttribute('aria-hidden', 'true');
+                overlay.innerHTML = '';
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', escListener);
+                document.removeEventListener('focus', trapFocus, true);
+                if (activeDialogTrigger) activeDialogTrigger.focus();
+            };
+
+            const escListener = (e) => { if (e.key === 'Escape') closeDialog(); };
+            const trapFocus = (e) => {
+                if (!overlay.contains(e.target)) {
+                    dialog.focus();
+                }
+            };
+            document.addEventListener('keydown', escListener);
+            document.addEventListener('focus', trapFocus, true);
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) closeDialog(); });
+            dialog.querySelector('#dialog-close').addEventListener('click', closeDialog);
+            dialog.tabIndex = -1;
+            dialog.focus();
         }
 
         function updateSchemaMarkup(data) {
@@ -529,7 +721,22 @@
             }
         });
 
-        document.getElementById('search-input').addEventListener('input', handleFiltering);
+        const debounce = (fn, delay = 300) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn(...args), delay);
+            };
+        };
+
+        const debouncedFilter = debounce(handleFiltering, 300);
+        document.getElementById('search-input').addEventListener('input', debouncedFilter);
+
+        const backToTop = document.getElementById('back-to-top');
+        backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        window.addEventListener('scroll', () => {
+            backToTop.style.display = window.scrollY > 400 ? 'inline-flex' : 'none';
+        });
         main();
     </script>
 </body>

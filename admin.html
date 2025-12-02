@@ -112,16 +112,39 @@
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBERZmLdmVxDSXcsQu6IZxOa6oEDFNQjBo",
-            authDomain: "topseospecialists.firebaseapp.com",
-            projectId: "topseospecialists",
-            storageBucket: "topseospecialists.firebasestorage.app",
-            messagingSenderId: "353115416273",
-            appId: "1:353115416273:web:c36f74dfa0c717072e47f0",
-            measurementId: "G-C70JP3DS7R"
-        };
-        
+        async function loadConfig() {
+            if (window.__APP_CONFIG__) {
+                return window.__APP_CONFIG__;
+            }
+
+            const candidates = ['config.runtime.json', 'config.json'];
+            for (const path of candidates) {
+                try {
+                    const response = await fetch(path, { cache: 'no-store' });
+                    if (response.ok) return response.json();
+                } catch (error) {
+                    console.warn(`Config fetch failed for ${path}`, error);
+                }
+            }
+
+            throw new Error('Runtime configuration is missing. Provide config.runtime.json or window.__APP_CONFIG__.');
+        }
+
+        const configResult = await loadConfig().catch((error) => {
+            console.error(error);
+            const errorEl = document.getElementById('login-error');
+            if (errorEl) {
+                errorEl.textContent = 'Admin app misconfigured: runtime Firebase settings missing.';
+            }
+            return null;
+        });
+
+        if (!configResult) {
+            throw new Error('Missing runtime configuration');
+        }
+
+        const { firebase: firebaseConfig } = configResult;
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
