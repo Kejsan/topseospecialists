@@ -36,8 +36,8 @@
         }
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
         }
         .modal-backdrop {
             transition: opacity 0.3s ease;
@@ -52,16 +52,20 @@
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
             z-index: 50;
         }
         .overlay.active { display: flex; }
         .card-3d {
             perspective: 1200px;
+            position: relative;
+            min-height: 320px;
+            overflow: hidden;
         }
         .card-inner {
             position: relative;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             transform-style: preserve-3d;
             transition: transform 0.7s ease;
         }
@@ -71,13 +75,20 @@
             inset: 0;
             backface-visibility: hidden;
             border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
         }
         .card-back { transform: rotateY(180deg); }
         @media (prefers-reduced-motion: reduce) {
             .card-inner, .modal-backdrop { transition: none !important; }
             .card-3d:hover .card-inner { transform: none; }
         }
-        .sticky-controls { position: sticky; top: 0; z-index: 30; background: #fdfdfd; padding-top: 1rem; }
+        @media (hover: none) {
+            .card-3d:hover .card-inner { transform: none; }
+        }
+        .sticky-controls { position: sticky; top: 0; z-index: 30; background: rgba(253,253,253,0.95); padding-top: 1rem; backdrop-filter: blur(6px); }
         #back-to-top { position: fixed; bottom: 24px; right: 24px; display: none; z-index: 40; }
     </style>
 </head>
@@ -186,12 +197,38 @@
         import { getFirestore, collection, onSnapshot, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         async function loadConfig() {
-            const response = await fetch('config.json');
-            if (!response.ok) throw new Error('Unable to load configuration');
-            return response.json();
+            if (window.__APP_CONFIG__) {
+                return window.__APP_CONFIG__;
+            }
+
+            const candidates = ['config.runtime.json', 'config.json'];
+            for (const path of candidates) {
+                try {
+                    const response = await fetch(path, { cache: 'no-store' });
+                    if (response.ok) return response.json();
+                } catch (error) {
+                    console.warn(`Config fetch failed for ${path}`, error);
+                }
+            }
+
+            throw new Error('Runtime configuration is missing. Provide config.runtime.json or window.__APP_CONFIG__.');
         }
 
-        const { firebase: firebaseConfig, rateLimitEnabled = false } = await loadConfig();
+        const configResult = await loadConfig().catch((error) => {
+            console.error(error);
+            const loading = document.getElementById('loading-state');
+            if (loading) {
+                loading.textContent = 'App misconfigured: unable to load Firebase settings.';
+                loading.classList.add('text-red-600');
+            }
+            return null;
+        });
+
+        if (!configResult) {
+            throw new Error('Missing runtime configuration');
+        }
+
+        const { firebase: firebaseConfig, rateLimitEnabled = false } = configResult;
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         // setLogLevel('debug');
@@ -487,7 +524,7 @@
                 const card = document.createElement('div');
                 card.id = slug;
                 card.dataset.name = specialist.name;
-                card.className = 'card-3d bg-transparent';
+                card.className = 'card-3d bg-transparent h-full';
                 const frontCta = `https://www.google.com/search?q=${encodeURIComponent(specialist.name)}`;
                 card.innerHTML = `
                     <div class="card-inner h-full">
@@ -563,7 +600,7 @@
             const dialog = document.createElement('div');
             dialog.setAttribute('role', 'dialog');
             dialog.setAttribute('aria-modal', 'true');
-            dialog.className = 'bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative';
+            dialog.className = 'bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto';
             dialog.innerHTML = `
                 <button aria-label="Close" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" id="dialog-close">×</button>
                 <h3 class="text-2xl font-bold mb-2 text-gray-900">${specialist.name}</h3>

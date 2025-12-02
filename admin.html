@@ -113,12 +113,37 @@
         import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         async function loadConfig() {
-            const response = await fetch('config.json');
-            if (!response.ok) throw new Error('Unable to load configuration');
-            return response.json();
+            if (window.__APP_CONFIG__) {
+                return window.__APP_CONFIG__;
+            }
+
+            const candidates = ['config.runtime.json', 'config.json'];
+            for (const path of candidates) {
+                try {
+                    const response = await fetch(path, { cache: 'no-store' });
+                    if (response.ok) return response.json();
+                } catch (error) {
+                    console.warn(`Config fetch failed for ${path}`, error);
+                }
+            }
+
+            throw new Error('Runtime configuration is missing. Provide config.runtime.json or window.__APP_CONFIG__.');
         }
 
-        const { firebase: firebaseConfig } = await loadConfig();
+        const configResult = await loadConfig().catch((error) => {
+            console.error(error);
+            const errorEl = document.getElementById('login-error');
+            if (errorEl) {
+                errorEl.textContent = 'Admin app misconfigured: runtime Firebase settings missing.';
+            }
+            return null;
+        });
+
+        if (!configResult) {
+            throw new Error('Missing runtime configuration');
+        }
+
+        const { firebase: firebaseConfig } = configResult;
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
