@@ -1,0 +1,25 @@
+{
+  "name": "top-seo-specialists-functions",
+  "description": "Cloud Functions for Top SEO Specialists",
+  "main": "index.js",
+  "dependencies": {
+    "@google/generative-ai": "^0.15.0",
+    "firebase-admin": "^12.1.1",
+    "firebase-functions": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "private": true
+}
