@@ -69,27 +69,66 @@
             transform-style: preserve-3d;
             transition: transform 0.7s ease;
         }
-        .card-3d:hover .card-inner { transform: rotateY(180deg); }
+        .card-3d.active {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            width: 90vw;
+            max-width: 420px;
+            height: 380px;
+        }
+        .card-3d.flipped .card-inner {
+            transform: rotateY(180deg) scale(1.1);
+        }
         .card-face {
             position: absolute;
-            inset: 0;
+            width: 100%;
+            height: 100%;
             backface-visibility: hidden;
             border-radius: 1rem;
             display: flex;
             flex-direction: column;
-            height: 100%;
             overflow-y: auto;
         }
         .card-back { transform: rotateY(180deg); }
         @media (prefers-reduced-motion: reduce) {
             .card-inner, .modal-backdrop { transition: none !important; }
-            .card-3d:hover .card-inner { transform: none; }
-        }
-        @media (hover: none) {
-            .card-3d:hover .card-inner { transform: none; }
         }
         .sticky-controls { position: sticky; top: 0; z-index: 30; background: rgba(253,253,253,0.95); padding-top: 1rem; backdrop-filter: blur(6px); }
         #back-to-top { position: fixed; bottom: 24px; right: 24px; display: none; z-index: 40; }
+        .dark {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark .bg-white {
+            background-color: #2d3748;
+        }
+        .dark .text-gray-800 {
+            color: #e2e8f0;
+        }
+        .dark .text-gray-900 {
+            color: #f7fafc;
+        }
+        .dark .text-gray-600 {
+            color: #a0aec0;
+        }
+        .dark .border-gray-200 {
+            border-color: #4a5568;
+        }
+        .dark .bg-gray-50 {
+            background-color: #2d3748;
+        }
+        .dark .text-gray-500 {
+            color: #a0aec0;
+        }
+        .dark .border-gray-300 {
+            border-color: #4a5568;
+        }
+        .dark #specialtyChart {
+            color: #e2e8f0;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -98,23 +137,30 @@
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <header class="text-center mb-10">
-            <h1 id="main-title" class="text-4xl font-bold text-gray-900">Top SEO Specialists</h1>
-            <p class="mt-2 text-lg text-gray-600">An interactive dashboard exploring the expertise of the industry's leading professionals.</p>
-            <button id="contribute-btn" class="mt-4 px-6 py-2 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition">Contribute a Specialist</button>
+        <header class="bg-white rounded-2xl shadow-sm border border-gray-200 mb-12 overflow-hidden">
+            <div class="grid md:grid-cols-2 items-center">
+                <div class="p-6 md:p-10 text-center md:text-left">
+                    <h1 id="main-title" class="text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">Top SEO Specialists</h1>
+                    <p class="mt-4 text-lg text-gray-600">An interactive dashboard exploring the expertise of the industry's leading professionals.</p>
+                    <button id="contribute-btn" class="mt-6 px-8 py-3 bg-indigo-600 text-white font-semibold rounded-full hover:bg-indigo-700 transition-transform duration-300 transform hover:scale-105">Contribute a Specialist</button>
+                </div>
+                <div class="relative bg-gray-50 p-6 h-full flex flex-col justify-center">
+                    <h2 class="text-2xl font-semibold text-center mb-2 text-gray-800">Distribution of Expertise</h2>
+                    <p class="text-center text-gray-500 mb-4 text-sm">Click a segment to filter the list below.</p>
+                    <div class="chart-container" style="height: 300px; max-width: 300px; margin: auto;">
+                        <canvas id="specialtyChart"></canvas>
+                    </div>
+                    <div class="absolute top-4 right-4">
+                        <button id="dark-mode-toggle" class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 transition">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main>
-            <section id="dashboard" class="mb-12">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-                    <h2 class="text-2xl font-semibold text-center mb-4 text-gray-800">Distribution of Expertise</h2>
-                    <p class="text-center text-gray-500 mb-6">This chart illustrates the primary specialties among the top SEO experts. It updates in real-time as new specialists are added. Click a segment to filter the list below.</p>
-                    <div class="chart-container">
-                        <canvas id="specialtyChart"></canvas>
-                    </div>
-                </div>
-            </section>
-            
+
             <section id="specialists">
                 <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Explore the Specialists</h2>
                  <p class="text-center text-gray-500 mb-8 max-w-3xl mx-auto">Use the filters and search bar to navigate the community-curated list of specialists. You can search by name, role, or keywords from their contributions.</p>
@@ -170,6 +216,14 @@
                     <label for="contribution" class="block text-sm font-medium text-gray-700">Key Contribution / Focus</label>
                     <textarea id="contribution" name="contribution" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                 </div>
+                <div class="mb-4">
+                    <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
+                    <input type="url" id="website" name="website" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="mb-6">
+                    <label for="social" class="block text-sm font-medium text-gray-700">Social Media</label>
+                    <input type="url" id="social" name="social" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
                 <div class="mb-6">
                     <label for="category" class="block text-sm font-medium text-gray-700">Specialty Category</label>
                     <select id="category" name="category" required class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
@@ -192,6 +246,10 @@
         </div>
     </div>
 
+    <footer class="text-center mt-16 py-8 border-t">
+        <p class="text-gray-600">© 2024 Top SEO Specialists. All rights reserved.</p>
+        <p class="text-gray-600">Made with AI❤️ by <a href="https://kejsancoku.com/" target="_blank" rel="noopener" class="text-indigo-600 hover:underline">Kejsan Coku</a></p>
+    </footer>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -242,9 +300,9 @@
         let activeDialogTrigger = null;
 
         const initialSpecialistData = [
-            { name: 'Tom Winter', role: 'Founder, SEOwind', contribution: 'Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.', category: 'AI SEO' },
-            { name: 'Erin Balsa', role: 'Founder, Bland to Bold', contribution: 'Helps B2B startups create bold content. Creator of Bland to Bold framework.', category: 'Content SEO' },
-            { name: 'Matt Emgi', role: 'Founder, EMGI', contribution: 'Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles.', category: 'Link Building' },
+            { name: 'Tom Winter', role: 'Founder, SEOwind', contribution: 'Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.', category: 'AI SEO', website: 'https://seowind.io/', social: 'https://www.linkedin.com/in/tom-winter/', summary: 'Tom Winter is an experienced SaaS founder passionate about SEO and AI. With a decade of experience scaling SaaS companies globally, he has already grown a company from zero to customers in 100+ countries, leveraging his unique blend of development, marketing, and sales skills. He is the co-founder of SEOwind, a tool that helps create SEO content briefs in minutes rather than hours.' },
+            { name: 'Erin Balsa', role: 'Founder, Bland to Bold', contribution: 'Helps B2B startups create bold content. Creator of Bland to Bold framework.', category: 'Content SEO', website: 'https://www.blandtobold.co/', social: 'https://www.linkedin.com/in/erinbalsa/', summary: 'Erin Balsa is a content marketing strategist specializing in helping B2B SaaS companies develop sales-led inbound marketing strategies. She is the founder of Haus of Bold (now Bland to Bold), where she offers marketing advisory services. With over 13 years of experience, she has partnered with well-known brands like HubSpot, Drift, G2, and Zapier.' },
+            { name: 'Matt Emgi', role: 'Founder, EMGI', contribution: 'Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles.', category: 'Link Building', website: 'https://emgigroup.com/', summary: 'Matt Emgi is an experienced Link Builder and SEO Consultant who has worked with clients across many SaaS verticals - AI SaaS, Lead Gen SaaS, HR SaaS, and Cybersecurity SaaS. He is the founder and Head of Link Building at EMGI Group.' },
             { name: 'Mersudin Forbes', role: 'SEO Advisor', contribution: 'Advises agencies & startups on SEO. Renowned for his blunt, no-nonsense SEO advice and mentorship.', category: 'Technical SEO' },
             { name: 'Ivan Palii', role: 'Head of Product, Sitechecker', contribution: 'Creates popular, free Looker Studio templates for SEO reporting.', category: 'Technical SEO' },
             { name: 'Charles Floate', role: 'SEO Consultant', contribution: 'Known for grey-hat tactics and a large industry following. Dubbed “SEO Darth Vader”.', category: 'General SEO' },
@@ -359,7 +417,7 @@
             const specialistsCollection = collection(db, `/artifacts/${firebaseConfig.appId}/public/data/approved-specialists`);
             onSnapshot(specialistsCollection, (snapshot) => {
                 const newSpecialists = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
+
                 // Merge initial data with new data from Firestore, avoiding duplicates
                 const combined = [...initialSpecialistData];
                 newSpecialists.forEach(newSpec => {
@@ -446,11 +504,11 @@
                 specialtyChart.destroy();
             }
             const backgroundColors = [
-                '#4f46e5', '#6366f1', '#818cf8', '#a5b4fc', 
+                '#4f46e5', '#6366f1', '#818cf8', '#a5b4fc',
                 '#c7d2fe', '#60a5fa', '#38bdf8', '#0ea5e9',
                 '#f59e0b', '#fbbf24', '#facc15'
             ];
-            
+
             specialtyChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -488,7 +546,7 @@
                 }
             });
         }
-        
+
         function handleFiltering() {
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
             let filteredData = allSpecialists;
@@ -529,23 +587,24 @@
                 card.innerHTML = `
                     <div class="card-inner h-full">
                         <div class="card-face bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-300 flex flex-col">
-                            <a href="#${slug}" class="flex-grow" data-trigger="dialog">
+                            <div class="flex-grow">
                                 <h3 class="text-xl font-semibold text-gray-900">${specialist.name}</h3>
                                 <p class="text-indigo-600 font-medium mt-1 mb-3">${specialist.role}</p>
                                 <p class="text-gray-600 text-sm">${specialist.contribution}</p>
-                            </a>
+                            </div>
                             <div class="mt-4 pt-4 border-t border-gray-100">
                                 <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
                             </div>
                         </div>
-                        <div class="card-face card-back bg-indigo-50 p-6 rounded-xl shadow-inner border border-indigo-100 flex flex-col justify-between">
+                        <div class="card-face card-back bg-blue-50 p-6 rounded-xl shadow-inner border border-blue-100 flex flex-col justify-between">
                             <div>
-                                <p class="text-sm text-indigo-800 mb-4">Learn more about ${specialist.name} or connect directly.</p>
-                                <p class="text-sm text-indigo-900 font-semibold">Category: ${specialist.category}</p>
+                                <p class="text-sm text-blue-800 mb-4">${specialist.summary || `Learn more about ${specialist.name} or connect directly.`}</p>
+                                <p class="text-sm text-blue-900 font-semibold">Category: ${specialist.category}</p>
                             </div>
-                            <div class="flex gap-2 mt-4">
-                                <a href="${frontCta}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm">View Profile</a>
-                                <button class="px-4 py-2 bg-white border border-indigo-200 text-indigo-700 rounded-md text-sm" data-trigger="dialog">Open Card</button>
+                            <div class="flex flex-col gap-2 mt-4">
+                                ${specialist.website ? `<a href="${specialist.website}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm text-center">Website</a>` : ''}
+                                ${specialist.social ? `<a href="${specialist.social}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm text-center">Social</a>` : ''}
+                                <a href="${frontCta}" target="_blank" rel="noopener" class="px-4 py-2 bg-white border border-blue-200 text-blue-700 rounded-md text-sm text-center">View Profile</a>
                             </div>
                         </div>
                     </div>
@@ -557,16 +616,18 @@
         }
 
         function attachDialogTriggers() {
-            document.querySelectorAll('[data-trigger="dialog"]').forEach(el => {
-                el.onclick = (e) => {
+            document.querySelectorAll('.card-3d').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'A' || e.target.closest('a')) {
+                        return;
+                    }
                     e.preventDefault();
-                    const card = e.currentTarget.closest('.card-3d');
-                    const name = card?.dataset.name;
+                    const name = card.dataset.name;
                     const specialist = allSpecialists.find(s => s.name === name);
                     if (specialist) {
-                        openCardDialog(specialist, e.currentTarget);
+                        openCardDialog(card, specialist);
                     }
-                };
+                });
             });
         }
 
@@ -594,52 +655,35 @@
             observer.observe(sentinel);
         }
 
-        function openCardDialog(specialist, trigger) {
+        function openCardDialog(card, specialist) {
             const overlay = document.getElementById('dialog-overlay');
-            overlay.innerHTML = '';
-            const dialog = document.createElement('div');
-            dialog.setAttribute('role', 'dialog');
-            dialog.setAttribute('aria-modal', 'true');
-            dialog.className = 'bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto';
-            dialog.innerHTML = `
-                <button aria-label="Close" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" id="dialog-close">×</button>
-                <h3 class="text-2xl font-bold mb-2 text-gray-900">${specialist.name}</h3>
-                <p class="text-indigo-700 font-semibold mb-2">${specialist.role}</p>
-                <p class="text-gray-700 mb-4">${specialist.contribution}</p>
-                <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
-                <div class="mt-6 flex gap-3">
-                    <a href="https://www.google.com/search?q=${encodeURIComponent(specialist.name)}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md">View Profile</a>
-                    <a href="mailto:?subject=Connect%20with%20${encodeURIComponent(specialist.name)}" class="px-4 py-2 border border-gray-200 rounded-md text-gray-800">Reach Out</a>
-                </div>
-            `;
-            overlay.appendChild(dialog);
-            overlay.classList.add('active');
-            overlay.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-            activeDialogTrigger = trigger;
-
-            const closeDialog = () => {
-                overlay.classList.remove('active');
-                overlay.setAttribute('aria-hidden', 'true');
-                overlay.innerHTML = '';
-                document.body.style.overflow = '';
-                document.removeEventListener('keydown', escListener);
-                document.removeEventListener('focus', trapFocus, true);
-                if (activeDialogTrigger) activeDialogTrigger.focus();
-            };
-
-            const escListener = (e) => { if (e.key === 'Escape') closeDialog(); };
-            const trapFocus = (e) => {
-                if (!overlay.contains(e.target)) {
-                    dialog.focus();
+            if (card.classList.contains('active')) {
+                card.classList.toggle('flipped');
+            } else {
+                const activeCard = document.querySelector('.card-3d.active');
+                if (activeCard) {
+                    activeCard.classList.remove('active', 'flipped');
+                }
+                card.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            overlay.onclick = (e) => {
+                if (e.target === overlay) {
+                    closeCardDialog();
                 }
             };
-            document.addEventListener('keydown', escListener);
-            document.addEventListener('focus', trapFocus, true);
-            overlay.addEventListener('click', (e) => { if (e.target === overlay) closeDialog(); });
-            dialog.querySelector('#dialog-close').addEventListener('click', closeDialog);
-            dialog.tabIndex = -1;
-            dialog.focus();
+        }
+
+        function closeCardDialog() {
+            const activeCard = document.querySelector('.card-3d.active');
+            if (activeCard) {
+                activeCard.classList.remove('active', 'flipped');
+            }
+            const overlay = document.getElementById('dialog-overlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            overlay.onclick = null;
         }
 
         function updateSchemaMarkup(data) {
@@ -705,10 +749,12 @@
                 name: formData.get('name'),
                 role: formData.get('role'),
                 contribution: formData.get('contribution'),
+                website: formData.get('website'),
+                social: formData.get('social'),
                 category: formData.get('category'),
                 submittedAt: new Date()
             };
-            
+
             try {
                 const pendingCollection = collection(db, `/artifacts/${firebaseConfig.appId}/public/data/pending-specialists`);
                 await addDoc(pendingCollection, newSpecialist);
@@ -737,8 +783,22 @@
         window.addEventListener('scroll', () => {
             backToTop.style.display = window.scrollY > 400 ? 'inline-flex' : 'none';
         });
+
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+
         main();
     </script>
 </body>
 </html>
-
