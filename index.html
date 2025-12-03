@@ -73,10 +73,10 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1.1);
+            transform: translate(-50%, -50%) scale(1.05);
             z-index: 100;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
         }
         .card-3d.flipped .card-inner {
             transform: rotateY(180deg) scale(1.1);
@@ -215,6 +215,14 @@
                     <label for="contribution" class="block text-sm font-medium text-gray-700">Key Contribution / Focus</label>
                     <textarea id="contribution" name="contribution" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
                 </div>
+                <div class="mb-4">
+                    <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
+                    <input type="url" id="website" name="website" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="mb-6">
+                    <label for="social" class="block text-sm font-medium text-gray-700">Social Media</label>
+                    <input type="url" id="social" name="social" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
                 <div class="mb-6">
                     <label for="category" class="block text-sm font-medium text-gray-700">Specialty Category</label>
                     <select id="category" name="category" required class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
@@ -291,9 +299,9 @@
         let activeDialogTrigger = null;
 
         const initialSpecialistData = [
-            { name: 'Tom Winter', role: 'Founder, SEOwind', contribution: 'Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.', category: 'AI SEO', website: 'https://seowind.io/', social: 'https://www.linkedin.com/in/tom-winter/' },
-            { name: 'Erin Balsa', role: 'Founder, Bland to Bold', contribution: 'Helps B2B startups create bold content. Creator of Bland to Bold framework.', category: 'Content SEO', website: 'https://erinbalsa.com/', social: 'https://www.linkedin.com/in/erinbalsa/' },
-            { name: 'Matt Emgi', role: 'Founder, EMGI', contribution: 'Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles.', category: 'Link Building' },
+            { name: 'Tom Winter', role: 'Founder, SEOwind', contribution: 'Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.', category: 'AI SEO', website: 'https://seowind.io/', social: 'https://www.linkedin.com/in/tom-winter/', summary: 'Tom Winter is an experienced SaaS founder passionate about SEO and AI. With a decade of experience scaling SaaS companies globally, he has already grown a company from zero to customers in 100+ countries, leveraging his unique blend of development, marketing, and sales skills. He is the co-founder of SEOwind, a tool that helps create SEO content briefs in minutes rather than hours.' },
+            { name: 'Erin Balsa', role: 'Founder, Bland to Bold', contribution: 'Helps B2B startups create bold content. Creator of Bland to Bold framework.', category: 'Content SEO', website: 'https://www.blandtobold.co/', social: 'https://www.linkedin.com/in/erinbalsa/', summary: 'Erin Balsa is a content marketing strategist specializing in helping B2B SaaS companies develop sales-led inbound marketing strategies. She is the founder of Haus of Bold (now Bland to Bold), where she offers marketing advisory services. With over 13 years of experience, she has partnered with well-known brands like HubSpot, Drift, G2, and Zapier.' },
+            { name: 'Matt Emgi', role: 'Founder, EMGI', contribution: 'Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles.', category: 'Link Building', website: 'https://emgigroup.com/', summary: 'Matt Emgi is an experienced Link Builder and SEO Consultant who has worked with clients across many SaaS verticals - AI SaaS, Lead Gen SaaS, HR SaaS, and Cybersecurity SaaS. He is the founder and Head of Link Building at EMGI Group.' },
             { name: 'Mersudin Forbes', role: 'SEO Advisor', contribution: 'Advises agencies & startups on SEO. Renowned for his blunt, no-nonsense SEO advice and mentorship.', category: 'Technical SEO' },
             { name: 'Ivan Palii', role: 'Head of Product, Sitechecker', contribution: 'Creates popular, free Looker Studio templates for SEO reporting.', category: 'Technical SEO' },
             { name: 'Charles Floate', role: 'SEO Consultant', contribution: 'Known for grey-hat tactics and a large industry following. Dubbed “SEO Darth Vader”.', category: 'General SEO' },
@@ -587,15 +595,15 @@
                                 <span class="inline-block bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${specialist.category}</span>
                             </div>
                         </div>
-                        <div class="card-face card-back bg-indigo-50 p-6 rounded-xl shadow-inner border border-indigo-100 flex flex-col justify-between">
+                        <div class="card-face card-back bg-blue-50 p-6 rounded-xl shadow-inner border border-blue-100 flex flex-col justify-between">
                             <div>
-                                <p class="text-sm text-indigo-800 mb-4">Learn more about ${specialist.name} or connect directly.</p>
-                                <p class="text-sm text-indigo-900 font-semibold">Category: ${specialist.category}</p>
+                                <p class="text-sm text-blue-800 mb-4">${specialist.summary || `Learn more about ${specialist.name} or connect directly.`}</p>
+                                <p class="text-sm text-blue-900 font-semibold">Category: ${specialist.category}</p>
                             </div>
                             <div class="flex flex-col gap-2 mt-4">
-                                ${specialist.website ? `<a href="${specialist.website}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm text-center">Website</a>` : ''}
-                                ${specialist.social ? `<a href="${specialist.social}" target="_blank" rel="noopener" class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm text-center">Social</a>` : ''}
-                                <a href="${frontCta}" target="_blank" rel="noopener" class="px-4 py-2 bg-white border border-indigo-200 text-indigo-700 rounded-md text-sm text-center">View Profile</a>
+                                ${specialist.website ? `<a href="${specialist.website}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm text-center">Website</a>` : ''}
+                                ${specialist.social ? `<a href="${specialist.social}" target="_blank" rel="noopener" class="px-4 py-2 bg-blue-600 text-white rounded-md text-sm text-center">Social</a>` : ''}
+                                <a href="${frontCta}" target="_blank" rel="noopener" class="px-4 py-2 bg-white border border-blue-200 text-blue-700 rounded-md text-sm text-center">View Profile</a>
                             </div>
                         </div>
                     </div>
@@ -740,6 +748,8 @@
                 name: formData.get('name'),
                 role: formData.get('role'),
                 contribution: formData.get('contribution'),
+                website: formData.get('website'),
+                social: formData.get('social'),
                 category: formData.get('category'),
                 submittedAt: new Date()
             };
