@@ -73,22 +73,23 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(1.05);
+            transform: translate(-50%, -50%);
             z-index: 100;
-            width: 90%;
-            max-width: 400px;
+            width: 90vw;
+            max-width: 420px;
+            height: 380px;
         }
         .card-3d.flipped .card-inner {
             transform: rotateY(180deg) scale(1.1);
         }
         .card-face {
             position: absolute;
-            inset: 0;
+            width: 100%;
+            height: 100%;
             backface-visibility: hidden;
             border-radius: 1rem;
             display: flex;
             flex-direction: column;
-            height: 100%;
             overflow-y: auto;
         }
         .card-back { transform: rotateY(180deg); }
