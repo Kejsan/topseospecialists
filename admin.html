@@ -111,6 +111,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-functions.js";
 
         async function loadConfig() {
             if (window.__APP_CONFIG__) {
@@ -148,6 +149,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        const functions = getFunctions(app);
+        const enrichProfile = httpsCallable(functions, 'enrichProfile');
         // setLogLevel('debug');
 
         const pendingCollectionPath = `/artifacts/${firebaseConfig.appId}/public/data/pending-specialists`;
@@ -249,11 +252,13 @@
                     <button data-id="${data.id}" class="reject-btn px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-md hover:bg-red-700">Reject</button>
                     <button data-id="${data.id}" class="edit-btn px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700">Edit</button>
                     <button data-id="${data.id}" class="approve-btn px-3 py-1 bg-green-600 text-white text-sm font-semibold rounded-md hover:bg-green-700">Approve</button>
+                    <button data-id="${data.id}" class="enrich-btn px-3 py-1 bg-purple-600 text-white text-sm font-semibold rounded-md hover:bg-purple-700">Enrich with AI</button>
                 `;
             } else { // live
                 buttonsHtml = `
                     <button data-id="${data.id}" class="delete-live-btn px-3 py-1 bg-red-600 text-white text-sm font-semibold rounded-md hover:bg-red-700">Delete</button>
                     <button data-id="${data.id}" class="edit-live-btn px-3 py-1 bg-blue-600 text-white text-sm font-semibold rounded-md hover:bg-blue-700">Edit</button>
+                    <button data-id="${data.id}" class="enrich-btn px-3 py-1 bg-purple-600 text-white text-sm font-semibold rounded-md hover:bg-purple-700">Enrich with AI</button>
                 `;
             }
 
@@ -282,6 +287,7 @@
             document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', () => openEditModal(btn.dataset.id, 'pending')));
             document.querySelectorAll('.edit-live-btn').forEach(btn => btn.addEventListener('click', () => openEditModal(btn.dataset.id, 'live')));
             document.querySelectorAll('.delete-live-btn').forEach(btn => btn.addEventListener('click', () => deleteLiveProfile(btn.dataset.id)));
+            document.querySelectorAll('.enrich-btn').forEach(btn => btn.addEventListener('click', (e) => handleEnrich(e, btn.dataset.id)));
         }
 
         async function approveData(idToDelete, dataToApprove) {
@@ -304,6 +310,42 @@
                 try {
                     await deleteDoc(doc(db, approvedCollectionPath, id));
                 } catch (error) { console.error("Error deleting live profile: ", error); }
+            }
+        }
+
+        async function handleEnrich(event, id) {
+            const button = event.currentTarget;
+            button.disabled = true;
+            button.textContent = 'Enriching...';
+
+            const specialistData = liveProfiles.find(p => p.id === id) || currentSubmissions.find(s => s.id === id);
+            if (!specialistData) {
+                console.error("Specialist not found for enrichment.");
+                button.disabled = false;
+                button.textContent = 'Enrich with AI';
+                return;
+            }
+
+            try {
+                const result = await enrichProfile({ specialistName: specialistData.name, specialistRole: specialistData.role });
+                const { website, social, summary } = result.data;
+
+                const source = liveProfiles.some(p => p.id === id) ? 'live' : 'pending';
+                const collectionPath = source === 'live' ? approvedCollectionPath : pendingCollectionPath;
+                const docRef = doc(db, collectionPath, id);
+
+                await updateDoc(docRef, {
+                    website: website || '',
+                    social: social || '',
+                    summary: summary || ''
+                });
+
+            } catch (error) {
+                console.error('Error enriching profile:', error);
+                alert('An error occurred while enriching the profile. Please check the console.');
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Enrich with AI';
             }
         }
 
