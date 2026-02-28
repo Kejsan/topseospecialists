@@ -23,6 +23,7 @@ export const SPECIALTY_CATEGORIES: SpecialtyCategory[] = [
 
 export interface Specialist {
   id?: string; // Firestore document ID
+  slug?: string;
   name: string;
   role: string;
   contribution: string;
@@ -31,6 +32,8 @@ export interface Specialist {
   social?: string;
   summary?: string;
   submittedAt?: any; // Firestore Timestamp
+  createdAt?: any;
+  updatedAt?: any;
   status?: 'pending' | 'approved';
 }
 

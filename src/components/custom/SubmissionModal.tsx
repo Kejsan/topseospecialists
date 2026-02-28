@@ -44,7 +44,7 @@ export function SubmissionModal() {
     setIsSubmitting(true);
     try {
       const { db, config } = await initFirebase();
-      const pendingCollection = collection(db, `/artifacts/${config.appId}/public/data/pending-specialists`);
+      const pendingCollection = collection(db, "pending-specialists");
       
       await addDoc(pendingCollection, {
         ...formData,

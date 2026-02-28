@@ -35,7 +35,7 @@ export function BulkImportModal() {
 
     try {
       const { db, config } = await initFirebase();
-      const pendingCollection = collection(db, `/artifacts/${config.appId}/public/data/pending-specialists`);
+      const pendingCollection = collection(db, "pending-specialists");
       
       for (const line of lines) {
         // Simple CSV parsing: split by comma, handling potential quotes if needed, but keeping it simple for now

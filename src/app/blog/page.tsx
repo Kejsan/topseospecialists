@@ -19,7 +19,7 @@ export default function BlogPage() {
     const loadPosts = async () => {
       try {
         const { db, config } = await initFirebase();
-        const postsRef = collection(db, `/artifacts/${config.appId}/public/data/blog-posts`);
+        const postsRef = collection(db, "blog-posts");
         const q = query(postsRef, where("status", "==", "published"), orderBy("publishedAt", "desc"));
 
         unsubscribe = onSnapshot(q, (snapshot) => {

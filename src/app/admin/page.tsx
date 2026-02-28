@@ -37,15 +37,15 @@ export default function AdminDashboard() {
     const loadData = async () => {
       try {
         const { db, config } = await initFirebase();
-        const baseCollectionPath = `/artifacts/${config.appId}/public/data/`;
+        // const baseCollectionPath = `/artifacts/${config.appId}/public/data/`; // Removed nested path
 
-        const qPending = query(collection(db, `${baseCollectionPath}pending-specialists`), orderBy("submittedAt", "desc"));
+        const qPending = query(collection(db, "pending-specialists"), orderBy("submittedAt", "desc"));
         unsubscribePending = onSnapshot(qPending, (snapshot) => {
           const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Specialist));
           setPending(data);
         });
 
-        const qApproved = query(collection(db, `${baseCollectionPath}specialists`), orderBy("createdAt", "desc"));
+        const qApproved = query(collection(db, "specialists"), orderBy("createdAt", "desc"));
         unsubscribeApproved = onSnapshot(qApproved, (snapshot) => {
           const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Specialist));
           setApproved(data);
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
         });
 
         // Listen to blog posts
-        const qBlog = query(collection(db, `${baseCollectionPath}blog-posts`), orderBy("createdAt", "desc"));
+        const qBlog = query(collection(db, "blog-posts"), orderBy("createdAt", "desc"));
         unsubscribeBlog = onSnapshot(qBlog, (snapshot) => {
           const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost));
           setBlogPosts(data);
@@ -85,11 +85,10 @@ export default function AdminDashboard() {
     if (!specialist.id) return;
     setIsProcessing(specialist.id);
     try {
-      const { db, config } = await initFirebase();
-      const base = `/artifacts/${config.appId}/public/data/`;
+      const { db } = await initFirebase();
       const { id, submittedAt, status, ...data } = specialist as any;
-      await setDoc(doc(db, `${base}specialists`, id), { ...data, createdAt: new Date(), updatedAt: new Date() });
-      await deleteDoc(doc(db, `${base}pending-specialists`, id));
+      await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date() });
+      await deleteDoc(doc(db, "pending-specialists", id));
     } catch (error) {
       console.error("Failed to approve:", error);
       alert("Failed to approve specialist.");
@@ -102,9 +101,9 @@ export default function AdminDashboard() {
     if (!confirm("Are you sure you want to delete this profile?")) return;
     setIsProcessing(id);
     try {
-      const { db, config } = await initFirebase();
+      const { db } = await initFirebase();
       const col = isPending ? "pending-specialists" : "specialists";
-      await deleteDoc(doc(db, `/artifacts/${config.appId}/public/data/${col}`, id));
+      await deleteDoc(doc(db, col, id));
     } catch (error) {
       console.error("Failed to reject/delete:", error);
     } finally {
@@ -166,14 +165,13 @@ export default function AdminDashboard() {
     if (!confirm(`Approve ${selectedPending.size} specialist(s)?`)) return;
     setIsBulkProcessing(true);
     try {
-      const { db, config } = await initFirebase();
-      const base = `/artifacts/${config.appId}/public/data/`;
+      const { db } = await initFirebase();
       const toApprove = pending.filter(s => selectedPending.has(s.id!));
 
       for (const specialist of toApprove) {
         const { id, submittedAt, status, ...data } = specialist as any;
-        await setDoc(doc(db, `${base}specialists`, id), { ...data, createdAt: new Date(), updatedAt: new Date() });
-        await deleteDoc(doc(db, `${base}pending-specialists`, id));
+        await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date() });
+        await deleteDoc(doc(db, "pending-specialists", id));
       }
       setSelectedPending(new Set());
     } catch (error) {
@@ -190,10 +188,10 @@ export default function AdminDashboard() {
     if (!confirm(`Delete ${selected.size} specialist(s)?`)) return;
     setIsBulkProcessing(true);
     try {
-      const { db, config } = await initFirebase();
+      const { db } = await initFirebase();
       const col = isPending ? "pending-specialists" : "specialists";
       for (const id of selected) {
-        await deleteDoc(doc(db, `/artifacts/${config.appId}/public/data/${col}`, id));
+        await deleteDoc(doc(db, col, id));
       }
       if (isPending) setSelectedPending(new Set());
       else setSelectedApproved(new Set());
@@ -279,9 +277,9 @@ export default function AdminDashboard() {
     if (!post.id) return;
     setIsProcessing(`blog-${post.id}`);
     try {
-      const { db, config } = await initFirebase();
+      const { db } = await initFirebase();
       const newStatus = post.status === "published" ? "draft" : "published";
-      await updateDoc(doc(db, `/artifacts/${config.appId}/public/data/blog-posts`, post.id), {
+      await updateDoc(doc(db, "blog-posts", post.id), {
         status: newStatus,
         updatedAt: new Date(),
         ...(newStatus === "published" ? { publishedAt: new Date() } : {}),
@@ -297,8 +295,8 @@ export default function AdminDashboard() {
     if (!confirm("Delete this blog post?")) return;
     setIsProcessing(`blog-del-${id}`);
     try {
-      const { db, config } = await initFirebase();
-      await deleteDoc(doc(db, `/artifacts/${config.appId}/public/data/blog-posts`, id));
+      const { db } = await initFirebase();
+      await deleteDoc(doc(db, "blog-posts", id));
     } catch (error) {
       console.error("Failed to delete blog post:", error);
     } finally {

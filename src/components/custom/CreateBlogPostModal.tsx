@@ -40,7 +40,7 @@ export function CreateBlogPostModal() {
     setIsSubmitting(true);
     try {
       const { db, config } = await initFirebase();
-      const postsCollection = collection(db, `/artifacts/${config.appId}/public/data/blog-posts`);
+      const postsCollection = collection(db, "blog-posts");
 
       const post: Omit<BlogPost, "id"> = {
         title: formData.title,

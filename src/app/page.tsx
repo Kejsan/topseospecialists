@@ -1,5 +1,5 @@
 import { SpecialistDirectory } from "@/components/custom/SpecialistDirectory";
-import { initialSpecialistData } from "@/lib/data";
+import { getApprovedSpecialists } from "@/lib/firebase";
 
 const BASE_URL = "https://topseospecialists.com";
 
@@ -8,22 +8,23 @@ function slugify(name: string): string {
 }
 
 // ItemList + FAQPage JSON-LD
-function HomeJsonLd() {
+function HomeJsonLd({ specialists }: { specialists: any[] }) {
   const itemList = {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Top SEO Specialists Directory",
     description:
       "A curated list of the world's top SEO specialists and consultants.",
-    numberOfItems: initialSpecialistData.length,
-    itemListElement: initialSpecialistData.map((s, i) => ({
+    numberOfItems: specialists.length,
+    itemListElement: specialists.map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,
       name: s.name,
-      url: `${BASE_URL}/specialist/${slugify(s.name)}`,
+      url: `${BASE_URL}/specialist/${s.slug || slugify(s.name)}`,
     })),
   };
 
+  // FAQ remains the same...
   const faq = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -77,10 +78,12 @@ function HomeJsonLd() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const specialists = await getApprovedSpecialists();
+
   return (
     <>
-      <HomeJsonLd />
+      <HomeJsonLd specialists={specialists} />
       <div className="container mx-auto px-4 md:px-8 py-12 lg:py-16 space-y-12 max-w-7xl">
         <section className="text-center space-y-6 max-w-4xl mx-auto flex flex-col items-center pb-8 border-b border-border/40">
           <span className="px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary bg-primary/10 rounded-full">
@@ -90,13 +93,13 @@ export default function Home() {
             Discover the world&apos;s top SEO minds.
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground text-balance max-w-2xl leading-relaxed">
-            A definitive, community-curated directory of {initialSpecialistData.length}+ elite Search Engine
+            A definitive, community-curated directory of {specialists.length}+ elite Search Engine
             Optimization specialists. Find your next hire, mentor, or collaborator.
           </p>
         </section>
 
         <section>
-          <SpecialistDirectory initialData={initialSpecialistData} />
+          <SpecialistDirectory initialData={specialists} />
         </section>
 
         {/* FAQ Section for SEO */}

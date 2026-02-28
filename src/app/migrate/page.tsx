@@ -23,7 +23,7 @@ export default function MigratePage() {
 
     try {
       const { db, config } = await initFirebase();
-      const specialistsRef = collection(db, `/artifacts/${config.appId}/public/data/specialists`);
+      const specialistsRef = collection(db, "specialists");
       
       addLog(`Found ${initialSpecialistData.length} specialists. Targeting collection: ${specialistsRef.path}`);
 

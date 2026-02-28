@@ -1,4 +1,4 @@
-import { initialSpecialistData } from "@/lib/data";
+import { getApprovedSpecialists, getSpecialistBySlug } from "@/lib/firebase";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -6,25 +6,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, Globe, Linkedin, Briefcase, Tag } from "lucide-react";
 import type { Metadata } from "next";
+import { Specialist } from "@/types/models";
 
 const BASE_URL = "https://topseospecialists.com";
 
-function slugify(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-function findSpecialist(slug: string) {
-  return initialSpecialistData.find((s) => slugify(s.name) === slug);
-}
-
-// Generate static params for all specialists
-export function generateStaticParams() {
-  return initialSpecialistData.map((s) => ({ slug: slugify(s.name) }));
+// Generate static params for all specialists fetching from DB
+export async function generateStaticParams() {
+  const specialists = await getApprovedSpecialists();
+  return specialists.map((s) => ({ slug: s.slug }));
 }
 
 // Generate metadata for each specialist page
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const specialist = findSpecialist(params.slug);
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const specialist = await getSpecialistBySlug(params.slug);
   if (!specialist) return {};
 
   const title = `${specialist.name} — ${specialist.role}`;
@@ -50,10 +44,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 }
 
 // Person JSON-LD
-function PersonJsonLd({ name, role, contribution, summary, website, social, category }: {
-  name: string; role: string; contribution: string; summary?: string;
-  website?: string; social?: string; category: string;
-}) {
+function PersonJsonLd({ name, role, contribution, summary, website, social, category, slug }: Specialist) {
   const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -61,7 +52,7 @@ function PersonJsonLd({ name, role, contribution, summary, website, social, cate
     jobTitle: role,
     description: summary || contribution,
     knowsAbout: [category, "Search Engine Optimization", "SEO"],
-    url: `${BASE_URL}/specialist/${slugify(name)}`,
+    url: `${BASE_URL}/specialist/${slug}`,
   };
   if (website) jsonLd.url = website;
   if (social) jsonLd.sameAs = [social];
@@ -75,17 +66,18 @@ function PersonJsonLd({ name, role, contribution, summary, website, social, cate
 }
 
 // Find related specialists (same category, excluding self)
-function getRelated(category: string, name: string) {
-  return initialSpecialistData
+async function getRelated(category: string, name: string) {
+  const all = await getApprovedSpecialists();
+  return all
     .filter((s) => s.category === category && s.name !== name)
     .slice(0, 4);
 }
 
-export default function SpecialistProfilePage({ params }: { params: { slug: string } }) {
-  const specialist = findSpecialist(params.slug);
+export default async function SpecialistProfilePage({ params }: { params: { slug: string } }) {
+  const specialist = await getSpecialistBySlug(params.slug);
   if (!specialist) return notFound();
 
-  const related = getRelated(specialist.category, specialist.name);
+  const related = await getRelated(specialist.category, specialist.name);
 
   return (
     <>
@@ -158,7 +150,7 @@ export default function SpecialistProfilePage({ params }: { params: { slug: stri
             <h2 className="text-xl font-semibold">More {specialist.category} Specialists</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {related.map((r) => (
-                <Link key={r.name} href={`/specialist/${slugify(r.name)}`} className="group">
+                <Link key={r.name} href={`/specialist/${r.slug}`} className="group">
                   <Card className="h-full transition-all hover:shadow-md hover:-translate-y-0.5 group-hover:border-primary/30">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-base group-hover:text-primary transition-colors">{r.name}</CardTitle>

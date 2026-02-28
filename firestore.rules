@@ -1,8 +1,27 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Specialists: Publicly readable, admin-only write
+    match /specialists/{specialistId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Pending Specialists: Publicly creatable, admin-only read/update/delete
+    match /pending-specialists/{pendingId} {
+      allow create: if true;
+      allow get, list, update, delete: if isAdmin();
+    }
+
+    // Blog Posts: Publicly readable if published, admin-only write
+    match /blog-posts/{postId} {
+      allow read: if true; // Or restrict to published: if resource.data.status == 'published' || isAdmin();
+      allow write: if isAdmin();
     }
   }
 }

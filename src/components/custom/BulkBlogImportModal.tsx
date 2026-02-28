@@ -53,7 +53,7 @@ export function BulkBlogImportModal() {
 
     try {
       const { db, config } = await initFirebase();
-      const postsCollection = collection(db, `/artifacts/${config.appId}/public/data/blog-posts`);
+      const postsCollection = collection(db, "blog-posts");
 
       for (const post of posts) {
         if (!post.title) { failedCount++; continue; }
