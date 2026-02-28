@@ -1,0 +1,6 @@
+src/app/page.tsx(20,30): error TS2322: Type 'Omit<Specialist, "id" | "status">[]' is not assignable to type 'Specialist[]'.
+  Type 'Omit<Specialist, "id" | "status">' is missing the following properties from type 'Specialist': id, status
+src/components/custom/SpecialistDirectory.tsx(20,61): error TS2322: Type 'unknown' is not assignable to type 'SpecialtyCategory | "All"'.
+src/components/custom/SpecialistDirectory.tsx(20,78): error TS2693: 'SpecialtyCategory' only refers to a type, but is being used as a value here.
+src/lib/firebase.ts(12,14): error TS2339: Property '__APP_CONFIG__' does not exist on type 'Window & typeof globalThis'.
+src/lib/firebase.ts(13,19): error TS2339: Property '__APP_CONFIG__' does not exist on type 'Window & typeof globalThis'.
