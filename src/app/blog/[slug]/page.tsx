@@ -21,6 +21,7 @@ export default function BlogPostPage() {
       try {
         const { db, config } = await initFirebase();
         const postsRef = collection(db, "blog-posts");
+        if (!slug) return;
         const q = query(postsRef, where("slug", "==", slug), where("status", "==", "published"));
         const snapshot = await getDocs(q);
 

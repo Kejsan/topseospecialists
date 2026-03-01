@@ -36,6 +36,7 @@ export async function getApprovedSpecialists(): Promise<Specialist[]> {
 }
 
 export async function getSpecialistBySlug(slug: string): Promise<Specialist | null> {
+  if (!slug) return null; // Guard against undefined/empty slug
   const q = query(collection(db, "specialists"), where("slug", "==", slug));
   const snapshot = await getDocs(q);
   if (snapshot.empty) return null;

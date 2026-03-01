@@ -17,13 +17,14 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for each specialist page
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const specialist = await getSpecialistBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const specialist = await getSpecialistBySlug(slug);
   if (!specialist) return {};
 
   const title = `${specialist.name} — ${specialist.role}`;
   const description = specialist.summary || specialist.contribution;
-  const url = `${BASE_URL}/specialist/${params.slug}`;
+  const url = `${BASE_URL}/specialist/${slug}`;
 
   return {
     title,
@@ -73,8 +74,9 @@ async function getRelated(category: string, name: string) {
     .slice(0, 4);
 }
 
-export default async function SpecialistProfilePage({ params }: { params: { slug: string } }) {
-  const specialist = await getSpecialistBySlug(params.slug);
+export default async function SpecialistProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const specialist = await getSpecialistBySlug(slug);
   if (!specialist) return notFound();
 
   const related = await getRelated(specialist.category, specialist.name);
