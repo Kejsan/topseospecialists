@@ -1,7 +1,7 @@
 import { SpecialistDirectory } from "@/components/custom/SpecialistDirectory";
 import { getApprovedSpecialists } from "@/lib/firebase";
 
-const BASE_URL = "https://topseospecialists.com";
+const BASE_URL = "https://topseospecialists.netlify.app";
 
 function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");

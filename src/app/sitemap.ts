@@ -1,28 +1,56 @@
 import type { MetadataRoute } from "next";
-import { initialSpecialistData } from "@/lib/data";
+import { initFirebase } from "@/lib/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-const BASE_URL = "https://topseospecialists.com";
+const BASE_URL = "https://topseospecialists.netlify.app";
 
-function slugify(name: string): string {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-
+  
   // Static pages
-  const staticPages: MetadataRoute.Sitemap = [
+  const routes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
     { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: "daily", priority: 0.8 },
   ];
 
-  // Specialist profile pages
-  const specialistPages: MetadataRoute.Sitemap = initialSpecialistData.map((s) => ({
-    url: `${BASE_URL}/specialist/${slugify(s.name)}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  try {
+    const { db } = await initFirebase();
 
-  return [...staticPages, ...specialistPages];
+    // Specialist profile pages
+    const specialistsRef = collection(db, "specialists");
+    const specialistsSnapshot = await getDocs(specialistsRef);
+    
+    specialistsSnapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.slug) {
+        routes.push({
+          url: `${BASE_URL}/specialist/${data.slug}`,
+          lastModified: data.updatedAt?.toDate() || now,
+          changeFrequency: "monthly",
+          priority: 0.7,
+        });
+      }
+    });
+
+    // Blog post pages
+    const blogRef = collection(db, "blog-posts");
+    const blogQuery = query(blogRef, where("status", "==", "published"));
+    const blogSnapshot = await getDocs(blogQuery);
+    
+    blogSnapshot.forEach((doc) => {
+      const data = doc.data();
+      if (data.slug) {
+        routes.push({
+          url: `${BASE_URL}/blog/${data.slug}`,
+          lastModified: data.updatedAt?.toDate() || now,
+          changeFrequency: "weekly",
+          priority: 0.6,
+        });
+      }
+    });
+  } catch (error) {
+    console.error("Error generating sitemap:", error);
+  }
+
+  return routes;
 }

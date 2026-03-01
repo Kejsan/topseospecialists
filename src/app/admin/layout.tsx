@@ -1,4 +1,12 @@
 import { ProtectedRoute } from "@/components/custom/ProtectedRoute";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function AdminLayout({
   children,

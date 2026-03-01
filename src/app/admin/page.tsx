@@ -6,7 +6,7 @@ import { collection, query, orderBy, onSnapshot, doc, deleteDoc, setDoc, updateD
 import { httpsCallable } from "firebase/functions";
 import { useAuth } from "@/context/AuthContext";
 import { signOut } from "firebase/auth";
-import { Specialist, BlogPost } from "@/types/models";
+import { Specialist, SpecialtyCategory, SPECIALTY_CATEGORIES, BlogPost } from "@/types/models";
 // UI Components
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,6 +18,12 @@ import { BulkImportModal } from "@/components/custom/BulkImportModal";
 import { CreateBlogPostModal } from "@/components/custom/CreateBlogPostModal";
 import { BulkBlogImportModal } from "@/components/custom/BulkBlogImportModal";
 
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Edit, Pencil, Undo2 } from "lucide-react";
+
 export default function AdminDashboard() {
   const { user } = useAuth();
   const [pending, setPending] = useState<Specialist[]>([]);
@@ -28,6 +34,10 @@ export default function AdminDashboard() {
   const [selectedApproved, setSelectedApproved] = useState<Set<string>>(new Set());
   const [isBulkProcessing, setIsBulkProcessing] = useState(false);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  
+  // Edit State
+  const [editingSpecialist, setEditingSpecialist] = useState<Specialist | null>(null);
+  const [editForm, setEditForm] = useState<Partial<Specialist>>({});
 
   useEffect(() => {
     let unsubscribePending: () => void;
@@ -36,9 +46,7 @@ export default function AdminDashboard() {
 
     const loadData = async () => {
       try {
-        const { db, config } = await initFirebase();
-        // const baseCollectionPath = `/artifacts/${config.appId}/public/data/`; // Removed nested path
-
+        const { db } = await initFirebase();
         const qPending = query(collection(db, "pending-specialists"), orderBy("submittedAt", "desc"));
         unsubscribePending = onSnapshot(qPending, (snapshot) => {
           const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Specialist));
@@ -52,7 +60,6 @@ export default function AdminDashboard() {
           setLoading(false);
         });
 
-        // Listen to blog posts
         const qBlog = query(collection(db, "blog-posts"), orderBy("createdAt", "desc"));
         unsubscribeBlog = onSnapshot(qBlog, (snapshot) => {
           const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as BlogPost));
@@ -79,19 +86,43 @@ export default function AdminDashboard() {
     await signOut(auth);
   };
 
-  // ── Single Actions ──
+  // ── Specialist Actions ──
 
   const approveSpecialist = async (specialist: Specialist) => {
     if (!specialist.id) return;
     setIsProcessing(specialist.id);
     try {
       const { db } = await initFirebase();
-      const { id, submittedAt, status, ...data } = specialist as any;
-      await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date() });
+      const { id, submittedAt, ...data } = specialist as any;
+      await setDoc(doc(db, "specialists", id), { 
+        ...data, 
+        createdAt: specialist.createdAt || new Date(), 
+        updatedAt: new Date() 
+      });
       await deleteDoc(doc(db, "pending-specialists", id));
     } catch (error) {
       console.error("Failed to approve:", error);
       alert("Failed to approve specialist.");
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
+  const unpublishSpecialist = async (specialist: Specialist) => {
+    if (!specialist.id) return;
+    if (!confirm("Move this profile back to drafts? It will be removed from the public list.")) return;
+    setIsProcessing(specialist.id);
+    try {
+      const { db } = await initFirebase();
+      const { id, createdAt, updatedAt, ...data } = specialist as any;
+      await setDoc(doc(db, "pending-specialists", id), { 
+        ...data, 
+        submittedAt: new Date() 
+      });
+      await deleteDoc(doc(db, "specialists", id));
+    } catch (error) {
+      console.error("Failed to unpublish:", error);
+      alert("Failed to unpublish.");
     } finally {
       setIsProcessing(null);
     }
@@ -111,13 +142,42 @@ export default function AdminDashboard() {
     }
   };
 
+  const openEditModal = (specialist: Specialist) => {
+    setEditingSpecialist(specialist);
+    setEditForm({ ...specialist });
+  };
+
+  const saveEdit = async () => {
+    if (!editingSpecialist?.id) return;
+    setIsProcessing(`save-${editingSpecialist.id}`);
+    try {
+      const { db } = await initFirebase();
+      const isPending = pending.some(s => s.id === editingSpecialist.id);
+      const col = isPending ? "pending-specialists" : "specialists";
+      
+      const updatedData = {
+        ...editForm,
+        updatedAt: new Date()
+      };
+      delete (updatedData as any).id;
+
+      await updateDoc(doc(db, col, editingSpecialist.id), updatedData);
+      setEditingSpecialist(null);
+      alert("Changes saved!");
+    } catch (error) {
+      console.error("Failed to save:", error);
+      alert("Failed to save changes.");
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
   const enrichProfile = async (id: string) => {
     setIsProcessing(`enrich-${id}`);
     try {
       const { functions, config } = await initFirebase();
       const enrichSpecialist = httpsCallable(functions, "enrichSpecialist");
       await enrichSpecialist({ appId: config.appId, specialistId: id });
-      alert("Profile enriched successfully!");
     } catch (error) {
       console.error("Failed to enrich:", error);
       alert("Failed to enrich profile.");
@@ -169,7 +229,7 @@ export default function AdminDashboard() {
       const toApprove = pending.filter(s => selectedPending.has(s.id!));
 
       for (const specialist of toApprove) {
-        const { id, submittedAt, status, ...data } = specialist as any;
+        const { id, submittedAt, ...data } = specialist as any;
         await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date() });
         await deleteDoc(doc(db, "pending-specialists", id));
       }
@@ -233,9 +293,14 @@ export default function AdminDashboard() {
                 <CardDescription className="mt-1">{spec.role}</CardDescription>
               </div>
             </div>
-            <Badge variant={isPending ? "secondary" : "default"}>
-              {spec.category}
-            </Badge>
+            <div className="flex flex-col items-end gap-1">
+              <Badge variant={isPending ? "secondary" : "default"}>
+                {spec.category}
+              </Badge>
+              <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => openEditModal(spec)}>
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="pb-4">
@@ -260,7 +325,11 @@ export default function AdminDashboard() {
                   {isProcessing === `enrich-${spec.id}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4 mr-1 text-yellow-500" />}
                   AI Enrich
                 </Button>
-                <Button size="sm" variant="destructive" onClick={() => rejectSpecialist(spec.id!, false)} disabled={!!isProcessing || isBulkProcessing}>
+                <Button size="sm" variant="outline" onClick={() => unpublishSpecialist(spec)} disabled={!!isProcessing || isBulkProcessing}>
+                   <Undo2 className="h-4 w-4 mr-1" />
+                   Unpublish
+                </Button>
+                <Button size="sm" variant="destructive" onClick={() => rejectSpecialist(spec.id!, false)} disabled={!!isProcessing || isBulkProcessing} className="ml-auto">
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </>
@@ -339,6 +408,58 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-6">
+      {/* Edit Specialist Modal */}
+      <Dialog open={!!editingSpecialist} onOpenChange={(open) => !open && setEditingSpecialist(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Edit Profile: {editingSpecialist?.name}</DialogTitle>
+            <DialogDescription>Modify specialist information before or after approval.</DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input id="name" value={editForm.name || ""} onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="role">Role / Job Title</Label>
+                <Input id="role" value={editForm.role || ""} onChange={e => setEditForm(prev => ({ ...prev, role: e.target.value }))} />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="category">Specialty Category</Label>
+              <select id="category" className="w-full border rounded-md p-2 bg-background" value={editForm.category || ""} 
+                onChange={e => setEditForm(prev => ({ ...prev, category: e.target.value as SpecialtyCategory }))}>
+                {SPECIALTY_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="slug">Slug (URL path)</Label>
+              <Input id="slug" value={editForm.slug || ""} onChange={e => setEditForm(prev => ({ ...prev, slug: e.target.value }))} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="summary">Short Summary</Label>
+              <Textarea id="summary" value={editForm.summary || ""} onChange={e => setEditForm(prev => ({ ...prev, summary: e.target.value }))} placeholder="One sentence summary..." />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="contribution">Detailed Bio / Contribution</Label>
+              <Textarea id="contribution" className="min-h-[150px]" value={editForm.contribution || ""} onChange={e => setEditForm(prev => ({ ...prev, contribution: e.target.value }))} />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="avatar">Avatar URL</Label>
+              <Input id="avatar" value={editForm.avatar || ""} onChange={e => setEditForm(prev => ({ ...prev, avatar: e.target.value }))} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditingSpecialist(null)}>Cancel</Button>
+            <Button onClick={saveEdit} disabled={!!isProcessing}>
+              {String(isProcessing).startsWith("save-") ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Check className="h-4 w-4 mr-2" />}
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-4 rounded-xl border shadow-sm">
         <div>

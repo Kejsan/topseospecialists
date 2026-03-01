@@ -1,8 +1,11 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { SubmissionModal } from "./SubmissionModal";
+import { useAuth } from "@/context/AuthContext";
 
 export function Header() {
+  const { user } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between mx-auto px-4 md:px-8">
@@ -17,9 +20,11 @@ export function Header() {
           <Button variant="ghost" size="sm" asChild>
             <Link href="/blog">Blog</Link>
           </Button>
-          <Button variant="outline" size="sm" asChild className="hidden sm:flex">
-            <Link href="/admin">Admin</Link>
-          </Button>
+          {user && (
+            <Button variant="outline" size="sm" asChild className="hidden sm:flex">
+              <Link href="/admin">Admin</Link>
+            </Button>
+          )}
           <SubmissionModal />
         </nav>
       </div>

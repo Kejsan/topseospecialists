@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://topseospecialists.com";
+const BASE_URL = "https://topseospecialists.netlify.app";
 
 export default function robots(): MetadataRoute.Robots {
   return {

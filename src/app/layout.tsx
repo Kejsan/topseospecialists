@@ -10,7 +10,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const BASE_URL = "https://topseospecialists.com";
+const BASE_URL = "https://topseospecialists.netlify.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

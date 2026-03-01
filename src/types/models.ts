@@ -35,6 +35,7 @@ export interface Specialist {
   createdAt?: any;
   updatedAt?: any;
   status?: 'pending' | 'approved';
+  avatar?: string;
 }
 
 export interface AppConfig {

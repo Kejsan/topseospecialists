@@ -8,7 +8,7 @@ import { ArrowLeft, Globe, Linkedin, Briefcase, Tag } from "lucide-react";
 import type { Metadata } from "next";
 import { Specialist } from "@/types/models";
 
-const BASE_URL = "https://topseospecialists.com";
+const BASE_URL = "https://topseospecialists.netlify.app";
 
 // Generate static params for all specialists fetching from DB
 export async function generateStaticParams() {
