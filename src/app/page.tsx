@@ -1,6 +1,8 @@
 import { SpecialistDirectory } from "@/components/custom/SpecialistDirectory";
 import { getApprovedSpecialists } from "@/lib/firebase";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = "https://topseospecialists.netlify.app";
 
 function slugify(name: string): string {
