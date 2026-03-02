@@ -22,9 +22,10 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Edit, Pencil, Undo2 } from "lucide-react";
+import { Edit, Pencil, Undo2, Download } from "lucide-react";
 
 export default function AdminDashboard() {
+
   const { user } = useAuth();
   const [pending, setPending] = useState<Specialist[]>([]);
   const [approved, setApproved] = useState<Specialist[]>([]);
@@ -263,6 +264,25 @@ export default function AdminDashboard() {
     }
   };
 
+  const bulkExport = (isPending: boolean) => {
+    const selected = isPending ? selectedPending : selectedApproved;
+    const list = isPending ? pending : approved;
+    
+    if (selected.size === 0) return;
+    
+    const exportData = list.filter(s => selected.has(s.id!));
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `specialists_export_${isPending ? "pending" : "approved"}_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   // ── Rendering ──
 
   if (loading) {
@@ -499,6 +519,10 @@ export default function AdminDashboard() {
                     {isBulkProcessing ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <CheckCheck className="h-4 w-4 mr-1" />}
                     Bulk Approve ({selectedPending.size})
                   </Button>
+                  <Button size="sm" variant="outline" onClick={() => bulkExport(true)}>
+                    <Download className="h-4 w-4 mr-1" />
+                    Export ({selectedPending.size})
+                  </Button>
                   <Button size="sm" variant="destructive" onClick={() => bulkReject(true)} disabled={isBulkProcessing}>
                     <Trash2 className="h-4 w-4 mr-1" />
                     Delete ({selectedPending.size})
@@ -507,6 +531,7 @@ export default function AdminDashboard() {
               )}
             </div>
           )}
+
           {pending.length === 0 ? (
             <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
               <p className="text-muted-foreground">No pending submissions.</p>
@@ -531,6 +556,10 @@ export default function AdminDashboard() {
               </span>
               {selectedApproved.size > 0 && (
                 <div className="flex gap-2 ml-auto">
+                  <Button size="sm" variant="outline" onClick={() => bulkExport(false)}>
+                    <Download className="h-4 w-4 mr-1" />
+                    Export ({selectedApproved.size})
+                  </Button>
                   <Button size="sm" variant="destructive" onClick={() => bulkReject(false)} disabled={isBulkProcessing}>
                     {isBulkProcessing ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Trash2 className="h-4 w-4 mr-1" />}
                     Bulk Delete ({selectedApproved.size})
@@ -539,6 +568,7 @@ export default function AdminDashboard() {
               )}
             </div>
           )}
+
           {approved.length === 0 ? (
             <div className="text-center py-12 bg-muted/30 rounded-lg border border-dashed">
               <p className="text-muted-foreground">No approved specialists yet.</p>

@@ -1,0 +1,2104 @@
+{
+  "specialists": [
+    {
+      "id": "alex-galinos",
+      "contribution": "Greek SEO expert specializing in multilingual and multi-country SEO.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "alex-galinos",
+      "status": "approved",
+      "role": "International SEO Consultant",
+      "name": "Alex Galinos",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "alex-horsman",
+      "status": "approved",
+      "slug": "alex-horsman",
+      "contribution": "Teaches “passive” link building – earning links without cold outreach.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Alex Horsman",
+      "role": "Founder, Sh*tty SEO Advice",
+      "category": "Link Building"
+    },
+    {
+      "id": "alexandra-tachalova",
+      "category": "Link Building",
+      "role": "Founder, Digital Olympus",
+      "name": "Alexandra Tachalova",
+      "contribution": "Equally famous for her SEO memes on Twitter and insightful link outreach strategies.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "alexandra-tachalova",
+      "status": "approved"
+    },
+    {
+      "id": "aleyda-sol-s",
+      "status": "approved",
+      "slug": "aleyda-sol-s",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "International SEO legend & author. Blogger, YouTuber (“Crawling Mondays”), and industry thought leader.",
+      "name": "Aleyda Solís",
+      "role": "Founder, Orainti",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "amanpreet-singh",
+      "role": "SEO Trainer",
+      "name": "Amanpreet Singh",
+      "category": "Community & Education",
+      "status": "approved",
+      "slug": "amanpreet-singh",
+      "contribution": "Popular on LinkedIn for bite-sized “quick win” SEO tips.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "andrew-holland",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Emphasizes profit-centric SEO. Author of “The Value of SEO” illustrated book.",
+      "slug": "andrew-holland",
+      "status": "approved",
+      "name": "Andrew Holland",
+      "role": "Director of SEO, JBH Agency",
+      "category": "General SEO"
+    },
+    {
+      "id": "anna-york",
+      "contribution": "AI SEO “queen”. Mastery of using GPT for keyword clustering, content briefs, etc.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "anna-york",
+      "status": "approved",
+      "category": "AI SEO",
+      "role": "SEO Consultant",
+      "name": "Anna York"
+    },
+    {
+      "id": "areej-abuali",
+      "category": "Community & Education",
+      "name": "Areej AbuAli",
+      "role": "Founder, Women in Tech SEO",
+      "slug": "areej-abuali",
+      "status": "approved",
+      "contribution": "Community leader & technical SEO advocate. Founded the global Women in Tech SEO community.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "artur-perrella-glukhovskyy",
+      "contribution": "Helps e-commerce scale with content and unique Looker Studio reports.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "artur-perrella-glukhovskyy",
+      "status": "approved",
+      "category": "E-commerce SEO",
+      "role": "Founder, Ivanhoe Digital",
+      "name": "Artur Perrella Glukhovskyy"
+    },
+    {
+      "id": "barry-schwartz",
+      "category": "Community & Education",
+      "role": "Founder, Search Engine Roundtable",
+      "name": "Barry Schwartz",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "The industry news “first responder”. Prolific SEO news reporter since 2003.",
+      "status": "approved",
+      "slug": "barry-schwartz"
+    },
+    {
+      "id": "ben-goodey",
+      "role": "Founder, “How the Fxck” Community",
+      "name": "Ben Goodey",
+      "category": "Content SEO",
+      "contribution": "Leads podcast/newsletter for content marketers. Shares SOPs for efficient content ops.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "ben-goodey",
+      "status": "approved"
+    },
+    {
+      "id": "bill-gaule",
+      "category": "AI SEO",
+      "name": "Bill Gaule",
+      "role": "Co-founder & SEO Director, SERPsculpt",
+      "contribution": "Helped many SaaS firms rank and convert. Shares how to leverage AI in content and SEO for B2B wins.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "bill-gaule"
+    },
+    {
+      "id": "brodie-clark",
+      "category": "E-commerce SEO",
+      "role": "Independent SEO Consultant",
+      "name": "Brodie Clark",
+      "slug": "brodie-clark",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Analyzes Google tests and SERP feature changes for e-commerce SEO. Australia’s best-known SEO name."
+    },
+    {
+      "id": "charles-floate",
+      "role": "SEO Consultant",
+      "name": "Charles Floate",
+      "category": "General SEO",
+      "contribution": "Known for grey-hat tactics and a large industry following. Dubbed “SEO Darth Vader”.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "charles-floate",
+      "status": "approved"
+    },
+    {
+      "id": "chris-lever",
+      "name": "Chris Lever",
+      "role": "Head of Technical SEO, Bring Digital",
+      "category": "Technical SEO",
+      "slug": "chris-lever",
+      "status": "approved",
+      "contribution": "Runs bold technical SEO experiments (site speed, MCP servers, etc.) and shares findings for e-commerce clients.",
+      "createdAt": "2026-03-01T00:54:37.428Z"
+    },
+    {
+      "id": "chris-long",
+      "category": "Technical SEO",
+      "role": "VP of Marketing, Go Fish Digital",
+      "name": "Chris Long",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Known for deep knowledge of Google’s algorithm and technical site audits.",
+      "slug": "chris-long",
+      "status": "approved"
+    },
+    {
+      "id": "connor-gillivan",
+      "slug": "connor-gillivan",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Emphasizes consistency in posting to build brand and improve search presence.",
+      "category": "Content SEO",
+      "role": "SEO & LinkedIn Consistency Coach",
+      "name": "Connor Gillivan"
+    },
+    {
+      "id": "craig-dewart",
+      "status": "approved",
+      "slug": "craig-dewart",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Veteran who’s “done it all” in SEO. Provides a balanced perspective to newcomers.",
+      "category": "General SEO",
+      "name": "Craig Dewart",
+      "role": "SEO Generalist"
+    },
+    {
+      "id": "cyrus-shepard",
+      "name": "Cyrus Shepard",
+      "role": "Founder, Zyppy SEO",
+      "category": "Technical SEO",
+      "status": "approved",
+      "slug": "cyrus-shepard",
+      "contribution": "Expert on Google’s inner workings and ranking factors. The \"infiltrator\".",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "daniel-foley-carter",
+      "status": "approved",
+      "slug": "daniel-foley-carter",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Renowned for comprehensive site audits and process-driven SEO implementations. The audit “king”.",
+      "category": "Technical SEO",
+      "role": "SEO Consultant & Auditor",
+      "name": "Daniel Foley Carter"
+    },
+    {
+      "id": "darren-shaw",
+      "name": "Darren Shaw",
+      "role": "Founder, Whitespark",
+      "category": "Local SEO",
+      "status": "approved",
+      "slug": "darren-shaw",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Specializes in local search software and services. Leads research initiatives like the Local Search Ranking Factors survey."
+    },
+    {
+      "id": "davor-bome-tar",
+      "contribution": "Process “god” of content SEO. Developed high-volume content processes at several agencies.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "davor-bome-tar",
+      "name": "Davor Bomeštar",
+      "role": "Content Operations Expert",
+      "category": "Content SEO"
+    },
+    {
+      "id": "devansh-parashar-dev",
+      "status": "approved",
+      "slug": "devansh-parashar-dev",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Spends 20+ hours/week researching how leading sites do SEO. Shares ~3 case studies weekly.",
+      "category": "Content SEO",
+      "name": "Devansh Parashar (Dev)",
+      "role": "SEO Case Study Analyst"
+    },
+    {
+      "id": "diandra-escobar",
+      "role": "CEO, Contact Studios",
+      "name": "Diandra Escobar",
+      "category": "Content SEO",
+      "contribution": "Builds “content flywheels” for B2B growth. Sourced $170K+ ACV via content.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "diandra-escobar"
+    },
+    {
+      "id": "elena-dyulgerova",
+      "status": "approved",
+      "slug": "elena-dyulgerova",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helps SaaS companies drive MRR and signups through content and link strategies.",
+      "category": "Content SEO",
+      "name": "Elena Dyulgerova",
+      "role": "Senior SEO Growth Strategist"
+    },
+    {
+      "id": "eli-schwartz",
+      "category": "General SEO",
+      "role": "Growth Advisor & Author",
+      "name": "Eli Schwartz",
+      "status": "approved",
+      "slug": "eli-schwartz",
+      "contribution": "Author of “Product-Led SEO”, promoting a user-centric SEO mindset.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "elie-berreby",
+      "name": "Elie Berreby",
+      "role": "Senior SEO Strategist",
+      "category": "Technical SEO",
+      "status": "approved",
+      "slug": "elie-berreby",
+      "contribution": "18+ years in SEO for global enterprises. Specializes in technical site architecture and international SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "erin-balsa",
+      "slug": "erin-balsa",
+      "social": "https://www.linkedin.com/in/erinbalsa/",
+      "category": "Content SEO",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Helps B2B startups create bold content. Creator of Bland to Bold framework.",
+      "role": "Founder, Bland to Bold",
+      "name": "Erin Balsa",
+      "website": "https://www.blandtobold.co/",
+      "summary": "Erin Balsa is a content marketing strategist specializing in helping B2B SaaS companies develop sales-led inbound marketing strategies. She is the founder of Haus of Bold (now Bland to Bold), where she offers marketing advisory services. With over 13 years of experience, she has partnered with well-known brands like HubSpot, Drift, G2, and Zapier."
+    },
+    {
+      "id": "fery-kaszoni",
+      "category": "Link Building",
+      "name": "Fery Kaszoni",
+      "role": "Founder, Search Intelligence Ltd",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Leads a 100+ person digital PR agency specializing in research-based campaigns.",
+      "slug": "fery-kaszoni",
+      "status": "approved"
+    },
+    {
+      "id": "francesco-baldini",
+      "name": "Francesco Baldini",
+      "role": "SEO Strategist & Blogger",
+      "category": "General SEO",
+      "contribution": "Shares late-night “3AM SEO thoughts”. Encourages questioning mainstream SEO “best practices.”",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "francesco-baldini",
+      "status": "approved"
+    },
+    {
+      "id": "gael-breton",
+      "category": "AI SEO",
+      "role": "Co-founder, Authority Hacker",
+      "name": "Gael Breton",
+      "status": "approved",
+      "slug": "gael-breton",
+      "contribution": "Built an 8-figure biz with 7 people using AI. Hosts Authority Hacker Podcast.",
+      "createdAt": "2026-03-01T00:54:37.428Z"
+    },
+    {
+      "id": "georgia-tan",
+      "role": "Co-founder & Head of Search",
+      "name": "Georgia Tan",
+      "category": "General SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Pioneering SXO (Search Experience Optimization) consultancy blending UX, CRO, and SEO.",
+      "slug": "georgia-tan",
+      "status": "approved"
+    },
+    {
+      "id": "gerrid-smith",
+      "slug": "gerrid-smith",
+      "status": "approved",
+      "contribution": "Known for distilling tactics into cheat sheets and focusing on business KPIs (leads, revenue).",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "name": "Gerrid Smith",
+      "role": "Founder & CEO, Fortress Growth",
+      "category": "General SEO"
+    },
+    {
+      "id": "ian-carroll",
+      "category": "General SEO",
+      "role": "SEO Consultant",
+      "name": "Ian Carroll",
+      "contribution": "Known for memorable SEO case studies (e.g., “from 0 to 100K with no link building”).",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "status": "approved",
+      "slug": "ian-carroll"
+    },
+    {
+      "id": "itamar-blauer",
+      "contribution": "Hosts “SEO Unplugged” podcast discussing latest trends and tools.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "itamar-blauer",
+      "category": "General SEO",
+      "name": "Itamar Blauer",
+      "role": "Senior SEO Director, StudioHawk"
+    },
+    {
+      "id": "ivan-palii",
+      "contribution": "Creates popular, free Looker Studio templates for SEO reporting.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "ivan-palii",
+      "name": "Ivan Palii",
+      "role": "Head of Product, Sitechecker",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "ivan-radica",
+      "contribution": "Runs an agency scaling small-to-mid e-commerce brands via SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "ivan-radica",
+      "role": "Co-founder & CMO, SEO LICK",
+      "name": "Ivan Radica",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "jairo-guerrero",
+      "category": "General SEO",
+      "name": "Jairo Guerrero",
+      "role": "Founder, Organic Hackers",
+      "slug": "jairo-guerrero",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Known for creative, sometimes unconventional SEO tactics. The “insane strategies” guy."
+    },
+    {
+      "id": "jake-ward",
+      "category": "General SEO",
+      "role": "Founder, Contact (SEO agency)",
+      "name": "Jake Ward",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Drives ~$20M/year in client revenue. Shares daily LinkedIn posts about scaling SaaS SEO.",
+      "status": "approved",
+      "slug": "jake-ward"
+    },
+    {
+      "id": "james-reynolds",
+      "status": "approved",
+      "slug": "james-reynolds",
+      "contribution": "Founded an award-winning international agency. Known for transparent case studies.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "category": "General SEO",
+      "name": "James Reynolds",
+      "role": "Founder & MD, SEO Sherpa"
+    },
+    {
+      "id": "jamie-indigo",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "OG technical SEO & bot specialist. Known for “speaking bot” – expertise in JavaScript SEO, crawling, and indexation.",
+      "status": "approved",
+      "slug": "jamie-indigo",
+      "category": "Technical SEO",
+      "role": "Technical SEO Consultant",
+      "name": "Jamie Indigo"
+    },
+    {
+      "id": "jean-christophe-chouinard",
+      "slug": "jean-christophe-chouinard",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helps the community learn Python for SEO. Known for automating SEO tasks.",
+      "category": "AI SEO",
+      "name": "Jean-Christophe Chouinard",
+      "role": "Sr. SEO Strategist, Tripadvisor"
+    },
+    {
+      "id": "jes-scholz",
+      "category": "General SEO",
+      "role": "International Digital Strategist",
+      "name": "Jes Scholz",
+      "slug": "jes-scholz",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Shares data-driven analyses of market-specific search trends. Speaker on emerging market search behaviors."
+    },
+    {
+      "id": "jesse-mcfarland",
+      "status": "approved",
+      "slug": "jesse-mcfarland",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Specializes in B2B and e-commerce SEO content that drives leads.",
+      "category": "Content SEO",
+      "name": "Jesse McFarland",
+      "role": "Founder, SpearPoint Marketing"
+    },
+    {
+      "id": "jessica-redman",
+      "contribution": "Shares “SEO as it is” – frank opinions on industry fads and realities.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "jessica-redman",
+      "status": "approved",
+      "category": "Content SEO",
+      "role": "SEO Content Strategist",
+      "name": "Jessica Redman"
+    },
+    {
+      "id": "joe-davies",
+      "contribution": "Built FATJOE (productized SEO & link-building platform). Known for blunt takes on industry “BS”.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "joe-davies",
+      "category": "General SEO",
+      "name": "Joe Davies",
+      "role": "Co-founder & CEO, FATJOE"
+    },
+    {
+      "id": "john-ozuysal",
+      "category": "Content SEO",
+      "name": "John Ozuysal",
+      "role": "Co-founder & CMO, Datapad",
+      "slug": "john-ozuysal",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Growth marketer who drove 500+ SaaS signups via content. Shares ROI-driven SEO playbooks."
+    },
+    {
+      "id": "jonathan-boshoff",
+      "name": "Jonathan Boshoff",
+      "role": "AI SEO Consultant & Toolmaker",
+      "category": "AI SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Publishes 50+ no-code AI SEO tools and guides on his site to streamline SEO tasks.",
+      "slug": "jonathan-boshoff",
+      "status": "approved"
+    },
+    {
+      "id": "josh-gallant",
+      "contribution": "Known for cutting through jargon (“no BS”) when explaining B2B SEO.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "status": "approved",
+      "slug": "josh-gallant",
+      "name": "Josh Gallant",
+      "role": "B2B SEO Lead",
+      "category": "Content SEO"
+    },
+    {
+      "id": "joy-hawkins",
+      "category": "Local SEO",
+      "role": "Founder & CEO, Sterling Sky",
+      "name": "Joy Hawkins",
+      "contribution": "Local SEO expert and forum leader. Top go-to for local SEO news.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "joy-hawkins"
+    },
+    {
+      "id": "julian-goldie",
+      "role": "Founder, Goldie Agency",
+      "name": "Julian Goldie",
+      "category": "Link Building",
+      "contribution": "Runs a link-building agency and a YouTube channel about agency life.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "julian-goldie",
+      "status": "approved"
+    },
+    {
+      "id": "katarzyna-gajska",
+      "category": "General SEO",
+      "role": "CRO & UX Specialist",
+      "name": "Katarzyna Gajska",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Polish CRO/UX expert blending SEO traffic with improved on-site UX for higher conversions.",
+      "status": "approved",
+      "slug": "katarzyna-gajska"
+    },
+    {
+      "id": "kevin-indig",
+      "contribution": "Ex-Director of SEO at Shopify. Advocates product-led, user-focused SEO for large sites.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "kevin-indig",
+      "status": "approved",
+      "category": "General SEO",
+      "role": "Growth Advisor",
+      "name": "Kevin Indig"
+    },
+    {
+      "id": "koray-tu-berk-g-b-r",
+      "role": "Founder, Holistic SEO",
+      "name": "Koray Tuğberk Gübür",
+      "category": "Technical SEO",
+      "status": "approved",
+      "slug": "koray-tu-berk-g-b-r",
+      "contribution": "Pioneer in topical authority and semantic search optimization. Publishes extensive studies.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "kristina-azarenko",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Renowned for her comprehensive technical audit checklists and teaching SEOs how to get implementations done.",
+      "status": "approved",
+      "slug": "kristina-azarenko",
+      "name": "Kristina Azarenko",
+      "role": "Founder, MarketingSyrup Academy",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "kuba-czubajewski",
+      "category": "Content SEO",
+      "role": "B2B SEO Content Strategist",
+      "name": "Kuba Czubajewski",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "“Content wizard” for B2B growth. Specializes in turning complex B2B topics into rankable content.",
+      "status": "approved",
+      "slug": "kuba-czubajewski"
+    },
+    {
+      "id": "lazarina-stoy",
+      "status": "approved",
+      "slug": "lazarina-stoy",
+      "contribution": "Blends data science with SEO. Writes about using machine learning for keyword clustering and automation.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Lazarina Stoy",
+      "role": "SEO & ML Specialist",
+      "category": "AI SEO"
+    },
+    {
+      "id": "leigh-mckenzie",
+      "slug": "leigh-mckenzie",
+      "status": "approved",
+      "contribution": "Experienced in both technical and content SEO. A “full-scope” generalist.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "role": "SEO Consultant",
+      "name": "Leigh McKenzie",
+      "category": "General SEO"
+    },
+    {
+      "id": "liam-fallen",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Grows personal brands with funny, engaging content. Injects humor into SEO/marketing tips.",
+      "status": "approved",
+      "slug": "liam-fallen",
+      "role": "Founder, Speed Social",
+      "name": "Liam Fallen",
+      "category": "Content SEO"
+    },
+    {
+      "id": "lidia-infante",
+      "role": "Head of Intl. SEO, SurveyMonkey",
+      "name": "Lidia Infante",
+      "category": "Technical SEO",
+      "slug": "lidia-infante",
+      "status": "approved",
+      "contribution": "Advocates for diversity in search and frequently speaks on technical and international SEO best practices.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "lily-ray",
+      "category": "Content SEO",
+      "role": "VP of SEO, Amsive Digital",
+      "name": "Lily Ray",
+      "status": "approved",
+      "slug": "lily-ray",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Known for in-depth analyses of Google core algorithm updates and promoting E-E-A-T best practices."
+    },
+    {
+      "id": "louis-smith",
+      "slug": "louis-smith",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helped brands earn $100M+ in monthly revenue via SEO. E-commerce SEO “monster”.",
+      "role": "Freelance eCommerce SEO Consultant",
+      "name": "Louis Smith",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "maddie-pain",
+      "role": "Freelance SEO Consultant",
+      "name": "Maddie Pain",
+      "category": "Content SEO",
+      "contribution": "Improves inbound lead flow for ERP and SaaS companies. Uses content and technical SEO to drive B2B leads.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "maddie-pain",
+      "status": "approved"
+    },
+    {
+      "id": "maeva-cifuentes",
+      "role": "Founder & CEO, Flying Cat Marketing",
+      "name": "Maeva Cifuentes",
+      "category": "Content SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Pushes “revenue-based SEO” for SaaS. Hosts podcast on bridging SEO and sales enablement.",
+      "status": "approved",
+      "slug": "maeva-cifuentes"
+    },
+    {
+      "id": "marco-giordano",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Analytics “lord” bridging SEO & data. Shares complex GA4 and BigQuery techniques.",
+      "status": "approved",
+      "slug": "marco-giordano",
+      "category": "Technical SEO",
+      "role": "Web Analytics Lead",
+      "name": "Marco Giordano"
+    },
+    {
+      "id": "mark-williams-cook",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Created AlsoAsked.com (People Also Ask tool). Shares tips via his podcast “Search with Candour”.",
+      "slug": "mark-williams-cook",
+      "status": "approved",
+      "name": "Mark Williams-Cook",
+      "role": "Director, Candour",
+      "category": "General SEO"
+    },
+    {
+      "id": "martin-greif",
+      "name": "Martin Greif",
+      "role": "President, SiteTuners",
+      "category": "General SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Globally recognized CRO expert. Known for tying SEO efforts to improved on-site conversion rates.",
+      "status": "approved",
+      "slug": "martin-greif"
+    },
+    {
+      "id": "martin-stepanek",
+      "contribution": "Optimizes site speed and technical SEO for revenue gains. Consults on Core Web Vitals.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "martin-stepanek",
+      "category": "Technical SEO",
+      "role": "Founder, TechSEO Vitals",
+      "name": "Martin Stepanek"
+    },
+    {
+      "id": "matt-diggity",
+      "slug": "matt-diggity",
+      "status": "approved",
+      "contribution": "Affiliate SEO star (truly “immortal”). Revered for consistently ranking and flipping sites.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "role": "Founder, Diggity Marketing",
+      "name": "Matt Diggity",
+      "category": "Affiliate SEO"
+    },
+    {
+      "id": "matt-emgi",
+      "category": "Link Building",
+      "slug": "matt-emgi",
+      "name": "Matt Emgi",
+      "role": "Founder, EMGI",
+      "summary": "Matt Emgi is an experienced Link Builder and SEO Consultant who has worked with clients across many SaaS verticals - AI SaaS, Lead Gen SaaS, HR SaaS, and Cybersecurity SaaS. He is the founder and Head of Link Building at EMGI Group.",
+      "website": "https://emgigroup.com/",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles."
+    },
+    {
+      "id": "mersudin-forbes",
+      "name": "Mersudin Forbes",
+      "role": "SEO Advisor",
+      "category": "Technical SEO",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Advises agencies & startups on SEO. Renowned for his blunt, no-nonsense SEO advice and mentorship.",
+      "status": "approved",
+      "slug": "mersudin-forbes"
+    },
+    {
+      "id": "michael-king",
+      "role": "Founder & CEO, iPullRank",
+      "name": "Michael King",
+      "category": "AI SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Technical SEO GOAT. Pioneered the fusion of AI, automation, and SEO.",
+      "slug": "michael-king",
+      "status": "approved"
+    },
+    {
+      "id": "natalia-witczyk",
+      "name": "Natalia Witczyk",
+      "role": "CEO, Mosquita Digital",
+      "category": "Technical SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "International SEO “maestra” with expertise in Google, Yandex, Baidu SEO.",
+      "status": "approved",
+      "slug": "natalia-witczyk"
+    },
+    {
+      "id": "natalie-slater",
+      "status": "approved",
+      "slug": "natalie-slater",
+      "contribution": "Offers enterprise audits, technical SEO, and digital PR. Active mentor and Women in Tech SEO contributor.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Natalie Slater",
+      "role": "Freelance SEO Consultant",
+      "category": "General SEO"
+    },
+    {
+      "id": "nathan-gotch",
+      "name": "Nathan Gotch",
+      "role": "Founder, Gotch SEO Academy",
+      "category": "Community & Education",
+      "status": "approved",
+      "slug": "nathan-gotch",
+      "contribution": "SEO trainer for agencies. Known for his “Become the SEO client’s trust” approach.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "nick-jordan",
+      "name": "Nick Jordan",
+      "role": "CEO, ContentDistribution",
+      "category": "Content SEO",
+      "contribution": "Grew multiple sites to 100K+ organics/month. Founded “Fat Graph Content Ops” community.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "nick-jordan"
+    },
+    {
+      "id": "nick-leroy",
+      "slug": "nick-leroy",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Created the popular #SEOJob of the Week newsletter.",
+      "category": "Community & Education",
+      "name": "Nick LeRoy",
+      "role": "SEO Consultant & Job Hunting Expert"
+    },
+    {
+      "id": "nick-zviadadze",
+      "slug": "nick-zviadadze",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Known for daily LinkedIn carousels sharing SEO tips and scaling SaaS startups’ organic growth.",
+      "role": "Founder, MintSEO",
+      "name": "Nick Zviadadze",
+      "category": "Content SEO"
+    },
+    {
+      "id": "olaf-kopp",
+      "category": "Technical SEO",
+      "role": "Co-founder, Aufgesang GmbH",
+      "name": "Olaf Kopp",
+      "status": "approved",
+      "slug": "olaf-kopp",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Internationally recognized for analyzing Google patents and advancing semantic SEO theory."
+    },
+    {
+      "id": "olga-zarr",
+      "status": "approved",
+      "slug": "olga-zarr",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Renowned for her exhaustive SEO audit checklists and tutorials. The “audit queen”.",
+      "category": "Technical SEO",
+      "name": "Olga Zarr",
+      "role": "Founder, SEOSLY"
+    },
+    {
+      "id": "orit-mutznik",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Expert in big-site technical SEO and digital PR for authority building.",
+      "status": "approved",
+      "slug": "orit-mutznik",
+      "name": "Orit Mutznik",
+      "role": "Head of Organic Search, Farfetch",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "patryk-wawok",
+      "category": "E-commerce SEO",
+      "name": "Patryk Wawok",
+      "role": "SEO Consultant (E-commerce)",
+      "slug": "patryk-wawok",
+      "status": "approved",
+      "contribution": "E-commerce technical SEO specialist. Curated this “100 Greatest SEOs” list.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "peter-rota",
+      "status": "approved",
+      "slug": "peter-rota",
+      "contribution": "Known for candid “tough guy” take on SEO myths. Specializes in technical audits.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "role": "Senior Technical SEO Manager",
+      "name": "Peter Rota",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "rand-fishkin",
+      "category": "Community & Education",
+      "role": "Co-founder & CEO, SparkToro",
+      "name": "Rand Fishkin",
+      "contribution": "“SEO Legend”. Co-founded Moz. Industry pioneer in SEO tools and community building.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "rand-fishkin",
+      "status": "approved"
+    },
+    {
+      "id": "rob-hoffman",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Builds AI-powered workflows to codify SEO knowledge into visuals.",
+      "slug": "rob-hoffman",
+      "status": "approved",
+      "role": "Co-founder & CEO, Contact Studios",
+      "name": "Rob Hoffman",
+      "category": "AI SEO"
+    },
+    {
+      "id": "sam-dunning",
+      "role": "Co-owner, Web Choice",
+      "name": "Sam Dunning",
+      "category": "General SEO",
+      "contribution": "Provides SEO that aligns with sales for B2B companies. Host of Business Growth Show podcast.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "sam-dunning",
+      "status": "approved"
+    },
+    {
+      "id": "samantha-north-phd",
+      "slug": "samantha-north-phd",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Focuses on automating content research and personalization with AI.",
+      "category": "AI SEO",
+      "name": "Samantha North, PhD",
+      "role": "Content & AI Automation Specialist"
+    },
+    {
+      "id": "samy-ben-sadok",
+      "role": "SEO Consultant",
+      "name": "Samy Ben Sadok",
+      "category": "General SEO",
+      "status": "approved",
+      "slug": "samy-ben-sadok",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Gained fame on LinkedIn for brutally honest takes and memes about SEO struggles."
+    },
+    {
+      "id": "samy-thuillier",
+      "status": "approved",
+      "slug": "samy-thuillier",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Creates highly-shareable SEO cheatsheet carousels on LinkedIn.",
+      "category": "Community & Education",
+      "name": "Samy Thuillier",
+      "role": "SEO Educator"
+    },
+    {
+      "id": "sanjay-shenoy",
+      "contribution": "Creator of the SEO Career Kickstarter (SCK) program, one of the highest-rated programs for aspiring SEO specialists.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "status": "approved",
+      "slug": "sanjay-shenoy",
+      "category": "Community & Education",
+      "role": "Partner, Boring Marketing",
+      "name": "Sanjay Shenoy"
+    },
+    {
+      "id": "sara-stella-lattanzio",
+      "category": "Content SEO",
+      "role": "Head of Marketing, Stryber",
+      "name": "Sara Stella Lattanzio",
+      "status": "approved",
+      "slug": "sara-stella-lattanzio",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Known for blending data and storytelling to drive pipeline as a marketing lead."
+    },
+    {
+      "id": "sara-taher",
+      "slug": "sara-taher",
+      "status": "approved",
+      "contribution": "Helps local and international brands improve their search rankings with effective SEO strategies.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "name": "Sara Taher",
+      "role": "SEO Consultant & Speaker",
+      "category": "General SEO"
+    },
+    {
+      "id": "steve-toth",
+      "contribution": "Focuses on “SEO of tomorrow” – testing new techniques and sharing cutting-edge strategies.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "steve-toth",
+      "status": "approved",
+      "role": "Founder, SEO Notebook",
+      "name": "Steve Toth",
+      "category": "General SEO"
+    },
+    {
+      "id": "steven-schneider",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helps B2B SaaS brands with SEO that directly drives revenue.",
+      "slug": "steven-schneider",
+      "status": "approved",
+      "category": "General SEO",
+      "name": "Steven Schneider",
+      "role": "Co-founder & CEO, TrioSEO"
+    },
+    {
+      "id": "taylor-scher",
+      "category": "Content SEO",
+      "name": "Taylor Scher",
+      "role": "SaaS SEO Consultant",
+      "slug": "taylor-scher",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Develops content & SEO playbooks that drive demos and ARR for SaaS startups."
+    },
+    {
+      "id": "tim-hanson",
+      "status": "approved",
+      "slug": "tim-hanson",
+      "contribution": "Early adopter of AI writing in SEO. Shares how to safely scale content with AI while maintaining quality.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Tim Hanson",
+      "role": "Content SEO Strategist",
+      "category": "AI SEO"
+    },
+    {
+      "id": "tim-kahlert",
+      "role": "Founder & CEO, Hypetrix.com",
+      "name": "Tim Kahlert",
+      "category": "Local SEO",
+      "slug": "tim-kahlert",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Helps businesses succeed in local search and Google Maps. Founded an agency focusing on Google Business Profile rankings."
+    },
+    {
+      "id": "tim-stoddart",
+      "status": "approved",
+      "slug": "tim-stoddart",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Built multiple 7-figure businesses via content. Shares solopreneurship and personal brand growth tips.",
+      "name": "Tim Stoddart",
+      "role": "CEO, Stodzy & Copyblogger Partner",
+      "category": "Content SEO"
+    },
+    {
+      "id": "tom-winter",
+      "social": "https://www.linkedin.com/in/tom-winter/",
+      "slug": "tom-winter",
+      "category": "AI SEO",
+      "status": "approved",
+      "contribution": "Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.",
+      "createdAt": "2026-03-01T00:54:37.426Z",
+      "role": "Founder, SEOwind",
+      "name": "Tom Winter",
+      "summary": "Tom Winter is an experienced SaaS founder passionate about SEO and AI. With a decade of experience scaling SaaS companies globally, he has already grown a company from zero to customers in 100+ countries, leveraging his unique blend of development, marketing, and sales skills. He is the co-founder of SEOwind, a tool that helps create SEO content briefs in minutes rather than hours.",
+      "website": "https://seowind.io/"
+    },
+    {
+      "id": "trish-seidel",
+      "category": "Content SEO",
+      "name": "Trish Seidel",
+      "role": "Marketing Lead",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Leverages her B2B-honed skills (podcasts, thought leadership) now in consumer content.",
+      "slug": "trish-seidel",
+      "status": "approved"
+    },
+    {
+      "id": "tyler-nalbach",
+      "contribution": "“Fashion SEO lad” sharing niche tips. Focuses on fashion e-commerce SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "tyler-nalbach",
+      "status": "approved",
+      "name": "Tyler Nalbach",
+      "role": "SEO Specialist (Fashion industry)",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "ume-laila",
+      "contribution": "Recognized on Reddit’s top SEO to follow for her hands-on advice on technical SEO.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "ume-laila",
+      "status": "approved",
+      "name": "Ume Laila",
+      "role": "SEO Strategist",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "viktoria-medvedko",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Specializes in media-driven link-building for SaaS/tech brands.",
+      "status": "approved",
+      "slug": "viktoria-medvedko",
+      "name": "Viktoria Medvedko",
+      "role": "Founder, GetMentioned",
+      "category": "Link Building"
+    },
+    {
+      "id": "zoe-ashbridge",
+      "category": "Content SEO",
+      "role": "Co-founder & Sr. SEO Strategist",
+      "name": "Zoe Ashbridge",
+      "contribution": "Focuses on data-driven content strategy and paid search integration.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "zoe-ashbridge"
+    }
+  ],
+  "seo-profiles": [
+    {
+      "id": "alex-galinos",
+      "contribution": "Greek SEO expert specializing in multilingual and multi-country SEO.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "alex-galinos",
+      "status": "approved",
+      "name": "Alex Galinos",
+      "role": "International SEO Consultant",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "alex-horsman",
+      "category": "Link Building",
+      "name": "Alex Horsman",
+      "role": "Founder, Sh*tty SEO Advice",
+      "status": "approved",
+      "slug": "alex-horsman",
+      "contribution": "Teaches “passive” link building – earning links without cold outreach.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "alexandra-tachalova",
+      "category": "Link Building",
+      "name": "Alexandra Tachalova",
+      "role": "Founder, Digital Olympus",
+      "slug": "alexandra-tachalova",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Equally famous for her SEO memes on Twitter and insightful link outreach strategies."
+    },
+    {
+      "id": "aleyda-sol-s",
+      "contribution": "International SEO legend & author. Blogger, YouTuber (“Crawling Mondays”), and industry thought leader.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "aleyda-sol-s",
+      "status": "approved",
+      "role": "Founder, Orainti",
+      "name": "Aleyda Solís",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "amanpreet-singh",
+      "category": "Community & Education",
+      "name": "Amanpreet Singh",
+      "role": "SEO Trainer",
+      "status": "approved",
+      "slug": "amanpreet-singh",
+      "contribution": "Popular on LinkedIn for bite-sized “quick win” SEO tips.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "andrew-holland",
+      "category": "General SEO",
+      "role": "Director of SEO, JBH Agency",
+      "name": "Andrew Holland",
+      "slug": "andrew-holland",
+      "status": "approved",
+      "contribution": "Emphasizes profit-centric SEO. Author of “The Value of SEO” illustrated book.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "anna-york",
+      "category": "AI SEO",
+      "name": "Anna York",
+      "role": "SEO Consultant",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "AI SEO “queen”. Mastery of using GPT for keyword clustering, content briefs, etc.",
+      "slug": "anna-york",
+      "status": "approved"
+    },
+    {
+      "id": "areej-abuali",
+      "slug": "areej-abuali",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Community leader & technical SEO advocate. Founded the global Women in Tech SEO community.",
+      "category": "Community & Education",
+      "name": "Areej AbuAli",
+      "role": "Founder, Women in Tech SEO"
+    },
+    {
+      "id": "artur-perrella-glukhovskyy",
+      "contribution": "Helps e-commerce scale with content and unique Looker Studio reports.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "artur-perrella-glukhovskyy",
+      "status": "approved",
+      "name": "Artur Perrella Glukhovskyy",
+      "role": "Founder, Ivanhoe Digital",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "barry-schwartz",
+      "category": "Community & Education",
+      "role": "Founder, Search Engine Roundtable",
+      "name": "Barry Schwartz",
+      "slug": "barry-schwartz",
+      "status": "approved",
+      "contribution": "The industry news “first responder”. Prolific SEO news reporter since 2003.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "ben-goodey",
+      "category": "Content SEO",
+      "name": "Ben Goodey",
+      "role": "Founder, “How the Fxck” Community",
+      "contribution": "Leads podcast/newsletter for content marketers. Shares SOPs for efficient content ops.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "ben-goodey",
+      "status": "approved"
+    },
+    {
+      "id": "bill-gaule",
+      "role": "Co-founder & SEO Director, SERPsculpt",
+      "name": "Bill Gaule",
+      "category": "AI SEO",
+      "slug": "bill-gaule",
+      "status": "approved",
+      "contribution": "Helped many SaaS firms rank and convert. Shares how to leverage AI in content and SEO for B2B wins.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "brodie-clark",
+      "contribution": "Analyzes Google tests and SERP feature changes for e-commerce SEO. Australia’s best-known SEO name.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "brodie-clark",
+      "status": "approved",
+      "role": "Independent SEO Consultant",
+      "name": "Brodie Clark",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "charles-floate",
+      "status": "approved",
+      "slug": "charles-floate",
+      "contribution": "Known for grey-hat tactics and a large industry following. Dubbed “SEO Darth Vader”.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "name": "Charles Floate",
+      "role": "SEO Consultant",
+      "category": "General SEO"
+    },
+    {
+      "id": "chris-lever",
+      "category": "Technical SEO",
+      "name": "Chris Lever",
+      "role": "Head of Technical SEO, Bring Digital",
+      "status": "approved",
+      "slug": "chris-lever",
+      "contribution": "Runs bold technical SEO experiments (site speed, MCP servers, etc.) and shares findings for e-commerce clients.",
+      "createdAt": "2026-03-01T00:54:37.428Z"
+    },
+    {
+      "id": "chris-long",
+      "status": "approved",
+      "slug": "chris-long",
+      "contribution": "Known for deep knowledge of Google’s algorithm and technical site audits.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "Technical SEO",
+      "name": "Chris Long",
+      "role": "VP of Marketing, Go Fish Digital"
+    },
+    {
+      "id": "connor-gillivan",
+      "category": "Content SEO",
+      "name": "Connor Gillivan",
+      "role": "SEO & LinkedIn Consistency Coach",
+      "contribution": "Emphasizes consistency in posting to build brand and improve search presence.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "connor-gillivan",
+      "status": "approved"
+    },
+    {
+      "id": "craig-dewart",
+      "category": "General SEO",
+      "name": "Craig Dewart",
+      "role": "SEO Generalist",
+      "slug": "craig-dewart",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Veteran who’s “done it all” in SEO. Provides a balanced perspective to newcomers."
+    },
+    {
+      "id": "cyrus-shepard",
+      "status": "approved",
+      "slug": "cyrus-shepard",
+      "contribution": "Expert on Google’s inner workings and ranking factors. The \"infiltrator\".",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "Technical SEO",
+      "name": "Cyrus Shepard",
+      "role": "Founder, Zyppy SEO"
+    },
+    {
+      "id": "daniel-foley-carter",
+      "slug": "daniel-foley-carter",
+      "status": "approved",
+      "contribution": "Renowned for comprehensive site audits and process-driven SEO implementations. The audit “king”.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "Technical SEO",
+      "name": "Daniel Foley Carter",
+      "role": "SEO Consultant & Auditor"
+    },
+    {
+      "id": "darren-shaw",
+      "name": "Darren Shaw",
+      "role": "Founder, Whitespark",
+      "category": "Local SEO",
+      "slug": "darren-shaw",
+      "status": "approved",
+      "contribution": "Specializes in local search software and services. Leads research initiatives like the Local Search Ranking Factors survey.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "davor-bome-tar",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Process “god” of content SEO. Developed high-volume content processes at several agencies.",
+      "slug": "davor-bome-tar",
+      "status": "approved",
+      "category": "Content SEO",
+      "name": "Davor Bomeštar",
+      "role": "Content Operations Expert"
+    },
+    {
+      "id": "devansh-parashar-dev",
+      "slug": "devansh-parashar-dev",
+      "status": "approved",
+      "contribution": "Spends 20+ hours/week researching how leading sites do SEO. Shares ~3 case studies weekly.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "category": "Content SEO",
+      "name": "Devansh Parashar (Dev)",
+      "role": "SEO Case Study Analyst"
+    },
+    {
+      "id": "diandra-escobar",
+      "slug": "diandra-escobar",
+      "status": "approved",
+      "contribution": "Builds “content flywheels” for B2B growth. Sourced $170K+ ACV via content.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "category": "Content SEO",
+      "role": "CEO, Contact Studios",
+      "name": "Diandra Escobar"
+    },
+    {
+      "id": "elena-dyulgerova",
+      "status": "approved",
+      "slug": "elena-dyulgerova",
+      "contribution": "Helps SaaS companies drive MRR and signups through content and link strategies.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "Content SEO",
+      "name": "Elena Dyulgerova",
+      "role": "Senior SEO Growth Strategist"
+    },
+    {
+      "id": "eli-schwartz",
+      "name": "Eli Schwartz",
+      "role": "Growth Advisor & Author",
+      "category": "General SEO",
+      "contribution": "Author of “Product-Led SEO”, promoting a user-centric SEO mindset.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "eli-schwartz",
+      "status": "approved"
+    },
+    {
+      "id": "elie-berreby",
+      "category": "Technical SEO",
+      "name": "Elie Berreby",
+      "role": "Senior SEO Strategist",
+      "contribution": "18+ years in SEO for global enterprises. Specializes in technical site architecture and international SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "elie-berreby"
+    },
+    {
+      "id": "erin-balsa",
+      "category": "Content SEO",
+      "social": "https://www.linkedin.com/in/erinbalsa/",
+      "slug": "erin-balsa",
+      "role": "Founder, Bland to Bold",
+      "name": "Erin Balsa",
+      "summary": "Erin Balsa is a content marketing strategist specializing in helping B2B SaaS companies develop sales-led inbound marketing strategies. She is the founder of Haus of Bold (now Bland to Bold), where she offers marketing advisory services. With over 13 years of experience, she has partnered with well-known brands like HubSpot, Drift, G2, and Zapier.",
+      "website": "https://www.blandtobold.co/",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Helps B2B startups create bold content. Creator of Bland to Bold framework."
+    },
+    {
+      "id": "fery-kaszoni",
+      "category": "Link Building",
+      "name": "Fery Kaszoni",
+      "role": "Founder, Search Intelligence Ltd",
+      "contribution": "Leads a 100+ person digital PR agency specializing in research-based campaigns.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "fery-kaszoni"
+    },
+    {
+      "id": "francesco-baldini",
+      "name": "Francesco Baldini",
+      "role": "SEO Strategist & Blogger",
+      "category": "General SEO",
+      "slug": "francesco-baldini",
+      "status": "approved",
+      "contribution": "Shares late-night “3AM SEO thoughts”. Encourages questioning mainstream SEO “best practices.”",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "gael-breton",
+      "name": "Gael Breton",
+      "role": "Co-founder, Authority Hacker",
+      "category": "AI SEO",
+      "contribution": "Built an 8-figure biz with 7 people using AI. Hosts Authority Hacker Podcast.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "gael-breton"
+    },
+    {
+      "id": "georgia-tan",
+      "name": "Georgia Tan",
+      "role": "Co-founder & Head of Search",
+      "category": "General SEO",
+      "contribution": "Pioneering SXO (Search Experience Optimization) consultancy blending UX, CRO, and SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "georgia-tan",
+      "status": "approved"
+    },
+    {
+      "id": "gerrid-smith",
+      "contribution": "Known for distilling tactics into cheat sheets and focusing on business KPIs (leads, revenue).",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "gerrid-smith",
+      "status": "approved",
+      "name": "Gerrid Smith",
+      "role": "Founder & CEO, Fortress Growth",
+      "category": "General SEO"
+    },
+    {
+      "id": "ian-carroll",
+      "category": "General SEO",
+      "name": "Ian Carroll",
+      "role": "SEO Consultant",
+      "slug": "ian-carroll",
+      "status": "approved",
+      "contribution": "Known for memorable SEO case studies (e.g., “from 0 to 100K with no link building”).",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "itamar-blauer",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Hosts “SEO Unplugged” podcast discussing latest trends and tools.",
+      "slug": "itamar-blauer",
+      "status": "approved",
+      "category": "General SEO",
+      "name": "Itamar Blauer",
+      "role": "Senior SEO Director, StudioHawk"
+    },
+    {
+      "id": "ivan-palii",
+      "slug": "ivan-palii",
+      "status": "approved",
+      "contribution": "Creates popular, free Looker Studio templates for SEO reporting.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "name": "Ivan Palii",
+      "role": "Head of Product, Sitechecker",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "ivan-radica",
+      "name": "Ivan Radica",
+      "role": "Co-founder & CMO, SEO LICK",
+      "category": "E-commerce SEO",
+      "status": "approved",
+      "slug": "ivan-radica",
+      "contribution": "Runs an agency scaling small-to-mid e-commerce brands via SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "jairo-guerrero",
+      "name": "Jairo Guerrero",
+      "role": "Founder, Organic Hackers",
+      "category": "General SEO",
+      "slug": "jairo-guerrero",
+      "status": "approved",
+      "contribution": "Known for creative, sometimes unconventional SEO tactics. The “insane strategies” guy.",
+      "createdAt": "2026-03-01T00:54:37.428Z"
+    },
+    {
+      "id": "jake-ward",
+      "category": "General SEO",
+      "name": "Jake Ward",
+      "role": "Founder, Contact (SEO agency)",
+      "contribution": "Drives ~$20M/year in client revenue. Shares daily LinkedIn posts about scaling SaaS SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "jake-ward",
+      "status": "approved"
+    },
+    {
+      "id": "james-reynolds",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Founded an award-winning international agency. Known for transparent case studies.",
+      "slug": "james-reynolds",
+      "status": "approved",
+      "category": "General SEO",
+      "name": "James Reynolds",
+      "role": "Founder & MD, SEO Sherpa"
+    },
+    {
+      "id": "jamie-indigo",
+      "category": "Technical SEO",
+      "name": "Jamie Indigo",
+      "role": "Technical SEO Consultant",
+      "contribution": "OG technical SEO & bot specialist. Known for “speaking bot” – expertise in JavaScript SEO, crawling, and indexation.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "jamie-indigo"
+    },
+    {
+      "id": "jean-christophe-chouinard",
+      "category": "AI SEO",
+      "name": "Jean-Christophe Chouinard",
+      "role": "Sr. SEO Strategist, Tripadvisor",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helps the community learn Python for SEO. Known for automating SEO tasks.",
+      "slug": "jean-christophe-chouinard",
+      "status": "approved"
+    },
+    {
+      "id": "jes-scholz",
+      "category": "General SEO",
+      "role": "International Digital Strategist",
+      "name": "Jes Scholz",
+      "slug": "jes-scholz",
+      "status": "approved",
+      "contribution": "Shares data-driven analyses of market-specific search trends. Speaker on emerging market search behaviors.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "jesse-mcfarland",
+      "category": "Content SEO",
+      "role": "Founder, SpearPoint Marketing",
+      "name": "Jesse McFarland",
+      "slug": "jesse-mcfarland",
+      "status": "approved",
+      "contribution": "Specializes in B2B and e-commerce SEO content that drives leads.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "jessica-redman",
+      "category": "Content SEO",
+      "name": "Jessica Redman",
+      "role": "SEO Content Strategist",
+      "status": "approved",
+      "slug": "jessica-redman",
+      "contribution": "Shares “SEO as it is” – frank opinions on industry fads and realities.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "joe-davies",
+      "category": "General SEO",
+      "name": "Joe Davies",
+      "role": "Co-founder & CEO, FATJOE",
+      "status": "approved",
+      "slug": "joe-davies",
+      "contribution": "Built FATJOE (productized SEO & link-building platform). Known for blunt takes on industry “BS”.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "john-ozuysal",
+      "slug": "john-ozuysal",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Growth marketer who drove 500+ SaaS signups via content. Shares ROI-driven SEO playbooks.",
+      "name": "John Ozuysal",
+      "role": "Co-founder & CMO, Datapad",
+      "category": "Content SEO"
+    },
+    {
+      "id": "jonathan-boshoff",
+      "role": "AI SEO Consultant & Toolmaker",
+      "name": "Jonathan Boshoff",
+      "category": "AI SEO",
+      "slug": "jonathan-boshoff",
+      "status": "approved",
+      "contribution": "Publishes 50+ no-code AI SEO tools and guides on his site to streamline SEO tasks.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "josh-gallant",
+      "contribution": "Known for cutting through jargon (“no BS”) when explaining B2B SEO.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "status": "approved",
+      "slug": "josh-gallant",
+      "category": "Content SEO",
+      "name": "Josh Gallant",
+      "role": "B2B SEO Lead"
+    },
+    {
+      "id": "joy-hawkins",
+      "slug": "joy-hawkins",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Local SEO expert and forum leader. Top go-to for local SEO news.",
+      "category": "Local SEO",
+      "name": "Joy Hawkins",
+      "role": "Founder & CEO, Sterling Sky"
+    },
+    {
+      "id": "julian-goldie",
+      "role": "Founder, Goldie Agency",
+      "name": "Julian Goldie",
+      "category": "Link Building",
+      "slug": "julian-goldie",
+      "status": "approved",
+      "contribution": "Runs a link-building agency and a YouTube channel about agency life.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "katarzyna-gajska",
+      "contribution": "Polish CRO/UX expert blending SEO traffic with improved on-site UX for higher conversions.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "katarzyna-gajska",
+      "status": "approved",
+      "name": "Katarzyna Gajska",
+      "role": "CRO & UX Specialist",
+      "category": "General SEO"
+    },
+    {
+      "id": "kevin-indig",
+      "contribution": "Ex-Director of SEO at Shopify. Advocates product-led, user-focused SEO for large sites.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "kevin-indig",
+      "status": "approved",
+      "role": "Growth Advisor",
+      "name": "Kevin Indig",
+      "category": "General SEO"
+    },
+    {
+      "id": "koray-tu-berk-g-b-r",
+      "category": "Technical SEO",
+      "name": "Koray Tuğberk Gübür",
+      "role": "Founder, Holistic SEO",
+      "slug": "koray-tu-berk-g-b-r",
+      "status": "approved",
+      "contribution": "Pioneer in topical authority and semantic search optimization. Publishes extensive studies.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "kristina-azarenko",
+      "name": "Kristina Azarenko",
+      "role": "Founder, MarketingSyrup Academy",
+      "category": "Technical SEO",
+      "contribution": "Renowned for her comprehensive technical audit checklists and teaching SEOs how to get implementations done.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "kristina-azarenko"
+    },
+    {
+      "id": "kuba-czubajewski",
+      "status": "approved",
+      "slug": "kuba-czubajewski",
+      "contribution": "“Content wizard” for B2B growth. Specializes in turning complex B2B topics into rankable content.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Kuba Czubajewski",
+      "role": "B2B SEO Content Strategist",
+      "category": "Content SEO"
+    },
+    {
+      "id": "lazarina-stoy",
+      "contribution": "Blends data science with SEO. Writes about using machine learning for keyword clustering and automation.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "lazarina-stoy",
+      "status": "approved",
+      "role": "SEO & ML Specialist",
+      "name": "Lazarina Stoy",
+      "category": "AI SEO"
+    },
+    {
+      "id": "leigh-mckenzie",
+      "category": "General SEO",
+      "name": "Leigh McKenzie",
+      "role": "SEO Consultant",
+      "slug": "leigh-mckenzie",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Experienced in both technical and content SEO. A “full-scope” generalist."
+    },
+    {
+      "id": "liam-fallen",
+      "category": "Content SEO",
+      "role": "Founder, Speed Social",
+      "name": "Liam Fallen",
+      "contribution": "Grows personal brands with funny, engaging content. Injects humor into SEO/marketing tips.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "liam-fallen",
+      "status": "approved"
+    },
+    {
+      "id": "lidia-infante",
+      "name": "Lidia Infante",
+      "role": "Head of Intl. SEO, SurveyMonkey",
+      "category": "Technical SEO",
+      "contribution": "Advocates for diversity in search and frequently speaks on technical and international SEO best practices.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "lidia-infante"
+    },
+    {
+      "id": "lily-ray",
+      "category": "Content SEO",
+      "role": "VP of SEO, Amsive Digital",
+      "name": "Lily Ray",
+      "slug": "lily-ray",
+      "status": "approved",
+      "contribution": "Known for in-depth analyses of Google core algorithm updates and promoting E-E-A-T best practices.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "louis-smith",
+      "name": "Louis Smith",
+      "role": "Freelance eCommerce SEO Consultant",
+      "category": "E-commerce SEO",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Helped brands earn $100M+ in monthly revenue via SEO. E-commerce SEO “monster”.",
+      "slug": "louis-smith",
+      "status": "approved"
+    },
+    {
+      "id": "maddie-pain",
+      "slug": "maddie-pain",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Improves inbound lead flow for ERP and SaaS companies. Uses content and technical SEO to drive B2B leads.",
+      "category": "Content SEO",
+      "name": "Maddie Pain",
+      "role": "Freelance SEO Consultant"
+    },
+    {
+      "id": "maeva-cifuentes",
+      "slug": "maeva-cifuentes",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Pushes “revenue-based SEO” for SaaS. Hosts podcast on bridging SEO and sales enablement.",
+      "name": "Maeva Cifuentes",
+      "role": "Founder & CEO, Flying Cat Marketing",
+      "category": "Content SEO"
+    },
+    {
+      "id": "marco-giordano",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Analytics “lord” bridging SEO & data. Shares complex GA4 and BigQuery techniques.",
+      "slug": "marco-giordano",
+      "status": "approved",
+      "name": "Marco Giordano",
+      "role": "Web Analytics Lead",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "mark-williams-cook",
+      "contribution": "Created AlsoAsked.com (People Also Ask tool). Shares tips via his podcast “Search with Candour”.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "mark-williams-cook",
+      "status": "approved",
+      "name": "Mark Williams-Cook",
+      "role": "Director, Candour",
+      "category": "General SEO"
+    },
+    {
+      "id": "martin-greif",
+      "name": "Martin Greif",
+      "role": "President, SiteTuners",
+      "category": "General SEO",
+      "slug": "martin-greif",
+      "status": "approved",
+      "contribution": "Globally recognized CRO expert. Known for tying SEO efforts to improved on-site conversion rates.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "martin-stepanek",
+      "category": "Technical SEO",
+      "name": "Martin Stepanek",
+      "role": "Founder, TechSEO Vitals",
+      "contribution": "Optimizes site speed and technical SEO for revenue gains. Consults on Core Web Vitals.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "martin-stepanek"
+    },
+    {
+      "id": "matt-diggity",
+      "category": "Affiliate SEO",
+      "role": "Founder, Diggity Marketing",
+      "name": "Matt Diggity",
+      "slug": "matt-diggity",
+      "status": "approved",
+      "contribution": "Affiliate SEO star (truly “immortal”). Revered for consistently ranking and flipping sites.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "matt-emgi",
+      "summary": "Matt Emgi is an experienced Link Builder and SEO Consultant who has worked with clients across many SaaS verticals - AI SaaS, Lead Gen SaaS, HR SaaS, and Cybersecurity SaaS. He is the founder and Head of Link Building at EMGI Group.",
+      "website": "https://emgigroup.com/",
+      "name": "Matt Emgi",
+      "role": "Founder, EMGI",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "contribution": "Runs EMGI Group focusing on SaaS link building. Known for building significant SaaS backlink profiles.",
+      "status": "approved",
+      "category": "Link Building",
+      "slug": "matt-emgi"
+    },
+    {
+      "id": "mersudin-forbes",
+      "category": "Technical SEO",
+      "name": "Mersudin Forbes",
+      "role": "SEO Advisor",
+      "contribution": "Advises agencies & startups on SEO. Renowned for his blunt, no-nonsense SEO advice and mentorship.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "mersudin-forbes"
+    },
+    {
+      "id": "michael-king",
+      "contribution": "Technical SEO GOAT. Pioneered the fusion of AI, automation, and SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "michael-king",
+      "status": "approved",
+      "category": "AI SEO",
+      "role": "Founder & CEO, iPullRank",
+      "name": "Michael King"
+    },
+    {
+      "id": "natalia-witczyk",
+      "contribution": "International SEO “maestra” with expertise in Google, Yandex, Baidu SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "natalia-witczyk",
+      "name": "Natalia Witczyk",
+      "role": "CEO, Mosquita Digital",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "natalie-slater",
+      "category": "General SEO",
+      "name": "Natalie Slater",
+      "role": "Freelance SEO Consultant",
+      "status": "approved",
+      "slug": "natalie-slater",
+      "contribution": "Offers enterprise audits, technical SEO, and digital PR. Active mentor and Women in Tech SEO contributor.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "nathan-gotch",
+      "slug": "nathan-gotch",
+      "status": "approved",
+      "contribution": "SEO trainer for agencies. Known for his “Become the SEO client’s trust” approach.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Nathan Gotch",
+      "role": "Founder, Gotch SEO Academy",
+      "category": "Community & Education"
+    },
+    {
+      "id": "nick-jordan",
+      "contribution": "Grew multiple sites to 100K+ organics/month. Founded “Fat Graph Content Ops” community.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "nick-jordan",
+      "status": "approved",
+      "category": "Content SEO",
+      "name": "Nick Jordan",
+      "role": "CEO, ContentDistribution"
+    },
+    {
+      "id": "nick-leroy",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Created the popular #SEOJob of the Week newsletter.",
+      "slug": "nick-leroy",
+      "status": "approved",
+      "name": "Nick LeRoy",
+      "role": "SEO Consultant & Job Hunting Expert",
+      "category": "Community & Education"
+    },
+    {
+      "id": "nick-zviadadze",
+      "name": "Nick Zviadadze",
+      "role": "Founder, MintSEO",
+      "category": "Content SEO",
+      "contribution": "Known for daily LinkedIn carousels sharing SEO tips and scaling SaaS startups’ organic growth.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "status": "approved",
+      "slug": "nick-zviadadze"
+    },
+    {
+      "id": "olaf-kopp",
+      "slug": "olaf-kopp",
+      "status": "approved",
+      "contribution": "Internationally recognized for analyzing Google patents and advancing semantic SEO theory.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "Technical SEO",
+      "name": "Olaf Kopp",
+      "role": "Co-founder, Aufgesang GmbH"
+    },
+    {
+      "id": "olga-zarr",
+      "category": "Technical SEO",
+      "name": "Olga Zarr",
+      "role": "Founder, SEOSLY",
+      "slug": "olga-zarr",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Renowned for her exhaustive SEO audit checklists and tutorials. The “audit queen”."
+    },
+    {
+      "id": "orit-mutznik",
+      "name": "Orit Mutznik",
+      "role": "Head of Organic Search, Farfetch",
+      "category": "Technical SEO",
+      "slug": "orit-mutznik",
+      "status": "approved",
+      "contribution": "Expert in big-site technical SEO and digital PR for authority building.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "patryk-wawok",
+      "role": "SEO Consultant (E-commerce)",
+      "name": "Patryk Wawok",
+      "category": "E-commerce SEO",
+      "slug": "patryk-wawok",
+      "status": "approved",
+      "contribution": "E-commerce technical SEO specialist. Curated this “100 Greatest SEOs” list.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    },
+    {
+      "id": "peter-rota",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Known for candid “tough guy” take on SEO myths. Specializes in technical audits.",
+      "slug": "peter-rota",
+      "status": "approved",
+      "name": "Peter Rota",
+      "role": "Senior Technical SEO Manager",
+      "category": "Technical SEO"
+    },
+    {
+      "id": "rand-fishkin",
+      "slug": "rand-fishkin",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "“SEO Legend”. Co-founded Moz. Industry pioneer in SEO tools and community building.",
+      "name": "Rand Fishkin",
+      "role": "Co-founder & CEO, SparkToro",
+      "category": "Community & Education"
+    },
+    {
+      "id": "rob-hoffman",
+      "role": "Co-founder & CEO, Contact Studios",
+      "name": "Rob Hoffman",
+      "category": "AI SEO",
+      "contribution": "Builds AI-powered workflows to codify SEO knowledge into visuals.",
+      "createdAt": "2026-03-01T00:54:37.428Z",
+      "slug": "rob-hoffman",
+      "status": "approved"
+    },
+    {
+      "id": "sam-dunning",
+      "status": "approved",
+      "slug": "sam-dunning",
+      "contribution": "Provides SEO that aligns with sales for B2B companies. Host of Business Growth Show podcast.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "General SEO",
+      "name": "Sam Dunning",
+      "role": "Co-owner, Web Choice"
+    },
+    {
+      "id": "samantha-north-phd",
+      "name": "Samantha North, PhD",
+      "role": "Content & AI Automation Specialist",
+      "category": "AI SEO",
+      "slug": "samantha-north-phd",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Focuses on automating content research and personalization with AI."
+    },
+    {
+      "id": "samy-ben-sadok",
+      "slug": "samy-ben-sadok",
+      "status": "approved",
+      "contribution": "Gained fame on LinkedIn for brutally honest takes and memes about SEO struggles.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "role": "SEO Consultant",
+      "name": "Samy Ben Sadok",
+      "category": "General SEO"
+    },
+    {
+      "id": "samy-thuillier",
+      "name": "Samy Thuillier",
+      "role": "SEO Educator",
+      "category": "Community & Education",
+      "contribution": "Creates highly-shareable SEO cheatsheet carousels on LinkedIn.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "slug": "samy-thuillier",
+      "status": "approved"
+    },
+    {
+      "id": "sanjay-shenoy",
+      "category": "Community & Education",
+      "name": "Sanjay Shenoy",
+      "role": "Partner, Boring Marketing",
+      "status": "approved",
+      "slug": "sanjay-shenoy",
+      "contribution": "Creator of the SEO Career Kickstarter (SCK) program, one of the highest-rated programs for aspiring SEO specialists.",
+      "createdAt": "2026-03-01T00:54:37.430Z"
+    },
+    {
+      "id": "sara-stella-lattanzio",
+      "contribution": "Known for blending data and storytelling to drive pipeline as a marketing lead.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "sara-stella-lattanzio",
+      "status": "approved",
+      "category": "Content SEO",
+      "name": "Sara Stella Lattanzio",
+      "role": "Head of Marketing, Stryber"
+    },
+    {
+      "id": "sara-taher",
+      "slug": "sara-taher",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Helps local and international brands improve their search rankings with effective SEO strategies.",
+      "name": "Sara Taher",
+      "role": "SEO Consultant & Speaker",
+      "category": "General SEO"
+    },
+    {
+      "id": "steve-toth",
+      "slug": "steve-toth",
+      "status": "approved",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Focuses on “SEO of tomorrow” – testing new techniques and sharing cutting-edge strategies.",
+      "name": "Steve Toth",
+      "role": "Founder, SEO Notebook",
+      "category": "General SEO"
+    },
+    {
+      "id": "steven-schneider",
+      "role": "Co-founder & CEO, TrioSEO",
+      "name": "Steven Schneider",
+      "category": "General SEO",
+      "contribution": "Helps B2B SaaS brands with SEO that directly drives revenue.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "steven-schneider",
+      "status": "approved"
+    },
+    {
+      "id": "taylor-scher",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "contribution": "Develops content & SEO playbooks that drive demos and ARR for SaaS startups.",
+      "slug": "taylor-scher",
+      "status": "approved",
+      "name": "Taylor Scher",
+      "role": "SaaS SEO Consultant",
+      "category": "Content SEO"
+    },
+    {
+      "id": "tim-hanson",
+      "slug": "tim-hanson",
+      "status": "approved",
+      "contribution": "Early adopter of AI writing in SEO. Shares how to safely scale content with AI while maintaining quality.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "category": "AI SEO",
+      "role": "Content SEO Strategist",
+      "name": "Tim Hanson"
+    },
+    {
+      "id": "tim-kahlert",
+      "contribution": "Helps businesses succeed in local search and Google Maps. Founded an agency focusing on Google Business Profile rankings.",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "status": "approved",
+      "slug": "tim-kahlert",
+      "category": "Local SEO",
+      "name": "Tim Kahlert",
+      "role": "Founder & CEO, Hypetrix.com"
+    },
+    {
+      "id": "tim-stoddart",
+      "category": "Content SEO",
+      "name": "Tim Stoddart",
+      "role": "CEO, Stodzy & Copyblogger Partner",
+      "contribution": "Built multiple 7-figure businesses via content. Shares solopreneurship and personal brand growth tips.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "slug": "tim-stoddart",
+      "status": "approved"
+    },
+    {
+      "id": "tom-winter",
+      "category": "AI SEO",
+      "social": "https://www.linkedin.com/in/tom-winter/",
+      "slug": "tom-winter",
+      "summary": "Tom Winter is an experienced SaaS founder passionate about SEO and AI. With a decade of experience scaling SaaS companies globally, he has already grown a company from zero to customers in 100+ countries, leveraging his unique blend of development, marketing, and sales skills. He is the co-founder of SEOwind, a tool that helps create SEO content briefs in minutes rather than hours.",
+      "website": "https://seowind.io/",
+      "name": "Tom Winter",
+      "role": "Founder, SEOwind",
+      "createdAt": "2026-03-01T00:54:37.426Z",
+      "contribution": "Scaled a SaaS globally; building SEOwind.io for AI-assisted content. Focuses on integrating AI with content strategy.",
+      "status": "approved"
+    },
+    {
+      "id": "trish-seidel",
+      "status": "approved",
+      "slug": "trish-seidel",
+      "contribution": "Leverages her B2B-honed skills (podcasts, thought leadership) now in consumer content.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "name": "Trish Seidel",
+      "role": "Marketing Lead",
+      "category": "Content SEO"
+    },
+    {
+      "id": "tyler-nalbach",
+      "slug": "tyler-nalbach",
+      "status": "approved",
+      "contribution": "“Fashion SEO lad” sharing niche tips. Focuses on fashion e-commerce SEO.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "role": "SEO Specialist (Fashion industry)",
+      "name": "Tyler Nalbach",
+      "category": "E-commerce SEO"
+    },
+    {
+      "id": "ume-laila",
+      "createdAt": "2026-03-01T00:54:37.430Z",
+      "contribution": "Recognized on Reddit’s top SEO to follow for her hands-on advice on technical SEO.",
+      "slug": "ume-laila",
+      "status": "approved",
+      "category": "Technical SEO",
+      "name": "Ume Laila",
+      "role": "SEO Strategist"
+    },
+    {
+      "id": "viktoria-medvedko",
+      "contribution": "Specializes in media-driven link-building for SaaS/tech brands.",
+      "createdAt": "2026-03-01T00:54:37.429Z",
+      "status": "approved",
+      "slug": "viktoria-medvedko",
+      "name": "Viktoria Medvedko",
+      "role": "Founder, GetMentioned",
+      "category": "Link Building"
+    },
+    {
+      "id": "zoe-ashbridge",
+      "role": "Co-founder & Sr. SEO Strategist",
+      "name": "Zoe Ashbridge",
+      "category": "Content SEO",
+      "slug": "zoe-ashbridge",
+      "status": "approved",
+      "contribution": "Focuses on data-driven content strategy and paid search integration.",
+      "createdAt": "2026-03-01T00:54:37.429Z"
+    }
+  ],
+  "pending-specialists": [],
+  "blog-posts": []
+}

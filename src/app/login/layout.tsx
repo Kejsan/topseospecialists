@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  title: "Login | Top SEO Specialists",
   robots: {
     index: false,
     follow: false,
