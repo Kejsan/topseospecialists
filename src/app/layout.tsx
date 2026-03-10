@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Header } from "@/components/custom/Header";
 import { Providers } from "@/components/providers";
@@ -98,6 +99,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <WebSiteJsonLd />
+        {/* Start cookieyes banner */}
+        <Script
+          id="cookieyes"
+          type="text/javascript"
+          src="https://cdn-cookieyes.com/client_data/ac0cf4bf7b867e9694a2bfb0d915c547/script.js"
+          strategy="beforeInteractive"
+        />
+        {/* End cookieyes banner */}
       </head>
       <body
         className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col bg-background relative`}
