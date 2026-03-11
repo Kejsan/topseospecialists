@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +29,7 @@ import { Plus, Loader2 } from "lucide-react";
 export function SubmissionModal() {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [consentChecked, setConsentChecked] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     role: "",
@@ -54,6 +56,7 @@ export function SubmissionModal() {
 
       setOpen(false);
       setFormData({ name: "", role: "", contribution: "", website: "", social: "", category: "" });
+      setConsentChecked(false);
       alert("Thank you! Your submission has been sent for review.");
     } catch (error) {
       console.error("Error submitting specialist:", error);
@@ -151,12 +154,32 @@ export function SubmissionModal() {
                 </SelectContent>
               </Select>
             </div>
+            <div className="flex items-start space-x-2 mt-2">
+              <input
+                type="checkbox"
+                id="consent"
+                className="mt-1"
+                checked={consentChecked}
+                onChange={(e) => setConsentChecked(e.target.checked)}
+              />
+              <label htmlFor="consent" className="text-sm text-muted-foreground leading-snug">
+                I have permission to share this information and accept the{" "}
+                <Link href="/privacy-policy" className="underline hover:text-foreground">
+                  Privacy Policy
+                </Link>{" "}
+                and{" "}
+                <Link href="/terms" className="underline hover:text-foreground">
+                  Terms of Service
+                </Link>
+                .
+              </label>
+            </div>
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting || !consentChecked}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

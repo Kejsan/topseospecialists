@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/custom/Header";
+import { Footer } from "@/components/custom/Footer";
+import { CookieConsentBanner } from "@/components/custom/CookieConsentBanner";
 import { Providers } from "@/components/providers";
 
 const inter = Inter({
@@ -105,6 +107,8 @@ export default function RootLayout({
         <Providers>
           <Header />
           <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+          <CookieConsentBanner />
         </Providers>
       </body>
     </html>
