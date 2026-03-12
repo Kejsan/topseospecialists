@@ -1,0 +1,60 @@
+You are helping enrich a CSV of SEO specialist profiles for the platform Top SEO Specialists.
+
+Goal:
+Fill in missing enrichment fields for each row using only reliable public web sources.
+Do not invent facts. If a field cannot be verified from public sources, leave it blank.
+
+Primary task:
+For each profile in the CSV, use the existing columns `name`, `slug`, `platform_category`, `current_role`, `key_contribution`, `personal_website`, `linkedin_url`, `x_url`, `github_url`, `source_urls`, and `crawl_seed_query` as starting signals.
+Find authoritative public sources such as:
+- personal website
+- company website/team page
+- LinkedIn profile
+- X/Twitter profile
+- conference speaker pages
+- reputable podcast/interview pages
+- trusted SEO event bios
+- clearly attributable author pages
+
+Important rules:
+- Only use verifiable public information.
+- Prefer primary sources over third-party summaries.
+- Do not guess country, company, or achievements from weak evidence.
+- Do not overwrite existing non-empty fields unless the source clearly shows they are wrong.
+- If multiple possible values exist, choose the most current one and note uncertainty in `manual_review_notes`.
+- Keep `bio_short` to 1-2 sentences max.
+- Keep `headline` short and directory-friendly.
+- Use semicolon-separated values for multi-value fields like `secondary_categories`, `specialties`, `languages`, `notable_achievements`, `notable_clients_or_brands`, `speaking_engagements`, `podcasts_or_interviews`, `books_or_newsletters`, `case_studies`, `certifications`, `services_offered`, and `problems_they_solve`.
+- Use ISO date format `YYYY-MM-DD` for `last_verified_at`.
+- Set `confidence_score` as a decimal from 0.0 to 1.0.
+
+Field guidance:
+- `current_company`: current employer, agency, consultancy brand, or own brand if they are founder/independent.
+- `headline`: concise public summary, example: "Technical SEO consultant focused on enterprise migrations".
+- `bio_short`: polished short summary for directory display.
+- `bio_long`: richer editorial description if clearly supported by sources.
+- `country`, `city`, `region`, `timezone`: only fill if public and reasonably certain.
+- `primary_category`: should usually match `platform_category`, unless a better fit is clearly supported.
+- `secondary_categories`: additional categories from the platform taxonomy.
+- `specialties`: practical skills/topics, example: `site migrations; JavaScript SEO; international SEO`.
+- `seniority_level`: use values like `specialist`, `consultant`, `manager`, `head`, `director`, `founder`.
+- `engagement_type`: use values like `consultant`, `agency`, `in-house`, `educator`, `speaker`, `fractional`.
+- `industry_focus`: sectors served, example: `SaaS; ecommerce; local business`.
+- `market_focus`: geographies or market types, example: `US; UK; international; multilingual`.
+- `company_size_focus`: example: `startup; SMB; mid-market; enterprise`.
+- `ideal_for`: describe the best-fit buyer/use case in one sentence.
+- `source_urls`: include the main URLs used to support the enriched data, separated by ` | `.
+- `source_notes`: brief note on how the facts were validated.
+- `manual_review_notes`: mention anything ambiguous, outdated, conflicting, or worth human review.
+
+Suggested workflow per row:
+1. Start from `source_urls` if present.
+2. If missing or insufficient, use `crawl_seed_query`.
+3. Verify current role/company first.
+4. Then enrich classification fields.
+5. Then enrich credibility/supporting fields.
+6. Update `last_verified_at`, `confidence_score`, `source_urls`, and `source_notes`.
+
+Output requirement:
+Return the completed CSV with the same columns and row order preserved.
+Leave unknown fields blank rather than guessing.

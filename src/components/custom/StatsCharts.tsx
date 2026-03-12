@@ -66,7 +66,7 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
                   ))}
                 </Pie>
                 <RechartsTooltip
-                  formatter={(value: number) => [`${value} specialists`, "Profiles"]}
+                  formatter={(value: number | undefined): [string, string] => [`${value ?? 0} specialists`, "Profiles"]}
                   contentStyle={{
                     borderRadius: "20px",
                     border: "1px solid var(--color-border)",
@@ -111,7 +111,7 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
                   tick={{ fontSize: 12, fill: "var(--color-foreground)" }}
                 />
                 <RechartsTooltip
-                  formatter={(value: number) => [`${value} specialists`, "Profiles"]}
+                  formatter={(value: number | undefined): [string, string] => [`${value ?? 0} specialists`, "Profiles"]}
                   cursor={{ fill: "rgba(84,160,155,0.08)" }}
                   contentStyle={{
                     borderRadius: "20px",
@@ -130,3 +130,4 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
     </div>
   );
 }
+
