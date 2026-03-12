@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
+import { Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip as RechartsTooltip, XAxis, YAxis } from "recharts";
 import { Specialist } from "@/types/models";
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const COLORS = [
@@ -23,11 +23,11 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
       acc[curr.category] = (acc[curr.category] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
-    
+
     return Object.entries(counts)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value)
-      .slice(0, 5); // top 5
+      .slice(0, 5);
   }, [specialists]);
 
   const roleData = useMemo(() => {
@@ -35,85 +35,93 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
       acc[curr.role] = (acc[curr.role] || 0) + 1;
       return acc;
     }, {} as Record<string, number>);
-    
+
     return Object.entries(counts)
       .map(([name, value]) => ({ name, value }))
       .sort((a, b) => b.value - a.value)
-      .slice(0, 5); // top 5
+      .slice(0, 5);
   }, [specialists]);
 
   if (specialists.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <Card className="border-muted bg-card/50 backdrop-blur shadow-sm">
-        <CardHeader className="pb-0 pt-4">
-          <CardTitle className="text-sm font-semibold tracking-tight uppercase text-muted-foreground flex items-center justify-between">
-            Top Categories
-            <span className="text-xs font-normal lowercase bg-primary/10 text-primary px-2 py-0.5 rounded-full">{specialists.length} total</span>
-          </CardTitle>
+    <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+      <Card className="overflow-hidden">
+        <CardHeader className="flex flex-col gap-4 border-b border-border/70 pb-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Category distribution</p>
+            <CardTitle className="mt-2 text-2xl">Where the directory is deepest.</CardTitle>
+          </div>
+          <p className="max-w-sm text-sm leading-6 text-muted-foreground">
+            These slices show where the strongest representation currently sits inside the public list.
+          </p>
         </CardHeader>
-        <CardContent>
-          <div className="h-[180px] w-full mt-2">
+        <CardContent className="grid gap-6 pt-6 md:grid-cols-[240px_minmax(0,1fr)] md:items-center">
+          <div className="h-[240px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie
-                  data={categoryData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                  stroke="none"
-                >
+                <Pie data={categoryData} dataKey="value" innerRadius={62} outerRadius={94} paddingAngle={4} stroke="none">
                   {categoryData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <RechartsTooltip 
-                  formatter={(value: any) => [`${value} Specialists`, 'Count']}
-                  contentStyle={{ borderRadius: '8px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                  itemStyle={{ color: 'var(--color-foreground)' }}
+                <RechartsTooltip
+                  formatter={(value: number) => [`${value} specialists`, "Profiles"]}
+                  contentStyle={{
+                    borderRadius: "20px",
+                    border: "1px solid var(--color-border)",
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    color: "var(--color-foreground)",
+                    boxShadow: "0 18px 34px -28px rgba(0,0,128,0.45)",
+                  }}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-1 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs font-medium text-foreground/80">
-            {categoryData.map((d, i) => (
-              <div key={d.name} className="flex items-center gap-1.5">
-                <div className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
-                <span>{d.name}</span>
+          <div className="space-y-3">
+            {categoryData.map((entry, index) => (
+              <div key={entry.name} className="flex items-center justify-between rounded-[22px] border border-border/70 bg-white/72 px-4 py-3">
+                <div className="flex items-center gap-3 text-sm font-medium text-foreground">
+                  <span className="h-3 w-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                  {entry.name}
+                </div>
+                <span className="text-sm font-semibold text-primary">{entry.value}</span>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-muted bg-card/50 backdrop-blur shadow-sm">
-        <CardHeader className="pb-0 pt-4">
-          <CardTitle className="text-sm font-semibold tracking-tight uppercase text-muted-foreground">Top Roles</CardTitle>
+      <Card>
+        <CardHeader className="border-b border-border/70 pb-5">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Role concentration</p>
+          <CardTitle className="mt-2 text-2xl">Most common operating titles.</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="h-[200px] w-full mt-2">
+        <CardContent className="pt-6">
+          <div className="h-[280px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={roleData} layout="vertical" margin={{ top: 0, right: 20, left: 60, bottom: 0 }}>
+              <BarChart data={roleData} layout="vertical" margin={{ top: 0, right: 8, left: 12, bottom: 0 }}>
                 <XAxis type="number" hide />
-                <YAxis 
-                  dataKey="name" 
-                  type="category" 
-                  axisLine={false} 
+                <YAxis
+                  dataKey="name"
+                  type="category"
+                  width={120}
+                  axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 11, fill: 'var(--color-foreground)', fontWeight: 500 }}
-                  width={110}
+                  tick={{ fontSize: 12, fill: "var(--color-foreground)" }}
                 />
-                <RechartsTooltip 
-                  cursor={{ fill: 'var(--color-muted)', opacity: 0.4 }}
-                  formatter={(value: any) => [`${value} Specialists`, 'Count']}
-                  contentStyle={{ borderRadius: '8px', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-                  itemStyle={{ color: 'var(--color-foreground)' }}
+                <RechartsTooltip
+                  formatter={(value: number) => [`${value} specialists`, "Profiles"]}
+                  cursor={{ fill: "rgba(84,160,155,0.08)" }}
+                  contentStyle={{
+                    borderRadius: "20px",
+                    border: "1px solid var(--color-border)",
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    color: "var(--color-foreground)",
+                    boxShadow: "0 18px 34px -28px rgba(0,0,128,0.45)",
+                  }}
                 />
-                <Bar dataKey="value" fill="var(--color-primary)" radius={[0, 4, 4, 0]} maxBarSize={24} />
+                <Bar dataKey="value" fill="var(--color-primary)" radius={[0, 999, 999, 0]} maxBarSize={28} />
               </BarChart>
             </ResponsiveContainer>
           </div>

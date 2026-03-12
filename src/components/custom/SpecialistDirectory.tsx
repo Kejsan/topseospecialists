@@ -1,14 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Search, FilterX, ArrowUpRight } from "lucide-react";
 import { Specialist, SpecialtyCategory, SPECIALTY_CATEGORIES } from "@/types/models";
 import { SpecialistCard } from "./SpecialistCard";
 import { StatsCharts } from "./StatsCharts";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, FilterX } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface SpecialistDirectoryProps {
   initialData: Specialist[];
@@ -22,115 +22,129 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
   const categories: (SpecialtyCategory | "All")[] = ["All", ...SPECIALTY_CATEGORIES];
 
   const filteredAndSortedSpecialists = useMemo(() => {
-    let result = initialData.filter((specialist) => {
-      const matchesSearch =
-        specialist.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        specialist.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        specialist.contribution.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = selectedCategory === "All" || specialist.category === selectedCategory;
+    const result = initialData.filter((specialist) => {
+      const haystack = [
+        specialist.name,
+        specialist.role,
+        specialist.contribution,
+        specialist.summary || "",
+      ]
+        .join(" ")
+        .toLowerCase();
 
+      const matchesSearch = haystack.includes(searchQuery.toLowerCase());
+      const matchesCategory = selectedCategory === "All" || specialist.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
 
-    // Sorting
     return result.sort((a, b) => {
       if (sortBy === "name-asc") return a.name.localeCompare(b.name);
       if (sortBy === "name-desc") return b.name.localeCompare(a.name);
       if (sortBy === "newest") {
-        const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt as any) || 0;
-        const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt as any) || 0;
-        return (dateB as any) - (dateA as any);
+        const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt as never) || 0;
+        const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt as never) || 0;
+        return Number(dateB) - Number(dateA);
       }
       return 0;
     });
   }, [initialData, searchQuery, selectedCategory, sortBy]);
 
+  const clearFilters = () => {
+    setSearchQuery("");
+    setSelectedCategory("All");
+    setSortBy("newest");
+  };
+
   return (
     <div className="space-y-8">
-      {/* 1. Specialty Categories Top */}
-      <div className="flex flex-wrap gap-2 justify-center py-4">
-        {categories.map((category) => (
-          <Badge
-            key={category}
-            variant={selectedCategory === category ? "default" : "outline"}
-            className={`cursor-pointer px-4 py-1.5 text-sm transition-all hover:scale-105 active:scale-95 ${
-              selectedCategory !== category ? "hover:bg-primary/10 hover:text-primary" : "shadow-md"
-            }`}
-            onClick={() => setSelectedCategory(category)}
-          >
-            {category}
-          </Badge>
-        ))}
-      </div>
-
-      {/* 2. Search and Sort Controls */}
-      <div className="flex flex-col md:flex-row gap-4 p-6 rounded-2xl bg-card border shadow-sm items-center">
-        <div className="relative flex-1 w-full">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            placeholder="Search by name, role, or keywords..."
-            className="pl-10 h-12 text-lg rounded-xl border-muted-foreground/20 focus-visible:ring-primary/30"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+      <section className="section-frame grid-accent space-y-6">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div className="space-y-3">
+            <span className="eyebrow">Directory controls</span>
+            <div className="space-y-2">
+              <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Filter by specialty, role, or signal.</h2>
+              <p className="max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
+                Search practitioners by expertise and quickly narrow the field without losing the editorial feel of the directory.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+            <Badge variant="secondary">{initialData.length} total profiles</Badge>
+            <Badge variant="outline">{filteredAndSortedSpecialists.length} in view</Badge>
+          </div>
         </div>
-        
-        <div className="flex items-center gap-3 w-full md:w-auto">
-          <select 
+
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px_52px]">
+          <div className="relative">
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search names, roles, specialties, and contributions"
+              className="h-14 pl-12 text-sm md:text-base"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-            className="h-12 px-4 rounded-xl border border-muted-foreground/20 bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 min-w-[140px]"
+            onChange={(e) => setSortBy(e.target.value as "newest" | "name-asc" | "name-desc")}
+            className="h-14 rounded-2xl border border-border bg-white/85 px-4 text-sm font-medium text-foreground shadow-[0_10px_28px_-20px_rgba(16,32,63,0.45)] outline-none focus:ring-4 focus:ring-ring"
           >
-            <option value="newest">Newest First</option>
-            <option value="name-asc">A-Z</option>
-            <option value="name-desc">Z-A</option>
+            <option value="newest">Newest first</option>
+            <option value="name-asc">Name A-Z</option>
+            <option value="name-desc">Name Z-A</option>
           </select>
-
-          {(searchQuery || selectedCategory !== "All") && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("All");
-                setSortBy("newest");
-              }}
-              className="h-12 px-4 text-muted-foreground hover:text-foreground border rounded-xl"
-            >
-              <FilterX className="h-4 w-4" />
-            </Button>
-          )}
+          <Button
+            variant="outline"
+            size="icon-lg"
+            onClick={clearFilters}
+            disabled={!searchQuery && selectedCategory === "All" && sortBy === "newest"}
+            aria-label="Clear filters"
+          >
+            <FilterX className="h-4 w-4" />
+          </Button>
         </div>
-      </div>
+
+        <div className="flex flex-wrap gap-2.5">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setSelectedCategory(category)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
+                selectedCategory === category
+                  ? "border-primary bg-primary text-primary-foreground shadow-[0_16px_30px_-24px_rgba(0,0,128,0.95)]"
+                  : "border-border bg-white/80 text-foreground hover:border-accent/40 hover:text-primary"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      </section>
 
       <StatsCharts specialists={filteredAndSortedSpecialists} />
 
       {filteredAndSortedSpecialists.length === 0 ? (
-        <div className="text-center py-20 grayscale opacity-60">
-          <p className="text-xl text-muted-foreground">No specialists found matching your criteria.</p>
-          <Button 
-            variant="link" 
-            onClick={() => {
-              setSearchQuery("");
-              setSelectedCategory("All");
-              setSortBy("newest");
-            }}
-          >
-            Clear all filters
+        <div className="section-frame text-center">
+          <p className="font-display text-3xl font-semibold text-foreground">No specialists match this filter combination.</p>
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-muted-foreground md:text-base">
+            Reset the filters to return to the full directory, or broaden your search terms to explore adjacent expertise.
+          </p>
+          <Button className="mt-6" onClick={clearFilters}>
+            Clear filters
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           <AnimatePresence mode="popLayout">
-            {filteredAndSortedSpecialists.map((specialist: Specialist) => (
+            {filteredAndSortedSpecialists.map((specialist) => (
               <motion.div
                 key={specialist.id || specialist.name}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.22 }}
               >
                 <SpecialistCard specialist={specialist} />
               </motion.div>
@@ -138,6 +152,15 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
           </AnimatePresence>
         </div>
       )}
+
+      <div className="flex justify-center">
+        <Button asChild variant="ghost" className="text-primary">
+          <a href="#faq">
+            Browse FAQs
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </Button>
+      </div>
     </div>
   );
 }

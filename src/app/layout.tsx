@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/custom/Header";
 import { Footer } from "@/components/custom/Footer";
 import { CookieConsentBanner } from "@/components/custom/CookieConsentBanner";
 import { Providers } from "@/components/providers";
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
 });
@@ -17,7 +23,7 @@ const BASE_URL = "https://topseospecialists.netlify.app";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Top SEO Specialists — The Definitive Curated Directory",
+    default: "Top SEO Specialists - The Definitive Curated Directory",
     template: "%s | Top SEO Specialists",
   },
   description:
@@ -41,13 +47,13 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: BASE_URL,
     siteName: "Top SEO Specialists",
-    title: "Top SEO Specialists — The Definitive Curated Directory",
+    title: "Top SEO Specialists - The Definitive Curated Directory",
     description:
       "Discover 100+ of the world's top SEO specialists. A community-curated directory featuring experts in Technical SEO, Content SEO, Link Building, AI SEO, and more.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Top SEO Specialists — The Definitive Curated Directory",
+    title: "Top SEO Specialists - The Definitive Curated Directory",
     description:
       "Discover 100+ of the world's top SEO specialists. A community-curated directory featuring experts across all SEO disciplines.",
   },
@@ -67,7 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD structured data — WebSite schema
 function WebSiteJsonLd() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -75,7 +80,7 @@ function WebSiteJsonLd() {
     name: "Top SEO Specialists",
     url: BASE_URL,
     description:
-      "A community-curated directory of the world's top Search Engine Optimization (SEO) specialists.",
+      "A community-curated directory of the world's top Search Engine Optimization specialists.",
     potentialAction: {
       "@type": "SearchAction",
       target: `${BASE_URL}/?q={search_term_string}`,
@@ -102,13 +107,15 @@ export default function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body
-        className={`${inter.variable} font-sans antialiased min-h-screen flex flex-col bg-background relative`}
+        className={`${manrope.variable} ${fraunces.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
         <Providers>
-          <Header />
-          <main className="flex-1 flex flex-col">{children}</main>
-          <Footer />
-          <CookieConsentBanner />
+          <div className="brand-shell flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1 flex flex-col">{children}</main>
+            <Footer />
+            <CookieConsentBanner />
+          </div>
         </Providers>
       </body>
     </html>

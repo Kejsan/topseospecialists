@@ -84,7 +84,7 @@ export function SubmissionModal() {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <label htmlFor="name" className="text-sm font-medium">Specialist's Name *</label>
+              <label htmlFor="name" className="text-sm font-medium">Specialist&apos;s Name *</label>
               <Input
                 id="name"
                 required
