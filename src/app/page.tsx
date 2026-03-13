@@ -108,19 +108,19 @@ export default async function Home() {
             </div>
           </div>
 
-          <aside className="section-frame space-y-6 bg-primary text-primary-foreground shadow-[0_36px_70px_-42px_rgba(0,0,128,0.6)]">
-            <span className="eyebrow border-white/15 bg-white/10 text-white">What makes the list useful</span>
+          <aside className="section-frame grid-accent space-y-6">
+            <span className="eyebrow">What makes the list useful</span>
             <div className="space-y-4">
-              <h2 className="text-3xl font-semibold">Less noise. More signal.</h2>
-              <ul className="space-y-3 text-sm leading-7 text-white/80">
+              <h2 className="text-3xl font-semibold text-foreground">Less noise. More signal.</h2>
+              <ul className="space-y-3 text-sm leading-7 text-muted-foreground">
                 <li>Curated around reputation, contribution, and visible expertise.</li>
                 <li>Browse by specialty to compare peers inside the same lane.</li>
                 <li>Profiles and journal content reinforce context, not vanity metrics.</li>
               </ul>
             </div>
-            <div className="rounded-[24px] border border-white/12 bg-white/8 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">Best for</p>
-              <p className="mt-3 text-base leading-7 text-white/88">
+            <div className="rounded-[24px] border border-border/70 bg-white/74 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">Best for</p>
+              <p className="mt-3 text-base leading-7 text-foreground/85">
                 Agencies assembling partner benches, founders vetting advisors, and marketers mapping the modern SEO landscape.
               </p>
             </div>
