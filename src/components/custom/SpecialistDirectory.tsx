@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, FilterX, ArrowUpRight } from "lucide-react";
 import { Specialist, SpecialtyCategory, SPECIALTY_CATEGORIES } from "@/types/models";
+import { asDate } from "@/lib/date";
 import { SpecialistCard } from "./SpecialistCard";
 import { StatsCharts } from "./StatsCharts";
 import { Input } from "@/components/ui/input";
@@ -41,8 +42,8 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
       if (sortBy === "name-asc") return a.name.localeCompare(b.name);
       if (sortBy === "name-desc") return b.name.localeCompare(a.name);
       if (sortBy === "newest") {
-        const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt as never) || 0;
-        const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt as never) || 0;
+        const dateA = asDate(a.createdAt) || new Date(0);
+        const dateB = asDate(b.createdAt) || new Date(0);
         return Number(dateB) - Number(dateA);
       }
       return 0;
