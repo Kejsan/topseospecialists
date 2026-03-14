@@ -111,8 +111,13 @@ export default function RootLayout({
       >
         <Providers>
           <div className="brand-shell flex min-h-screen flex-col">
+            <a href="#main-content" className="skip-link">
+              Skip to main content
+            </a>
             <Header />
-            <main className="flex-1 flex flex-col">{children}</main>
+            <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col">
+              {children}
+            </main>
             <Footer />
             <CookieConsentBanner />
           </div>

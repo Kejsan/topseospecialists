@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { BulkImportModal } from "@/components/custom/BulkImportModal";
 import { CreateBlogPostModal } from "@/components/custom/CreateBlogPostModal";
 import { BulkBlogImportModal } from "@/components/custom/BulkBlogImportModal";
+import { EnrichmentManagerModal } from "@/components/custom/EnrichmentManagerModal";
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -98,7 +99,10 @@ export default function AdminDashboard() {
       await setDoc(doc(db, "specialists", id), { 
         ...data, 
         createdAt: specialist.createdAt || new Date(), 
-        updatedAt: new Date() 
+        updatedAt: new Date(),
+        enrichmentStatus: "pending",
+        enrichmentRequestedAt: new Date(),
+        enrichmentPendingApproval: false 
       });
       await deleteDoc(doc(db, "pending-specialists", id));
     } catch (error) {
@@ -176,9 +180,10 @@ export default function AdminDashboard() {
   const enrichProfile = async (id: string) => {
     setIsProcessing(`enrich-${id}`);
     try {
-      const { functions, config } = await initFirebase();
-      const enrichSpecialist = httpsCallable(functions, "enrichSpecialist");
-      await enrichSpecialist({ appId: config.appId, specialistId: id });
+      const { functions } = await initFirebase();
+      const enrichSpecialist = httpsCallable(functions, "enrichProfile");
+      await enrichSpecialist({ specialistId: id });
+      alert("Enrichment draft created. Review it in the Enrichment Manager before approving.");
     } catch (error) {
       console.error("Failed to enrich:", error);
       alert("Failed to enrich profile.");
@@ -231,7 +236,7 @@ export default function AdminDashboard() {
 
       for (const specialist of toApprove) {
         const { id, submittedAt, ...data } = specialist as any;
-        await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date() });
+        await setDoc(doc(db, "specialists", id), { ...data, createdAt: new Date(), updatedAt: new Date(), enrichmentStatus: "pending", enrichmentRequestedAt: new Date(), enrichmentPendingApproval: false });
         await deleteDoc(doc(db, "pending-specialists", id));
       }
       setSelectedPending(new Set());
@@ -430,13 +435,13 @@ export default function AdminDashboard() {
     <div className="space-y-6">
       {/* Edit Specialist Modal */}
       <Dialog open={!!editingSpecialist} onOpenChange={(open) => !open && setEditingSpecialist(null)}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] overflow-y-auto max-w-2xl">
           <DialogHeader>
             <DialogTitle>Edit Profile: {editingSpecialist?.name}</DialogTitle>
             <DialogDescription>Modify specialist information before or after approval.</DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
                 <Input id="name" value={editForm.name || ""} onChange={e => setEditForm(prev => ({ ...prev, name: e.target.value }))} />
@@ -481,13 +486,14 @@ export default function AdminDashboard() {
       </Dialog>
 
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-4 rounded-xl border shadow-sm">
+      <div className="flex flex-col gap-4 rounded-xl border bg-card p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Admin Dashboard</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage specialists, blog posts, and submissions</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">
           <BulkImportModal />
+          <EnrichmentManagerModal profiles={approved} />
           <Button variant="outline" size="sm" onClick={handleLogout}>
             <LogOut className="h-4 w-4 mr-2" />
             Logout
@@ -496,7 +502,7 @@ export default function AdminDashboard() {
       </div>
 
       <Tabs defaultValue="pending" className="w-full">
-        <TabsList className="grid w-full max-w-lg grid-cols-3">
+        <TabsList className="grid w-full grid-cols-1 gap-2 sm:max-w-lg sm:grid-cols-3">
           <TabsTrigger value="pending">Pending ({pending.length})</TabsTrigger>
           <TabsTrigger value="approved">Approved ({approved.length})</TabsTrigger>
           <TabsTrigger value="blog" className="gap-1.5"><FileText className="h-3.5 w-3.5" />Blog ({blogPosts.length})</TabsTrigger>
@@ -505,7 +511,7 @@ export default function AdminDashboard() {
         {/* ── Pending Tab ── */}
         <TabsContent value="pending" className="mt-6 space-y-4">
           {pending.length > 0 && (
-            <div className="flex items-center gap-3 p-3 bg-muted/40 rounded-lg border">
+            <div className="flex flex-col gap-3 rounded-lg border bg-muted/40 p-3 sm:flex-row sm:items-center">
               <Checkbox
                 checked={selectedPending.size === pending.length && pending.length > 0}
                 onCheckedChange={selectAllPending}
@@ -514,7 +520,7 @@ export default function AdminDashboard() {
                 {selectedPending.size > 0 ? `${selectedPending.size} selected` : "Select all"}
               </span>
               {selectedPending.size > 0 && (
-                <div className="flex gap-2 ml-auto">
+                <div className="flex w-full flex-wrap gap-2 sm:ml-auto sm:w-auto sm:justify-end">
                   <Button size="sm" onClick={bulkApprove} disabled={isBulkProcessing}>
                     {isBulkProcessing ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <CheckCheck className="h-4 w-4 mr-1" />}
                     Bulk Approve ({selectedPending.size})
@@ -546,7 +552,7 @@ export default function AdminDashboard() {
         {/* ── Approved Tab ── */}
         <TabsContent value="approved" className="mt-6 space-y-4">
           {approved.length > 0 && (
-            <div className="flex items-center gap-3 p-3 bg-muted/40 rounded-lg border">
+            <div className="flex flex-col gap-3 rounded-lg border bg-muted/40 p-3 sm:flex-row sm:items-center">
               <Checkbox
                 checked={selectedApproved.size === approved.length && approved.length > 0}
                 onCheckedChange={selectAllApproved}
@@ -555,7 +561,7 @@ export default function AdminDashboard() {
                 {selectedApproved.size > 0 ? `${selectedApproved.size} selected` : "Select all"}
               </span>
               {selectedApproved.size > 0 && (
-                <div className="flex gap-2 ml-auto">
+                <div className="flex w-full flex-wrap gap-2 sm:ml-auto sm:w-auto sm:justify-end">
                   <Button size="sm" variant="outline" onClick={() => bulkExport(false)}>
                     <Download className="h-4 w-4 mr-1" />
                     Export ({selectedApproved.size})
@@ -582,11 +588,11 @@ export default function AdminDashboard() {
 
         {/* ── Blog Tab ── */}
         <TabsContent value="blog" className="mt-6 space-y-4">
-          <div className="flex items-center gap-2 p-3 bg-muted/40 rounded-lg border">
+          <div className="flex flex-wrap items-center gap-2 rounded-lg border bg-muted/40 p-3">
             <CreateBlogPostModal />
             <BulkBlogImportModal />
             <span className="text-xs text-muted-foreground ml-auto">
-              {blogPosts.filter(p => p.status === "published").length} published · {blogPosts.filter(p => p.status === "draft").length} drafts
+              {blogPosts.filter(p => p.status === "published").length} published � {blogPosts.filter(p => p.status === "draft").length} drafts
             </span>
           </div>
           {blogPosts.length === 0 ? (
@@ -603,3 +609,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

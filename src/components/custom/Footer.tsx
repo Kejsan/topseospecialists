@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="mt-16 border-t border-border/70 bg-primary text-primary-foreground">
       <div className="container mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-[1.3fr_1fr] md:px-8">
         <div className="space-y-4">
-          <span className="eyebrow bg-white/10 text-white border-white/15">Built for trust</span>
+          <span className="eyebrow border-white/15 bg-white/10 text-white">Built for trust</span>
           <div className="space-y-3">
             <h2 className="text-3xl font-semibold">A sharper way to discover credible SEO operators.</h2>
             <p className="max-w-2xl text-sm leading-7 text-white/78">
@@ -14,20 +14,20 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="grid gap-3 text-sm text-white/78 sm:grid-cols-2 md:grid-cols-1">
-          <Link href="/privacy-policy" className="transition-colors hover:text-white">
+        <nav aria-label="Footer" className="grid gap-3 text-sm text-white/78 sm:grid-cols-2 md:grid-cols-1">
+          <Link href="/privacy-policy" className="transition-colors hover:text-white focus-visible:text-white">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="transition-colors hover:text-white">
+          <Link href="/terms" className="transition-colors hover:text-white focus-visible:text-white">
             Terms of Service
           </Link>
-          <Link href="/cookie-policy" className="transition-colors hover:text-white">
+          <Link href="/cookie-policy" className="transition-colors hover:text-white focus-visible:text-white">
             Cookie Policy
           </Link>
           <p className="pt-3 text-xs uppercase tracking-[0.18em] text-white/50">
             Copyright {new Date().getFullYear()} Top SEO Specialists
           </p>
-        </div>
+        </nav>
       </div>
     </footer>
   );

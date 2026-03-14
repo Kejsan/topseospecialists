@@ -78,7 +78,7 @@ export default function BlogPostPage() {
         <section className="section-frame grid-accent space-y-6">
           <Badge variant="secondary">{post.category}</Badge>
           <div className="space-y-4">
-            <h1 className="text-5xl font-semibold leading-tight text-foreground md:text-6xl">{post.title}</h1>
+            <h1 className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl md:text-6xl">{post.title}</h1>
             <p className="max-w-3xl text-base leading-8 text-muted-foreground md:text-lg">{post.excerpt}</p>
           </div>
           <div className="flex flex-wrap items-center gap-5 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
@@ -132,3 +132,4 @@ export default function BlogPostPage() {
     </article>
   );
 }
+

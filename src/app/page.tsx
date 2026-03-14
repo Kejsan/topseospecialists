@@ -77,12 +77,12 @@ export default async function Home() {
   return (
     <>
       <HomeJsonLd specialists={specialists} />
-      <div className="container mx-auto flex max-w-7xl flex-col gap-12 px-4 py-10 md:px-8 lg:py-14">
+      <div className="container mx-auto flex max-w-7xl flex-col gap-12 px-4 py-8 md:px-8 lg:py-14">
         <section className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(280px,0.8fr)] lg:items-end">
           <div className="section-frame grid-accent space-y-6">
             <span className="eyebrow">Editorial trust for SEO discovery</span>
             <div className="space-y-4">
-              <h1 className="text-5xl font-semibold leading-[0.96] text-foreground md:text-6xl lg:text-7xl">
+              <h1 className="text-4xl font-semibold leading-[1] text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                 Find the SEO operators shaping what good looks like.
               </h1>
               <p className="max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
@@ -134,7 +134,7 @@ export default async function Home() {
         <section id="faq" className="section-frame space-y-6">
           <div className="space-y-3 text-center">
             <span className="eyebrow">FAQ</span>
-            <h2 className="text-4xl font-semibold text-foreground">Questions we hear most often.</h2>
+            <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Questions we hear most often.</h2>
             <p className="mx-auto max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
               A quick orientation for teams exploring the platform, contributing names, or trying to understand the curation lens.
             </p>
@@ -163,7 +163,7 @@ export default async function Home() {
               },
             ].map((item) => (
               <details key={item.question} className="rounded-[24px] border border-border/70 bg-white/74 p-5 open:border-primary/20">
-                <summary className="cursor-pointer list-none text-lg font-semibold text-foreground">{item.question}</summary>
+                <summary className="cursor-pointer list-none text-lg font-semibold text-foreground marker:hidden">{item.question}</summary>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.answer}</p>
               </details>
             ))}
@@ -173,3 +173,4 @@ export default async function Home() {
     </>
   );
 }
+

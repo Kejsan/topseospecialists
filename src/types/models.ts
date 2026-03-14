@@ -21,8 +21,47 @@ export const SPECIALTY_CATEGORIES: SpecialtyCategory[] = [
   'Community & Education'
 ];
 
+export type FirestoreDateValue = {
+  toDate?: () => Date;
+} | Date | string | number | null | undefined;
+
+export type EnrichmentStatus =
+  | 'pending'
+  | 'processing'
+  | 'needs_review'
+  | 'enriched'
+  | 'failed'
+  | 'excluded'
+  | 'rejected';
+
+export interface SpecialistEnrichmentDraft {
+  headline?: string;
+  summary?: string;
+  website?: string;
+  social?: string;
+  linkedinUrl?: string;
+  xUrl?: string;
+  githubUrl?: string;
+  otherSocialUrl?: string;
+  country?: string;
+  city?: string;
+  region?: string;
+  timezone?: string;
+  currentCompany?: string;
+  specialties?: string[];
+  secondaryCategories?: string[];
+  servicesOffered?: string[];
+  problemsTheySolve?: string[];
+  notableAchievements?: string[];
+  confidenceScore?: number;
+  notes?: string;
+  sourceUrls?: string[];
+  generatedAt?: string;
+  version?: string;
+}
+
 export interface Specialist {
-  id?: string; // Firestore document ID
+  id?: string;
   slug?: string;
   name: string;
   role: string;
@@ -31,24 +70,46 @@ export interface Specialist {
   website?: string;
   social?: string;
   summary?: string;
-  submittedAt?: any; // Firestore Timestamp
-  createdAt?: any;
-  updatedAt?: any;
+  submittedAt?: FirestoreDateValue;
+  createdAt?: FirestoreDateValue;
+  updatedAt?: FirestoreDateValue;
   status?: 'pending' | 'approved';
   avatar?: string;
+  headline?: string;
+  country?: string;
+  city?: string;
+  region?: string;
+  timezone?: string;
+  currentCompany?: string;
+  specialties?: string[];
+  secondaryCategories?: string[];
+  servicesOffered?: string[];
+  problemsTheySolve?: string[];
+  notableAchievements?: string[];
+  enrichmentStatus?: EnrichmentStatus;
+  enrichmentRequestedAt?: FirestoreDateValue;
+  enrichmentLastAttemptAt?: FirestoreDateValue;
+  enrichmentLastSuccessAt?: FirestoreDateValue;
+  enrichmentApprovedAt?: FirestoreDateValue;
+  enrichmentPendingApproval?: boolean;
+  enrichmentConfidence?: number;
+  enrichmentSourceUrls?: string[];
+  enrichmentNotes?: string;
+  enrichmentVersion?: string;
+  enrichmentDraft?: SpecialistEnrichmentDraft;
 }
 
 export interface AppConfig {
-    firebase: {
-        apiKey: string;
-        authDomain: string;
-        projectId: string;
-        storageBucket: string;
-        messagingSenderId: string;
-        appId: string;
-        measurementId?: string;
-    };
-    rateLimitEnabled?: boolean;
+  firebase: {
+    apiKey: string;
+    authDomain: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
+    measurementId?: string;
+  };
+  rateLimitEnabled?: boolean;
 }
 
 export interface BlogPost {
@@ -56,15 +117,15 @@ export interface BlogPost {
   title: string;
   slug: string;
   excerpt: string;
-  content: string; // Markdown content
+  content: string;
   author: string;
   category: string;
   tags: string[];
   coverImage?: string;
   status: 'draft' | 'published';
-  createdAt?: any;
-  updatedAt?: any;
-  publishedAt?: any;
+  createdAt?: FirestoreDateValue;
+  updatedAt?: FirestoreDateValue;
+  publishedAt?: FirestoreDateValue;
 }
 
 export const BLOG_CATEGORIES = [

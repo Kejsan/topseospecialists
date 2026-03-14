@@ -53,7 +53,7 @@ export default function BlogPage() {
         <section className="section-frame grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_300px] lg:items-end">
           <div className="space-y-4">
             <span className="eyebrow">Journal</span>
-            <h1 className="text-5xl font-semibold leading-tight text-foreground md:text-6xl">SEO analysis, strategy, and practical thinking.</h1>
+            <h1 className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl md:text-6xl">SEO analysis, strategy, and practical thinking.</h1>
             <p className="max-w-2xl text-base leading-8 text-muted-foreground md:text-lg">
               The editorial side of the platform: perspective, frameworks, and case-driven insight from the same world the directory is curating.
             </p>
@@ -116,3 +116,4 @@ export default function BlogPage() {
     </div>
   );
 }
+

@@ -75,7 +75,7 @@ export function CreateBlogPostModal() {
           New Post
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[600px]">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
             <DialogTitle>Create Blog Post</DialogTitle>
@@ -91,7 +91,7 @@ export function CreateBlogPostModal() {
                 placeholder="10 Advanced Technical SEO Tips for 2026"
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <label htmlFor="bp-author" className="text-sm font-medium">Author *</label>
                 <Input id="bp-author" required value={formData.author}
@@ -128,7 +128,7 @@ export function CreateBlogPostModal() {
                 rows={10}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <label htmlFor="bp-tags" className="text-sm font-medium">Tags (comma-separated)</label>
                 <Input id="bp-tags" value={formData.tags}
@@ -160,3 +160,4 @@ export function CreateBlogPostModal() {
     </Dialog>
   );
 }
+

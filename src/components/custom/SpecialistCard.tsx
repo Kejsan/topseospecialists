@@ -31,11 +31,11 @@ export function SpecialistCard({ specialist }: SpecialistCardProps) {
   const profileUrl = `/specialist/${specialist.slug || slugify(specialist.name)}`;
 
   return (
-    <Card className="grid-accent h-full overflow-hidden border-border/80 transition-all duration-200 hover:-translate-y-1 hover:border-primary/15">
-      <Link href={profileUrl} className="flex h-full flex-col">
+    <Card className="group grid-accent h-full overflow-hidden border-border/80 transition-all duration-200 hover:-translate-y-1 hover:border-primary/15">
+      <Link href={profileUrl} className="flex h-full flex-col" aria-label={`View profile for ${specialist.name}`}>
         <CardHeader className="gap-5 pb-4">
           <div className="flex items-start justify-between gap-4">
-            <div className="flex min-w-0 items-center gap-4">
+            <div className="flex min-w-0 items-start gap-4">
               <Avatar className="h-16 w-16 border border-white/80 shadow-[0_14px_26px_-18px_rgba(0,0,128,0.5)]">
                 <AvatarImage src={specialist.avatar || `https://avatar.vercel.sh/${specialist.name}.png`} alt={specialist.name} />
                 <AvatarFallback className="bg-secondary text-sm font-semibold text-primary">{initials}</AvatarFallback>
@@ -97,3 +97,4 @@ export function SpecialistCard({ specialist }: SpecialistCardProps) {
     </Card>
   );
 }
+

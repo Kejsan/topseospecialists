@@ -97,7 +97,7 @@ export function BulkBlogImportModal() {
           Bulk Import
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[550px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[550px]">
         <DialogHeader>
           <DialogTitle>Bulk Import Blog Posts</DialogTitle>
           <DialogDescription>
@@ -107,7 +107,7 @@ export function BulkBlogImportModal() {
 
         <Alert className="bg-muted/50">
           <Info className="h-4 w-4" />
-          <AlertDescription className="text-xs space-y-1">
+          <AlertDescription className="space-y-1 text-xs leading-5">
             <p><strong>JSON format:</strong></p>
             <code className="block bg-muted px-2 py-1 rounded text-[10px]">
               {`[{"title":"...", "author":"...", "category":"...", "excerpt":"...", "content":"...", "tags":["a","b"]}]`}
@@ -144,3 +144,4 @@ export function BulkBlogImportModal() {
     </Dialog>
   );
 }
+

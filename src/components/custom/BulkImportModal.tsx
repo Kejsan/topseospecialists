@@ -82,7 +82,7 @@ export function BulkImportModal() {
           Bulk Import
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Bulk Import Specialists</DialogTitle>
           <DialogDescription>
@@ -92,7 +92,7 @@ export function BulkImportModal() {
         
         <Alert className="bg-muted/50">
           <Info className="h-4 w-4" />
-          <AlertDescription className="text-xs">
+          <AlertDescription className="text-xs leading-5">
             Format: <code className="bg-muted px-1 rounded">Name, LinkedIn URL, Role (optional), Category (optional)</code>
             <br/>Example: <br/>
             Jane Doe, https://linkedin.com/in/janedoe, SEO Lead, Technical SEO
@@ -135,3 +135,4 @@ export function BulkImportModal() {
     </Dialog>
   );
 }
+

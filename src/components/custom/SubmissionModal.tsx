@@ -26,7 +26,7 @@ import { initFirebase } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { Plus, Loader2 } from "lucide-react";
 
-export function SubmissionModal() {
+export function SubmissionModal({ compact = false }: { compact?: boolean }) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [consentChecked, setConsentChecked] = useState(false);
@@ -45,13 +45,13 @@ export function SubmissionModal() {
 
     setIsSubmitting(true);
     try {
-      const { db, config } = await initFirebase();
+      const { db } = await initFirebase();
       const pendingCollection = collection(db, "pending-specialists");
-      
+
       await addDoc(pendingCollection, {
         ...formData,
         submittedAt: new Date(),
-        status: "pending"
+        status: "pending",
       });
 
       setOpen(false);
@@ -69,13 +69,14 @@ export function SubmissionModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" size="sm" className="gap-2 shadow-sm transition-all hover:shadow hover:-translate-y-0.5">
+        <Button variant="default" size="sm" className="gap-2 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow">
           <Plus className="h-4 w-4" />
-          <span className="hidden sm:inline-block">Join the List</span>
+          <span className={compact ? "sr-only" : "hidden sm:inline-block"}>Join the List</span>
+          {compact ? <span className="sm:hidden">Submit</span> : null}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
-        <form onSubmit={handleSubmit}>
+      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-[500px]">
+        <form onSubmit={handleSubmit} className="space-y-1">
           <DialogHeader>
             <DialogTitle>Contribute a Specialist</DialogTitle>
             <DialogDescription>
@@ -115,7 +116,7 @@ export function SubmissionModal() {
                 rows={3}
               />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid gap-4 sm:grid-cols-2">
               <div className="grid gap-2">
                 <label htmlFor="website" className="text-sm font-medium">Website</label>
                 <Input
@@ -139,12 +140,11 @@ export function SubmissionModal() {
             </div>
             <div className="grid gap-2">
               <label htmlFor="category" className="text-sm font-medium">Specialty Category *</label>
-              <Select 
-                value={formData.category} 
+              <Select
+                value={formData.category}
                 onValueChange={(value) => setFormData({ ...formData, category: value as SpecialtyCategory })}
-                required
               >
-                <SelectTrigger>
+                <SelectTrigger aria-label="Specialty category">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
@@ -154,15 +154,15 @@ export function SubmissionModal() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-start space-x-2 mt-2">
+            <div className="mt-2 flex items-start gap-2">
               <input
                 type="checkbox"
                 id="consent"
-                className="mt-1"
+                className="mt-1 h-4 w-4 rounded border-border text-primary focus-visible:ring-4 focus-visible:ring-ring"
                 checked={consentChecked}
                 onChange={(e) => setConsentChecked(e.target.checked)}
               />
-              <label htmlFor="consent" className="text-sm text-muted-foreground leading-snug">
+              <label htmlFor="consent" className="text-sm leading-snug text-muted-foreground">
                 I have permission to share this information and accept the{" "}
                 <Link href="/privacy-policy" className="underline hover:text-foreground">
                   Privacy Policy
@@ -175,7 +175,7 @@ export function SubmissionModal() {
               </label>
             </div>
           </div>
-          <DialogFooter>
+          <DialogFooter className="gap-2">
             <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={isSubmitting}>
               Cancel
             </Button>

@@ -57,7 +57,7 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
           </p>
         </CardHeader>
         <CardContent className="grid gap-6 pt-6 md:grid-cols-[240px_minmax(0,1fr)] md:items-center">
-          <div className="h-[240px] w-full">
+          <div className="h-[240px] w-full" aria-hidden="true">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie data={categoryData} dataKey="value" innerRadius={62} outerRadius={94} paddingAngle={4} stroke="none">
@@ -89,6 +89,13 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
               </div>
             ))}
           </div>
+          <ul className="sr-only">
+            {categoryData.map((entry) => (
+              <li key={entry.name}>
+                {entry.name}: {entry.value} specialists
+              </li>
+            ))}
+          </ul>
         </CardContent>
       </Card>
 
@@ -98,7 +105,7 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
           <CardTitle className="mt-2 text-2xl">Most common operating titles.</CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
-          <div className="h-[280px] w-full">
+          <div className="h-[280px] w-full" aria-hidden="true">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={roleData} layout="vertical" margin={{ top: 0, right: 8, left: 12, bottom: 0 }}>
                 <XAxis type="number" hide />
@@ -125,9 +132,15 @@ export function StatsCharts({ specialists }: StatsChartsProps) {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          <ul className="sr-only">
+            {roleData.map((entry) => (
+              <li key={entry.name}>
+                {entry.name}: {entry.value} specialists
+              </li>
+            ))}
+          </ul>
         </CardContent>
       </Card>
     </div>
   );
 }
-

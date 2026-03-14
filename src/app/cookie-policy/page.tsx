@@ -7,12 +7,12 @@ export const metadata: Metadata = {
 
 export default function CookiePolicyPage() {
   return (
-    <div className="container mx-auto px-4 md:px-8 py-12 lg:py-16 max-w-4xl">
-      <h1 className="text-3xl md:text-5xl font-extrabold mb-8 tracking-tight text-foreground">
+    <div className="container mx-auto max-w-4xl px-4 py-12 md:px-8 lg:py-16">
+      <h1 className="mb-8 text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
         Cookie Policy
       </h1>
       
-      <div className="space-y-8 text-muted-foreground leading-relaxed">
+      <div className="space-y-8 leading-relaxed text-muted-foreground">
         <section className="space-y-4">
           <p>Last updated: {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
           <p>
@@ -90,3 +90,4 @@ export default function CookiePolicyPage() {
     </div>
   );
 }
+

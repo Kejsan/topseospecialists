@@ -56,13 +56,13 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
   };
 
   return (
-    <div className="space-y-8">
-      <section className="section-frame grid-accent space-y-6">
+    <div className="space-y-8" id="directory">
+      <section className="section-frame grid-accent space-y-6" aria-labelledby="directory-heading">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-3">
             <span className="eyebrow">Directory controls</span>
             <div className="space-y-2">
-              <h2 className="text-3xl font-semibold text-foreground md:text-4xl">Filter by specialty, role, or signal.</h2>
+              <h2 id="directory-heading" className="text-3xl font-semibold text-foreground md:text-4xl">Filter by specialty, role, or signal.</h2>
               <p className="max-w-2xl text-sm leading-7 text-muted-foreground md:text-base">
                 Search practitioners by expertise and quickly narrow the field without losing the editorial feel of the directory.
               </p>
@@ -74,28 +74,39 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
           </div>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px_52px]">
+        <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px] lg:grid-cols-[minmax(0,1fr)_220px_52px]">
           <div className="relative">
+            <label htmlFor="directory-search" className="sr-only">
+              Search specialists
+            </label>
             <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
             <Input
+              id="directory-search"
               placeholder="Search names, roles, specialties, and contributions"
               className="h-14 pl-12 text-sm md:text-base"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "newest" | "name-asc" | "name-desc")}
-            className="h-14 rounded-2xl border border-border bg-white/85 px-4 text-sm font-medium text-foreground shadow-[0_10px_28px_-20px_rgba(16,32,63,0.45)] outline-none focus:ring-4 focus:ring-ring"
-          >
-            <option value="newest">Newest first</option>
-            <option value="name-asc">Name A-Z</option>
-            <option value="name-desc">Name Z-A</option>
-          </select>
+          <div className="grid gap-2">
+            <label htmlFor="directory-sort" className="sr-only">
+              Sort specialists
+            </label>
+            <select
+              id="directory-sort"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as "newest" | "name-asc" | "name-desc")}
+              className="h-14 rounded-2xl border border-border bg-white/85 px-4 text-sm font-medium text-foreground shadow-[0_10px_28px_-20px_rgba(16,32,63,0.45)] outline-none focus:ring-4 focus:ring-ring"
+            >
+              <option value="newest">Newest first</option>
+              <option value="name-asc">Name A-Z</option>
+              <option value="name-desc">Name Z-A</option>
+            </select>
+          </div>
           <Button
             variant="outline"
             size="icon-lg"
+            className="sm:justify-self-start lg:justify-self-auto"
             onClick={clearFilters}
             disabled={!searchQuery && selectedCategory === "All" && sortBy === "newest"}
             aria-label="Clear filters"
@@ -104,22 +115,26 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
           </Button>
         </div>
 
-        <div className="flex flex-wrap gap-2.5">
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setSelectedCategory(category)}
-              className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
-                selectedCategory === category
-                  ? "border-primary bg-primary text-primary-foreground shadow-[0_16px_30px_-24px_rgba(0,0,128,0.95)]"
-                  : "border-border bg-white/80 text-foreground hover:border-accent/40 hover:text-primary"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        <fieldset className="space-y-3">
+          <legend className="text-sm font-semibold text-foreground">Filter by specialty</legend>
+          <div className="flex flex-wrap gap-2.5">
+            {categories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                aria-pressed={selectedCategory === category}
+                className={`rounded-full border px-4 py-2 text-sm font-semibold transition-all ${
+                  selectedCategory === category
+                    ? "border-primary bg-primary text-primary-foreground shadow-[0_16px_30px_-24px_rgba(0,0,128,0.95)]"
+                    : "border-border bg-white/80 text-foreground hover:border-accent/40 hover:text-primary"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </fieldset>
       </section>
 
       <StatsCharts specialists={filteredAndSortedSpecialists} />
@@ -135,22 +150,27 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <AnimatePresence mode="popLayout">
-            {filteredAndSortedSpecialists.map((specialist) => (
-              <motion.div
-                key={specialist.id || specialist.name}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.22 }}
-              >
-                <SpecialistCard specialist={specialist} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+        <>
+          <div aria-live="polite" className="sr-only">
+            Showing {filteredAndSortedSpecialists.length} specialists
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <AnimatePresence mode="popLayout">
+              {filteredAndSortedSpecialists.map((specialist) => (
+                <motion.div
+                  key={specialist.id || specialist.name}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.22 }}
+                >
+                  <SpecialistCard specialist={specialist} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        </>
       )}
 
       <div className="flex justify-center">

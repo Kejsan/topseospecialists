@@ -39,12 +39,12 @@ export default function LoginPage() {
         <section className="section-frame bg-primary text-primary-foreground shadow-[0_36px_70px_-42px_rgba(0,0,128,0.6)]">
           <span className="eyebrow border-white/15 bg-white/10 text-white">Secure admin access</span>
           <div className="mt-5 space-y-4">
-            <h1 className="text-5xl font-semibold leading-tight">Manage reviews, publishing, and editorial flow.</h1>
+            <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">Manage reviews, publishing, and editorial flow.</h1>
             <p className="max-w-2xl text-base leading-8 text-white/82">
               This area is for curators and operators reviewing submissions, publishing profiles, and maintaining the platform&apos;s editorial standard.
             </p>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <div className="rounded-[24px] border border-white/12 bg-white/8 p-4">
               <ShieldCheck className="h-5 w-5 text-white" />
               <p className="mt-3 text-sm font-semibold uppercase tracking-[0.18em] text-white/65">Protected</p>
@@ -89,3 +89,4 @@ export default function LoginPage() {
     </div>
   );
 }
+

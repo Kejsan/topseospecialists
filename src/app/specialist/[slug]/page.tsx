@@ -92,7 +92,7 @@ export default async function SpecialistProfilePage({ params }: { params: Promis
               <div className="space-y-4">
                 <Badge variant="secondary">{specialist.category}</Badge>
                 <div className="space-y-3">
-                  <h1 className="text-5xl font-semibold leading-tight text-foreground md:text-6xl">{specialist.name}</h1>
+                  <h1 className="text-4xl font-semibold leading-tight text-foreground sm:text-5xl md:text-6xl">{specialist.name}</h1>
                   <p className="flex items-center gap-2 text-base font-medium text-muted-foreground md:text-lg">
                     <Briefcase className="h-5 w-5 text-accent" />
                     {specialist.role}
@@ -193,3 +193,4 @@ export default async function SpecialistProfilePage({ params }: { params: Promis
     </>
   );
 }
+

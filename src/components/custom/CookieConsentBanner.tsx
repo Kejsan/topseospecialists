@@ -24,7 +24,7 @@ export function CookieConsentBanner() {
   if (!showBanner) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 px-4">
+    <div className="fixed inset-x-0 bottom-4 z-50 px-4" role="region" aria-label="Cookie consent">
       <div className="container mx-auto max-w-5xl">
         <div className="surface-card rounded-[30px] border px-5 py-5 md:px-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -50,3 +50,4 @@ export function CookieConsentBanner() {
     </div>
   );
 }
+
