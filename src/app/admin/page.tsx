@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { initFirebase } from "@/lib/firebase";
+import { formatFirebaseFunctionsError, initFirebase } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc, setDoc, updateDoc, where } from "firebase/firestore";
 import { httpsCallable } from "firebase/functions";
 import { useAuth } from "@/context/AuthContext";
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
       alert("Enrichment draft created. Review it in the Enrichment Manager before approving.");
     } catch (error) {
       console.error("Failed to enrich:", error);
-      alert("Failed to enrich profile.");
+      alert(formatFirebaseFunctionsError(error, "Enriching the profile"));
     } finally {
       setIsProcessing(null);
     }

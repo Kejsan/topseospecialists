@@ -14,19 +14,45 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+const functionsRegion = process.env.NEXT_PUBLIC_FIREBASE_FUNCTIONS_REGION || "us-central1";
+
 // Initialize Firebase
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
 const auth = getAuth(app);
-const functions = getFunctions(app);
+const functions = getFunctions(app, functionsRegion);
 
-export { db, auth, functions };
+export { db, auth, functions, functionsRegion };
 
 export async function initFirebase() {
   if (!firebaseConfig.apiKey) {
     throw new Error("Firebase configuration not found. Check your .env.local file.");
   }
-  return { app, db, auth, functions, config: firebaseConfig };
+  return { app, db, auth, functions, functionsRegion, config: firebaseConfig };
+}
+
+export function formatFirebaseFunctionsError(error: unknown, actionLabel: string) {
+  const details = error as { code?: string; message?: string } | null;
+  const code = details?.code || "";
+  const message = details?.message || "";
+
+  if (code === "functions/unauthenticated") {
+    return `${actionLabel} requires an authenticated admin session. Sign in again and retry.`;
+  }
+
+  if (code === "functions/failed-precondition") {
+    return message || `${actionLabel} is not configured correctly on Firebase yet.`;
+  }
+
+  if (code === "functions/internal") {
+    return `${actionLabel} could not reach the Firebase callable function. This usually means the function is not deployed correctly for project "${firebaseConfig.projectId}" in region "${functionsRegion}", or the browser request was blocked before the callable handler responded.`;
+  }
+
+  if (message) {
+    return `${actionLabel} failed: ${message}`;
+  }
+
+  return `${actionLabel} failed. Check the browser console and Firebase Functions deployment.`;
 }
 
 export async function getApprovedSpecialists(): Promise<Specialist[]> {

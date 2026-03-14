@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { httpsCallable } from "firebase/functions";
 import { Check, Loader2, Play, Sparkles, Trash2, X } from "lucide-react";
-import { initFirebase } from "@/lib/firebase";
+import { formatFirebaseFunctionsError, initFirebase } from "@/lib/firebase";
 import { Specialist } from "@/types/models";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -71,7 +71,7 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
       await fn({ specialistId });
     } catch (error) {
       console.error(`Failed to run ${fnName}:`, error);
-      alert(`Failed to run ${fnName}.`);
+      alert(formatFirebaseFunctionsError(error, `Running ${fnName}`));
     } finally {
       setWorkingId(null);
     }
@@ -87,7 +87,7 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
       alert(`Monthly batch complete. Attempted ${data.attempted || 0}, processed ${data.processed || 0}.`);
     } catch (error) {
       console.error("Failed to run monthly enrichment batch:", error);
-      alert("Failed to run the monthly enrichment batch.");
+      alert(formatFirebaseFunctionsError(error, "Running the monthly enrichment batch"));
     } finally {
       setIsBatchRunning(false);
     }
