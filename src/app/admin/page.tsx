@@ -88,7 +88,7 @@ export default function AdminDashboard() {
     await signOut(auth);
   };
 
-  // ── Specialist Actions ──
+  // Specialist Actions
 
   const approveSpecialist = async (specialist: Specialist) => {
     if (!specialist.id) return;
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // ── Bulk Actions ──
+  // Bulk Actions
 
   const togglePendingSelection = (id: string) => {
     setSelectedPending(prev => {
@@ -288,7 +288,7 @@ export default function AdminDashboard() {
     URL.revokeObjectURL(url);
   };
 
-  // ── Rendering ──
+  // Rendering
 
   if (loading) {
     return (
@@ -365,7 +365,7 @@ export default function AdminDashboard() {
     );
   };
 
-  // ── Blog Actions ──
+  // Blog Actions
 
   const toggleBlogStatus = async (post: BlogPost) => {
     if (!post.id) return;
@@ -406,7 +406,7 @@ export default function AdminDashboard() {
             <CardTitle className="text-base truncate">{post.title}</CardTitle>
             <CardDescription className="mt-1 flex items-center gap-2">
               <span>{post.author}</span>
-              <span>·</span>
+              <span>-</span>
               <span>{post.category}</span>
             </CardDescription>
           </div>
@@ -508,7 +508,7 @@ export default function AdminDashboard() {
           <TabsTrigger value="blog" className="gap-1.5"><FileText className="h-3.5 w-3.5" />Blog ({blogPosts.length})</TabsTrigger>
         </TabsList>
 
-        {/* ── Pending Tab ── */}
+        {/* Pending Tab */}
         <TabsContent value="pending" className="mt-6 space-y-4">
           {pending.length > 0 && (
             <div className="flex flex-col gap-3 rounded-lg border bg-muted/40 p-3 sm:flex-row sm:items-center">
@@ -549,7 +549,7 @@ export default function AdminDashboard() {
           )}
         </TabsContent>
 
-        {/* ── Approved Tab ── */}
+        {/* Approved Tab */}
         <TabsContent value="approved" className="mt-6 space-y-4">
           {approved.length > 0 && (
             <div className="flex flex-col gap-3 rounded-lg border bg-muted/40 p-3 sm:flex-row sm:items-center">
@@ -586,13 +586,13 @@ export default function AdminDashboard() {
           )}
         </TabsContent>
 
-        {/* ── Blog Tab ── */}
+        {/* Blog Tab */}
         <TabsContent value="blog" className="mt-6 space-y-4">
           <div className="flex flex-wrap items-center gap-2 rounded-lg border bg-muted/40 p-3">
             <CreateBlogPostModal />
             <BulkBlogImportModal />
             <span className="text-xs text-muted-foreground ml-auto">
-              {blogPosts.filter(p => p.status === "published").length} published � {blogPosts.filter(p => p.status === "draft").length} drafts
+              {blogPosts.filter(p => p.status === "published").length} published - {blogPosts.filter(p => p.status === "draft").length} drafts
             </span>
           </div>
           {blogPosts.length === 0 ? (
