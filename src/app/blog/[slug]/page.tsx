@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { ArrowLeft, Calendar, Loader2, Tag, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { asDate } from "@/lib/date";
 import { initFirebase } from "@/lib/firebase";
 import { BlogPost } from "@/types/models";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -41,6 +42,7 @@ export default function BlogPostPage() {
   }, [slug]);
 
   const contentBlocks = useMemo(() => post?.content.split("\n") ?? [], [post?.content]);
+  const publishedAt = asDate(post?.publishedAt);
 
   if (loading) {
     return (
@@ -88,8 +90,8 @@ export default function BlogPostPage() {
             </span>
             <span className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
-              {post.publishedAt?.toDate
-                ? post.publishedAt.toDate().toLocaleDateString("en-US", {
+              {publishedAt
+                ? publishedAt.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",

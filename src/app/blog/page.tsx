@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, Loader2, User } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { asDate } from "@/lib/date";
 import { initFirebase } from "@/lib/firebase";
 import { BlogPost } from "@/types/models";
 import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
@@ -90,7 +91,7 @@ export default function BlogPage() {
                       </span>
                       <span className="flex items-center gap-2">
                         <Calendar className="h-3.5 w-3.5" />
-                        {post.publishedAt?.toDate ? post.publishedAt.toDate().toLocaleDateString() : "Pending"}
+                        {asDate(post.publishedAt)?.toLocaleDateString() ?? "Pending"}
                       </span>
                     </div>
                     {post.tags?.length > 0 && (

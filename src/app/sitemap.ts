@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { asDate } from "@/lib/date";
 import { initFirebase } from "@/lib/firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 
@@ -25,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (data.slug) {
         routes.push({
           url: `${BASE_URL}/specialist/${data.slug}`,
-          lastModified: data.updatedAt?.toDate() || now,
+          lastModified: asDate(data.updatedAt) || now,
           changeFrequency: "monthly",
           priority: 0.7,
         });
@@ -42,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (data.slug) {
         routes.push({
           url: `${BASE_URL}/blog/${data.slug}`,
-          lastModified: data.updatedAt?.toDate() || now,
+          lastModified: asDate(data.updatedAt) || now,
           changeFrequency: "weekly",
           priority: 0.6,
         });
