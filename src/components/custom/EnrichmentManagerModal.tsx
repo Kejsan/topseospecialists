@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { httpsCallable } from "firebase/functions";
 import { Check, Loader2, Play, Sparkles, Trash2, X } from "lucide-react";
 import { formatFirebaseFunctionsError, initFirebase } from "@/lib/firebase";
 import { Specialist } from "@/types/models";
@@ -15,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { doc, setDoc, deleteField, serverTimestamp } from "firebase/firestore";
 
 interface EnrichmentManagerModalProps {
   profiles: Specialist[];
@@ -66,12 +66,118 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
     if (!specialistId) return;
     setWorkingId(`${fnName}:${specialistId}`);
     try {
-      const { functions } = await initFirebase();
-      const fn = httpsCallable(functions, fnName);
-      await fn({ specialistId });
-    } catch (error) {
+      const { db } = await initFirebase();
+      const specialistRef = doc(db, "specialists", specialistId);
+      const profile = profiles.find((p) => p.id === specialistId);
+
+      if (fnName === "queueProfileEnrichment") {
+        await setDoc(specialistRef, {
+          enrichmentStatus: "pending",
+          enrichmentRequestedAt: serverTimestamp(),
+          enrichmentPendingApproval: false,
+          enrichmentNotes: "Queued for enrichment.",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      } 
+      else if (fnName === "excludeProfileFromEnrichment") {
+        await setDoc(specialistRef, {
+          enrichmentStatus: "excluded",
+          enrichmentPendingApproval: false,
+          enrichmentDraft: deleteField(),
+          enrichmentNotes: "Excluded from automated enrichment.",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
+      else if (fnName === "rejectProfileEnrichment") {
+        await setDoc(specialistRef, {
+          enrichmentStatus: "rejected",
+          enrichmentPendingApproval: false,
+          enrichmentDraft: deleteField(),
+          enrichmentNotes: "Enrichment draft rejected.",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
+      else if (fnName === "approveProfileEnrichment" && profile) {
+        const draft = profile.enrichmentDraft;
+        if (!draft) throw new Error("No enrichment draft available to approve.");
+        
+        await setDoc(specialistRef, {
+          headline: draft.headline || profile.headline || "",
+          summary: draft.summary || profile.summary || "",
+          website: draft.website || profile.website || "",
+          social: draft.social || profile.social || "",
+          country: draft.country || profile.country || "",
+          city: draft.city || profile.city || "",
+          region: draft.region || profile.region || "",
+          timezone: draft.timezone || profile.timezone || "",
+          currentCompany: draft.currentCompany || profile.currentCompany || "",
+          specialties: draft.specialties || profile.specialties || [],
+          secondaryCategories: draft.secondaryCategories || profile.secondaryCategories || [],
+          servicesOffered: draft.servicesOffered || profile.servicesOffered || [],
+          problemsTheySolve: draft.problemsTheySolve || profile.problemsTheySolve || [],
+          notableAchievements: draft.notableAchievements || profile.notableAchievements || [],
+          enrichmentStatus: "enriched",
+          enrichmentPendingApproval: false,
+          enrichmentApprovedAt: serverTimestamp(),
+          enrichmentConfidence: draft.confidenceScore || null,
+          enrichmentSourceUrls: draft.sourceUrls || [],
+          enrichmentDraft: deleteField(),
+          enrichmentNotes: draft.notes || profile.enrichmentNotes || "Approved enrichment draft.",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
+      else if (fnName === "enrichProfile" && profile) {
+        await setDoc(specialistRef, {
+          enrichmentStatus: "processing",
+          enrichmentLastAttemptAt: serverTimestamp(),
+          enrichmentUpdatedBy: "manual",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+
+        const res = await fetch("/api/enrich", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ profile }),
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.error || `Server responded with ${res.status}`);
+        }
+
+        const data = await res.json();
+        const draft = data.draft;
+
+        if (!draft) throw new Error("No draft returned from API.");
+
+        await setDoc(specialistRef, {
+          enrichmentStatus: "needs_review",
+          enrichmentDraft: draft,
+          enrichmentConfidence: draft.confidenceScore || null,
+          enrichmentSourceUrls: draft.sourceUrls,
+          enrichmentLastSuccessAt: serverTimestamp(),
+          enrichmentPendingApproval: true,
+          enrichmentVersion: draft.version || "firecrawl-v1",
+          updatedAt: serverTimestamp(),
+        }, { merge: true });
+      }
+    } catch (error: any) {
       console.error(`Failed to run ${fnName}:`, error);
-      alert(formatFirebaseFunctionsError(error, `Running ${fnName}`));
+      
+      if (fnName === "enrichProfile" && specialistId) {
+        try {
+          const { db } = await initFirebase();
+          await setDoc(doc(db, "specialists", specialistId), {
+            enrichmentStatus: "failed",
+            enrichmentPendingApproval: false,
+            enrichmentNotes: typeof error === 'string' ? error : error?.message || "Unknown error",
+            updatedAt: serverTimestamp(),
+          }, { merge: true });
+        } catch (e) {
+          console.error("Failed to update status to failed:", e);
+        }
+      }
+      alert(`Error running ${fnName}:\n${error?.message || "Check the console for details."}`);
     } finally {
       setWorkingId(null);
     }
@@ -79,15 +185,25 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
 
   const runMonthlyBatchNow = async () => {
     setIsBatchRunning(true);
+    let attempted = 0;
+    let processed = 0;
+    
     try {
-      const { functions } = await initFirebase();
-      const fn = httpsCallable(functions, "runMonthlyEnrichmentBatch");
-      const response = await fn({});
-      const data = response.data as { attempted?: number; processed?: number };
-      alert(`Monthly batch complete. Attempted ${data.attempted || 0}, processed ${data.processed || 0}.`);
-    } catch (error) {
+      const pendingProfiles = profiles.filter((p) => p.enrichmentStatus === "pending").slice(0, 5); // Batch size of 5
+      attempted = pendingProfiles.length;
+
+      for (const profile of pendingProfiles) {
+        try {
+          await callAction("enrichProfile", profile.id);
+          processed++;
+        } catch (e) {
+          console.error("Failed to process profile in batch:", profile.id, e);
+        }
+      }
+      alert(`Monthly batch complete. Attempted ${attempted}, processed successfully ${processed}.`);
+    } catch (error: any) {
       console.error("Failed to run monthly enrichment batch:", error);
-      alert(formatFirebaseFunctionsError(error, "Running the monthly enrichment batch"));
+      alert(`Error running batch:\n${error?.message || "Check the console"}`);
     } finally {
       setIsBatchRunning(false);
     }
@@ -190,3 +306,4 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
     </Dialog>
   );
 }
+

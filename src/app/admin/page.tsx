@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { formatFirebaseFunctionsError, initFirebase } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc, setDoc, updateDoc, where } from "firebase/firestore";
-import { httpsCallable } from "firebase/functions";
 import { useAuth } from "@/context/AuthContext";
 import { signOut } from "firebase/auth";
 import { Specialist, SpecialtyCategory, SPECIALTY_CATEGORIES, BlogPost } from "@/types/models";
@@ -180,13 +179,59 @@ export default function AdminDashboard() {
   const enrichProfile = async (id: string) => {
     setIsProcessing(`enrich-${id}`);
     try {
-      const { functions } = await initFirebase();
-      const enrichSpecialist = httpsCallable(functions, "enrichProfile");
-      await enrichSpecialist({ specialistId: id });
+      const { db } = await initFirebase();
+      const profile = approved.find(p => p.id === id) || pending.find(p => p.id === id);
+      if (!profile) throw new Error("Profile not found in memory");
+
+      await setDoc(doc(db, "specialists", id), {
+        enrichmentStatus: "processing",
+        enrichmentLastAttemptAt: new Date(),
+        enrichmentUpdatedBy: "manual",
+        updatedAt: new Date(),
+      }, { merge: true });
+
+      const res = await fetch("/api/enrich", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ profile }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `Server responded with ${res.status}`);
+      }
+
+      const data = await res.json();
+      const draft = data.draft;
+
+      await setDoc(doc(db, "specialists", id), {
+        enrichmentStatus: "needs_review",
+        enrichmentDraft: draft,
+        enrichmentConfidence: draft.confidenceScore || null,
+        enrichmentSourceUrls: draft.sourceUrls,
+        enrichmentLastSuccessAt: new Date(),
+        enrichmentPendingApproval: true,
+        enrichmentVersion: draft.version || "firecrawl-v1",
+        updatedAt: new Date(),
+      }, { merge: true });
+
       alert("Enrichment draft created. Review it in the Enrichment Manager before approving.");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to enrich:", error);
-      alert(formatFirebaseFunctionsError(error, "Enriching the profile"));
+      
+      try {
+        const { db } = await initFirebase();
+        await setDoc(doc(db, "specialists", id), {
+          enrichmentStatus: "failed",
+          enrichmentPendingApproval: false,
+          enrichmentNotes: error?.message || "Unknown error",
+          updatedAt: new Date(),
+        }, { merge: true });
+      } catch (e) {
+        // ...
+      }
+
+      alert("Enriching the profile failed: " + (error?.message || "Unknown error"));
     } finally {
       setIsProcessing(null);
     }
