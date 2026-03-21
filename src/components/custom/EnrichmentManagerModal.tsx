@@ -137,7 +137,7 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
         const res = await fetch("/api/enrich", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ profile }),
+          body: JSON.stringify({ profile, action: "start" }),
         });
 
         if (!res.ok) {
@@ -145,8 +145,33 @@ export function EnrichmentManagerModal({ profiles }: EnrichmentManagerModalProps
           throw new Error(errorData.error || `Server responded with ${res.status}`);
         }
 
-        const data = await res.json();
-        const draft = data.draft;
+        const startData = await res.json();
+        const jobId = startData.jobId;
+        
+        if (!jobId) throw new Error("No job ID returned from extraction start.");
+
+        let draft = null;
+        for (let i = 0; i < 20; i++) {
+          await new Promise(r => setTimeout(r, 4000));
+          const checkRes = await fetch("/api/enrich", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ profile, action: "check", jobId }),
+          });
+          
+          if (!checkRes.ok) {
+             const err = await checkRes.json().catch(() => ({}));
+             throw new Error(err.error || `Server responded with ${checkRes.status}`);
+          }
+          
+          const checkData = await checkRes.json();
+          if (checkData.status === "completed") {
+             draft = checkData.draft;
+             break;
+          }
+        }
+
+        if (!draft) throw new Error("Enrichment timed out waiting for results.");
 
         if (!draft) throw new Error("No draft returned from API.");
 

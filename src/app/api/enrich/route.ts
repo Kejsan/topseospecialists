@@ -217,21 +217,55 @@ export const maxDuration = 60;
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { profile } = body;
+    const { profile, action = "auto", jobId } = body;
 
     if (!profile || !profile.id) {
       return NextResponse.json({ error: "Missing highly required profile data or ID" }, { status: 400 });
     }
 
+    // Step 1: Start the extraction
+    if (action === "start") {
+      const urls = await searchCandidateUrls(profile);
+      const started = await startExtract(profile, urls);
+      const newJobId = started.id || started.jobId;
+
+      if (!newJobId) {
+        throw new Error(`Missing extract job id: ${JSON.stringify(started)}`);
+      }
+      return NextResponse.json({ success: true, jobId: newJobId }, { status: 200 });
+    }
+
+    // Step 2: Check the extraction status
+    if (action === "check") {
+      if (!jobId) {
+        return NextResponse.json({ error: "Missing jobId for check action" }, { status: 400 });
+      }
+      const payload = await firecrawlRequest(`/extract/${jobId}`, { method: "GET" });
+      
+      if (payload.status === "completed") {
+        const extracted = payload.data || {};
+        const sources = payload.sources || extracted.sources || [];
+        const draft = buildDraft(profile, extracted, sources);
+        return NextResponse.json({ success: true, status: "completed", draft }, { status: 200 });
+      }
+      
+      if (payload.status === "failed" || payload.status === "cancelled") {
+        throw new Error(`Firecrawl extract ${payload.status}`);
+      }
+
+      return NextResponse.json({ success: true, status: "processing" }, { status: 200 });
+    }
+
+    // Original auto behavior (might timeout on Netlify free, kept for local dev or pro plans)
     const urls = await searchCandidateUrls(profile);
     const started = await startExtract(profile, urls);
-    const jobId = started.id || started.jobId;
+    const activeJobId = started.id || started.jobId;
 
-    if (!jobId) {
+    if (!activeJobId) {
       throw new Error(`Missing extract job id: ${JSON.stringify(started)}`);
     }
 
-    const completed = await waitForExtractResult(jobId);
+    const completed = await waitForExtractResult(activeJobId);
     const extracted = completed.data || {};
     const sources = completed.sources || extracted.sources || [];
     
@@ -247,3 +281,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
