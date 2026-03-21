@@ -58,6 +58,8 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
 
   return (
     <div className="space-y-8" id="directory">
+      <StatsCharts specialists={filteredAndSortedSpecialists} />
+
       <section className="section-frame grid-accent space-y-6" aria-labelledby="directory-heading">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-3">
@@ -137,8 +139,6 @@ export function SpecialistDirectory({ initialData }: SpecialistDirectoryProps) {
           </div>
         </fieldset>
       </section>
-
-      <StatsCharts specialists={filteredAndSortedSpecialists} />
 
       {filteredAndSortedSpecialists.length === 0 ? (
         <div className="section-frame text-center">
